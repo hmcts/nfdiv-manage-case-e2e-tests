@@ -1,5 +1,7 @@
 #!groovy
 
+@Library("Infrastructure")
+
 properties([
   // Currently, we run this pipeline on the first monday of every month (for resources sake)
   // If you want to run this nightly, uncomment the below line
@@ -9,7 +11,7 @@ properties([
   parameters([
     string(
       name: 'CITIZEN_FRONTEND_BASE_URL',
-      defaultValue: 'https://privatelaw.aat.platform.hmcts.net/',
+      defaultValue: 'https://nfdiv.aat.platform.hmcts.net/',
       description: 'The Citizen URL to test against'
     ),
     string(
@@ -34,9 +36,9 @@ properties([
 
 // Replace these with your own teams info
 def type = "nodejs"
-def product = "dtsse"
-def component = "e2e-tests"
-def channel = "#tcoe-builds"
+def product = "nfdiv"
+def component = "manage-case-e2e-tests"
+def channel = "#no-fault-divorce-builds"
 
 static Map < String, Object > secret(String secretName, String envVariable) {
   [
@@ -47,17 +49,14 @@ static Map < String, Object > secret(String secretName, String envVariable) {
   ]
 }
 
-// Replace the key vault name with your own service
 def secrets = [
-  'prl-${env}': [
-    secret('solicitor-user', 'SOLICITOR_USERNAME'),
-    secret('solicitor-password', 'SOLICITOR_PASSWORD'),
-    secret('case-manager-swansea-username', 'CASEMANAGER_USERNAME'),
-    secret('case-manager-swansea-password', 'CASEMANAGER_PASSWORD'),
-    secret('judge-testuser-one', 'JUDGE_USERNAME'),
-    secret('judge-testpassword', 'JUDGE_PASSWORD'),
-    secret('citizen-user', 'CITIZEN_USERNAME'),
-    secret('citizen-password', 'CITIZEN_PASSWORD'),
+        'nfdiv-${env}'    :[
+                secret('e2e-test-user-password', 'TEST_PASSWORD'),
+                secret('frontend-secret', 'SERVICE_AUTH_SECRET'),
+                secret('idam-secret', 'IDAM_SECRET'),
+                secret('pcq-token-key', 'PCQ_TOKEN'),
+                secret('playwright-service-url', 'PLAYWRIGHT_SERVICE_URL'),
+                secret('playwright-token', 'PLAYWRIGHT_SERVICE_ACCESS_TOKEN'),
   ]
 ]
 
