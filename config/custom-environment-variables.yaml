@@ -1,0 +1,41 @@
+forceCivilMode: FORCE_CIVIL_MODE
+services:
+  authProvider:
+    url: SERVICE_AUTH_PROVIDER_URL
+    secret: SERVICE_AUTH_SECRET
+  idam:
+    authorizationURL: IDAM_WEB_URL
+    tokenURL: IDAM_API_URL
+    clientID: IDAM_CLIENT_ID
+    clientSecret: IDAM_SECRET
+    caching: IDAM_TOKEN_CACHE
+  case:
+    url: CCD_URL
+    checkDivCases: SKIP_DIV_CASE_CHECK
+  payments:
+    url: PAYMENTS_API_URL
+  fees:
+    url: FEES_API_URL
+  caseDocumentManagement:
+    url: CASE_DOCUMENT_MANAGEMENT_URL
+  equalityAndDiversity:
+    url: EQUALITY_URL
+    tokenKey: PCQ_TOKEN
+  decreeNisi:
+    url: DECREE_NISI_URL
+  nfdiv_divorce:
+    url: NFDIV_DIVORCE_URL
+  nfdiv_dissolution:
+    url: NFDIV_DISSOLUTION_URL
+port: PORT
+session:
+  redis:
+    host: REDIS_HOST
+appInsights:
+  instrumentationKey: APPINSIGHTS_KEY
+webchat:
+  avayaUrl: WEBCHAT_AVAYA_URL
+  avayaClientUrl: WEBCHAT_AVAYA_CLIENT_URL
+  avayaService: WEBCHAT_AVAYA_SERVICE
+dynatrace:
+  dynatraceUrl: DYNATRACE_URL

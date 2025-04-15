@@ -1,7 +1,5 @@
 #!groovy
 
-@Library("Infrastructure")
-
 properties([
   // Currently, we run this pipeline on the first monday of every month (for resources sake)
   // If you want to run this nightly, uncomment the below line

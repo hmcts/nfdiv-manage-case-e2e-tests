@@ -1,0 +1,59 @@
+nodejs:
+  applicationPort: 3001
+  aadIdentityName: nfdiv
+  ingressHost: nfdiv.{{ .Values.global.environment }}.platform.hmcts.net
+  registerAdditionalDns:
+    enabled: true
+    prefix: nfdiv
+    primaryIngressHost: end-civil-partnership.{{ .Values.global.environment }}.platform.hmcts.net
+  image: 'hmctspublic.azurecr.io/nfdiv/manage-case-e2e-tests:latest'
+  readinessDelay: 45
+  readinessTimeout: 5
+  readinessPeriod: 15
+  livenessDelay: 45
+  livenessTimeout: 5
+  livenessPeriod: 15
+  memoryLimits: '384Mi'
+  memoryRequests: '384Mi'
+  cpuLimits: '1000m'
+  cpuRequests: '200m'
+  devcpuRequests: '400m'
+  devmemoryLimits: '384Mi'
+  devmemoryRequests: '384Mi'
+  keyVaults:
+    nfdiv:
+      resourceGroup: nfdiv
+      secrets:
+        - idam-secret
+        - AppInsightsInstrumentationKey
+        - name: redis6-access-key
+          alias: redis-access-key
+        - frontend-secret
+        - os-places-token
+        - idam-systemupdate-username
+        - idam-systemupdate-password
+        - pcq-token-key
+  environment:
+    SERVICE_AUTH_PROVIDER_URL: 'http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
+    IDAM_WEB_URL: 'https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/login'
+    IDAM_API_URL: 'https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net/o/token'
+    PAYMENTS_API_URL: 'http://payment-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
+    FEES_API_URL: 'http://fees-register-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
+    REDIS_HOST: 'nfdiv-frontend-{{ .Values.global.environment }}.redis.cache.windows.net'
+    CCD_URL: 'http://ccd-data-store-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
+    #CCD_URL: 'https://nfdiv-case-api-pr-3980.preview.platform.hmcts.net'
+    #SKIP_DIV_CASE_CHECK: false #this is required to connect to nfdiv-case-api in preview
+    CASE_DOCUMENT_MANAGEMENT_URL: 'http://ccd-case-document-am-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
+    EQUALITY_URL: 'https://pcq.{{ .Values.global.environment }}.platform.hmcts.net'
+    DECREE_NISI_URL: 'https://decree-nisi-aks.{{ .Values.global.environment }}.platform.hmcts.net'
+    NFDIV_DIVORCE_URL: 'https://nfdiv-apply-for-divorce.{{ .Values.global.environment }}.platform.hmcts.net'
+    NFDIV_DISSOLUTION_URL: 'https://nfdiv-end-civil-partnership.{{ .Values.global.environment }}.platform.hmcts.net'
+    IDAM_TOKEN_CACHE: false
+#disable autoscaling because it doesnt deploy AAT
+  autoscaling:
+    enabled: true
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 80
+
+idam-pr:
+  enabled: false

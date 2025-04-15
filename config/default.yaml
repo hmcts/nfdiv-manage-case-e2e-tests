@@ -1,0 +1,111 @@
+port: 3001
+timeout: 30000
+uploadTimeout: 60000
+forceCivilMode: false
+dates:
+  issueDateOffsetDays: 141
+  disputeDueDateOffsetDays: 37
+  awaitingLegalAdvisorReferralOffsetDays: 56
+  clarificationSubmittedOffsetDays: 56
+  finalOrderSubmittedOffsetDays: 14
+  changingToSolePartnerConfirmationWeeks: 2
+  settlingFinancesConfirmationDays: 14
+  changingToSolePartnerResponseDays: 14
+  contactCourtBeforeHearingDays: 7
+  applyForFoDays: 43
+  applicationSubmittedOffsetDays: 28
+  arrangeProcessServiceDays: 28
+  switchToSoleFinalOrderIntentionNotificationOffsetDays: 14
+  requestForInformationResponseCourtReplyOffsetDays: 28
+fees:
+  applicationFee: DivorceCivPart
+  financialOrder: FinancialOrderOnNotice
+  courtBailiffService: BailiffServeDoc
+  alternativeService: GeneralAppWithoutNotice
+  consentOrder: GeneralAppWithoutNotice
+  deemedService: GeneralAppWithoutNotice
+  dispensedService: GeneralAppWithoutNotice
+  searchForAddress: GeneralAppWithoutNotice
+  d8bFormSubmission: DivAnswerReceived
+  updateApplication: DivorceAmendPetition
+  finalOrderApplicationFee: GAOnNotice
+services:
+  authProvider:
+    url: 'http://rpe-service-auth-provider-aat.service.core-compute-aat.internal'
+    microservice: 'divorce_frontend'
+    secret: 'NEED TO INSERT SECRET'
+  idam:
+    authorizationURL: 'https://idam-web-public.aat.platform.hmcts.net/login'
+    tokenURL: 'https://idam-api.aat.platform.hmcts.net/o/token'
+    clientID: 'divorce'
+    clientSecret: 'NEED TO INSERT SECRET'
+    systemUsername: 'dummy_user'
+    systemPassword:
+    caching: false
+  case:
+    #url: 'http://localhost:4452' #uncomment for local
+    url: 'http://ccd-data-store-api-aat.service.core-compute-aat.internal'
+    #url: 'https://nfdiv-case-api-pr-4188.preview.platform.hmcts.net' #uncomment to run against pr
+    checkDivCases: true
+  postcodeLookup:
+    url: 'https://api.os.uk/search/places/v1'
+    token: 'NEED TO INSERT SECRET'
+  caseDocumentManagement:
+    url: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
+  payments:
+    url: http://payment-api-aat.service.core-compute-aat.internal
+  fees:
+    url: http://fees-register-api-aat.service.core-compute-aat.internal
+    channel: default
+    jurisdiction1: family
+    jurisdiction2: family court
+  equalityAndDiversity:
+    name: 'Equality and Diversity Service'
+    url: 'https://pcq.aat.platform.hmcts.net'
+    path: '/service-endpoint'
+    port: 4000
+    tokenKey: 'SERVICE_TOKEN_KEY'
+  decreeNisi:
+    url: 'https://decree-nisi-aks.aat.platform.hmcts.net'
+  nfdiv_divorce:
+    url: https://nfdiv-apply-for-divorce.aat.platform.hmcts.net
+  nfdiv_dissolution:
+    url: https://nfdiv-end-civil-partnership.aat.platform.hmcts.net
+health:
+  timeout: 5000
+  deadline: 15000
+session:
+  secret: 'local'
+  maxAge: 1260000
+  redis:
+    host:
+    key:
+e2e:
+  userTestPassword: ''
+appInsights:
+  instrumentationKey:
+webchat:
+  avayaUrl: 'webchat.pp.ctsc.hmcts.net'
+  avayaClientUrl: 'webchat-client.pp.ctsc.hmcts.net'
+  avayaService: 'Divorce'
+dynatrace:
+  dynatraceUrl: 'https://js-cdn.dynatrace.com/jstag/17177a07246/bf24054dsx/2ab4686fc177447_complete.js'
+serviceAddress:
+  line1: 'Courts and Tribunals Service Centre'
+  line2: 'HMCTS Divorce and Dissolution service'
+  poBox: 'PO Box 13226'
+  town: 'Harlow'
+  postcode: 'CM20 9UG'
+govukUrls:
+  d11Form: 'https://www.gov.uk/government/publications/form-d11-application-notice'
+  d36Form: 'https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/952032/d36-eng.pdf'
+  n215Form: 'https://www.gov.uk/government/publications/form-n215-certificate-of-service'
+  mediation: 'https://www.gov.uk/money-property-when-relationship-ends/mediation'
+  consentOrder: 'https://www.gov.uk/money-property-when-relationship-ends/apply-for-consent-order'
+  financialOrder: 'https://www.gov.uk/money-property-when-relationship-ends/get-court-to-decide'
+  moneyAndProperty: 'https://www.gov.uk/money-property-when-relationship-ends'
+  legalAdvisor: 'https://www.gov.uk/find-a-legal-adviser'
+  callCharges: 'https://www.gov.uk/call-charges'
+  domesticAbuse: 'https://www.gov.uk/guidance/domestic-abuse-how-to-get-help'
+  feedbackExitSurvey: 'https://smartsurvey.co.uk/s/SurveyExit'
+  applyForDivorce: 'https://www.gov.uk/apply-for-divorce'
