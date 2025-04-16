@@ -25,8 +25,9 @@
     "typescript-eslint": "^8.8.0"
   },
   "scripts": {
+    "pwinstall": "yarn playwright install --with-deps",
     "lint": "yarn tsc -p tsconfig.json && yarn eslint .",
-    "setup": "yarn playwright install --with-deps",
+    "setup": "yarn install && ./scripts/get_secrets.sh && yarn pwinstall && yarn playwright install webkit && yarn playwright install firefox",
     "test:changes": "yarn pwinstall && ts-node ./e2e/common/changedTestsRunner.ts",
     "test:chrome": "yarn playwright test tests/ --project=chrome --grep-invert='(@a11y)|(@performance)|(@visual)'",
     "test:firefox": "yarn playwright test tests/ --project=firefox --grep-invert='(@a11y)|(@performance)|(@visual)'",
