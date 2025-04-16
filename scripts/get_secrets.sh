@@ -5,7 +5,7 @@
 
 # Requires: Azure CLI & JQ (brew install azure-cli jq)
 
-KEY_VAULT_NAME="prl-aat"
+KEY_VAULT_NAME="nfdiv-aat"
 EXAMPLE_ENV_FILE=".env.example"
 ENV_FILE=".env"
 TEMP_ENV_FILE=$(mktemp)
