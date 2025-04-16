@@ -6,6 +6,7 @@ export default tseslint.config(
   { ignores: [".yarn/**", "eslint.config.mjs", ".pnp.cjs", ".pnp.loader.mjs"] },
   {
     files: ["**/*.ts"],
+    ignores:["playwright-e2e/**/*.ts"],
     plugins: {
       "@typescript-eslint": tseslint.plugin,
     },
@@ -31,7 +32,7 @@ export default tseslint.config(
       // This should be enabled when waitForTimeout calls are changed to explicit waits (where possible)
       "playwright/no-wait-for-timeout": "off",
     },
-    ignores: ["e2e/common/helpers.ts", "playwright-e2e/**/*.ts"],
+    ignores: ["e2e/common/helpers.ts"],
     files: ["e2e/**/*.ts"],
   },
 );
