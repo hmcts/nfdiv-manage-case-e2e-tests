@@ -1,5 +1,8 @@
-import { exec, ExecException } from "child_process";
-import { SimpleGit, simpleGit } from "simple-git";
+import { exec } from "child_process";
+import type { ExecException } from "child_process";
+import simpleGit from 'simple-git';
+import type { SimpleGit } from 'simple-git';
+
 
 export class ChangedTestsRunner {
   public static async run(): Promise<void> {
