@@ -31,7 +31,7 @@ export default tseslint.config(
       // This should be enabled when waitForTimeout calls are changed to explicit waits (where possible)
       "playwright/no-wait-for-timeout": "off",
     },
-    ignores: ["e2e/common/helpers.ts", "playwright-e2e/*"],
+    ignores: ["e2e/common/helpers.ts", "playwright-e2e/**/*.ts"],
     files: ["e2e/**/*.ts"],
   },
 );
