@@ -1,29 +1,45 @@
 #!groovy
 @Library("Infrastructure")
 
-// Need to replace these with TCoE team once available
 def type = "nodejs"
-def product = "dtsse"
-def component = "e2e-tests"
-def channel = "#tcoe-builds"
+def product = "nfdiv"
+def component = "manage-case-e2e-tests"
+def channel = "#no-fault-divorce-builds"
+
+static Map<String, Object> secret(String secretName, String envVariable) {
+  [$class     : 'AzureKeyVaultSecret',
+   secretType : 'Secret',
+   name       : secretName,
+   envVariable: envVariable
+  ]
+}
+
+def secrets = [
+        'nfdiv-${env}'    :[
+                secret('e2e-test-user-password', 'TEST_PASSWORD'),
+                secret('frontend-secret', 'SERVICE_AUTH_SECRET'),
+                secret('idam-secret', 'IDAM_SECRET'),
+                secret('pcq-token-key', 'PCQ_TOKEN'),
+                secret('playwright-service-url', 'PLAYWRIGHT_SERVICE_URL'),
+                secret('playwright-token', 'PLAYWRIGHT_SERVICE_ACCESS_TOKEN'),
+        ]
+]
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
+def pipelineConf = new AppPipelineConfig()
+pipelineConf.vaultSecrets = secrets
 
-/**
-* As this repo is not a part of any service or application, withNightlyPipeline is used
-* Typically, withPipeline would be used as it contains additional steps needed to release & deploy
-* See https://github.com/hmcts/cnp-jenkins-library for more info on the opinionated pipeline
-*/
-withNightlyPipeline(type, product, component) {
-  enableSlackNotifications(channel)
-  afterAlways('DependencyCheckNightly') {
-    stage('Lint') {
-        try {
-          yarnBuilder.yarn('lint')
-        } catch (Error) {
-          unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
-        }
-      }
+withPipeline(type, product, component) {
+  disableLegacyDeployment()
+  loadVaultSecrets(secrets)
+
+  afterAlways('build') {
+    yarnBuilder.yarn('build')
   }
+
+  // uncomment to connect backend PR
+  //onPR {
+  //  env.CASE_TYPE="NFD-4188"
+  //}
 }
