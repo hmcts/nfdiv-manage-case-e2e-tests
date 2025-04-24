@@ -41,7 +41,7 @@ You also need to create a list of those secrets in your Jenkinsfile e.g:
 
 ```groovy
 def secrets = [
-  'prl-${env}': [
+  'nfdiv-${env}': [
     secret('solicitor-user', 'SOLICITOR_USERNAME'),
     secret('solicitor-password', 'SOLICITOR_PASSWORD'),
     ...

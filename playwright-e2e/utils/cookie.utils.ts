@@ -23,7 +23,7 @@ export class CookieUtils {
       );
       const state = JSON.parse(fs.readFileSync(sessionPath, "utf-8"));
       state.cookies.push({
-        name: `prl-cookie-preferences`,
+        name: `nfdiv-cookie-preferences`,
         value: JSON.stringify({"analytics": "on", "apm": "on"}),
         domain: `${domain}`,
         path: "/",
