@@ -13,7 +13,7 @@ export interface UserCredentialsLong extends UserCredentials {
   readonly surname: string;
 }
 
-export type solicitorCaseCreateType = "C100" | "FL401";
+export type caseType = "NFD" | "NO_FAULT_DIVORCE_BulkAction";
 
 export type State = "undefined";
 

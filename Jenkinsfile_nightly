@@ -73,6 +73,7 @@ def secrets = [
                 secret('pcq-token-key', 'PCQ_TOKEN'),
                 secret('playwright-service-url', 'PLAYWRIGHT_SERVICE_URL'),
                 secret('playwright-token', 'PLAYWRIGHT_SERVICE_ACCESS_TOKEN'),
+                secret('idam-testing-support-users-url', 'IDAM_TESTING_SUPPORT_USERS_URL'),
         ]
 ]
 

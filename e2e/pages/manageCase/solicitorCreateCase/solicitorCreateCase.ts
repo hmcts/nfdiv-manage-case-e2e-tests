@@ -1,0 +1,58 @@
+import {Page} from "@playwright/test";
+import { Selectors } from "../../../common/selectors";
+import {Helpers} from "../../../common/helpers.ts";
+import {SolicitorCreateCaseStart} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/solicitorCreateCaseStart.ts";
+import AccessibilityTestHelper from "../../../common/accessibilityTestHelper.ts";
+import {chromium} from "playwright/test";
+
+enum fieldIds {
+  jurisdiction = "#cc-jurisdiction",
+  caseType = "#cc-case-type",
+  event = "#cc-event",
+}
+
+export class SolicitorCreatePage {
+  public static async solicitorCreatePage(
+    page: Page,
+    accessibilityTest: boolean,
+  ): Promise<void> {
+    console.log('page load started');
+
+    await this.checkPageLoads(page, accessibilityTest);
+    console.log('page load finished');
+
+    await this.fillInFields(page);
+  }
+
+  private static async checkPageLoads(
+    page: Page,
+    accessibilityTest: boolean,
+  ): Promise<void> {
+    await page.waitForSelector(
+      `${Selectors.GovukHeadingXL}:text-is("${SolicitorCreateCaseStart.pageTitle}")`,
+      );
+  }
+
+  private static async fillInFields(
+    page: Page,
+  ): Promise<void> {
+    await page.selectOption(fieldIds.jurisdiction, SolicitorCreateCaseStart.jurisdictionOption);
+    await page.selectOption(fieldIds.caseType, SolicitorCreateCaseStart.caseTypeOption);
+    // If event dropdown fails to load then fail the test fast - interim solution until the underlying problem is fixed
+    const eventDropdown = page.locator(fieldIds.event);
+    const eventOptions = await eventDropdown.evaluate((el: HTMLSelectElement) =>
+      Array.from(el.options).map((option) => option.value),
+    );
+    if (eventOptions.length <= 1) {
+      console.log("Event dropdown failed to load, retrying...");
+      await page.reload();
+      await this.fillInFields(page);
+    }
+
+    await page.selectOption(fieldIds.event, SolicitorCreateCaseStart.solicitorCreateApplication);
+
+    await page.click(
+      `${Selectors.button}:text-is("${SolicitorCreateCaseStart.button}")`,
+    );
+  }
+}

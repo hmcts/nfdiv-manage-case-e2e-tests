@@ -35,6 +35,8 @@ export class IdamLoginHelper {
           `#skiplinktarget:text("Sign in or create an account")`,
         );
       }
+      console.log('sign in method user creds are ' + username +  ' ' + password)
+
       await page.fill(this.fields.username, username);
       await page.fill(this.fields.password, password);
       await page.click(this.submitButton);
@@ -61,6 +63,7 @@ export class IdamLoginHelper {
   ): Promise<void> {
     const userCredentials = Config.getUserCredentials(user);
     if (!userCredentials) return;
+    console.log('Long live sign in method user creds are ' + userCredentials.email +  ' ' + userCredentials.password)
 
     await this.signIn(
       page,

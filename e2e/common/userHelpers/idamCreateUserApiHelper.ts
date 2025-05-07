@@ -52,9 +52,9 @@ export async function createUser(
       break;
     case "solicitor":
       password = process.env.SOLICITOR_PASSWORD!;
-      email = `TEST_DIVORCE_USER_solicitor.${uniqueId}@test.local`;
-      forename = "fn_" + uniqueId.split("-")[0];
-      surname = "sn_" + uniqueId.split("-")[1];
+      email = `TEST_DIVORCE_USER_solicitor@test.local`;
+      forename = "faisal";
+      surname = "amin";
       roleNames = [
         "pui-user-manager",
         "caseworker-divorce",
@@ -83,7 +83,7 @@ export async function createUser(
   }
 
   const id = uniqueId;
-
+  console.log(`details of user passed: fname= ${forename}, sname=${surname}, email = ${email}`)
   const response = await apiContext.post(idamUrl, {
     headers: {
       Authorization: `Bearer ${token}`,
