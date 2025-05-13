@@ -65,8 +65,8 @@ export class IdamLoginHelper {
 
     await this.signIn(
       page,
-      userCredentials.email,
-      userCredentials.password,
+      userCredentials.email ?? 'TEST_SOLICITORONLY_USER@mailinator.com',
+      userCredentials.password ?? 'genericPassword123',
       application,
       user,
     );
