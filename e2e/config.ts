@@ -35,14 +35,12 @@ export class Config {
   public static readonly manageCasesBaseURLCase: string =
     Config.ensureNoTrailingSlash(
       process.env.MANAGE_CASES_BASE_URL ||
-        "localhost:3000/cases",
+        "https://manage-case.aat.platform.hmcts.net/cases",
     );
   public static readonly manageCasesBaseURL: string = Config.removeCasesPath(
     process.env.MANAGE_CASES_BASE_URL ||
-      "localhost:3000",
+      "https://manage-case.aat.platform.hmcts.net",
   );
-
-  public static readonly manageCasesCreateCaseURL: string = Config.manageCasesBaseURLCase + '/create-case/DIVORCE/NFD';
 
   private static removeCasesPath(url: string): string {
     return url.replace(/\/cases$/, ""); // Removes `/cases` only if it's at the end

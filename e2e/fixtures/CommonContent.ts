@@ -3,7 +3,7 @@ export enum CommonContent {
   manageCases = "Manage Cases",
   signOut = "Sign out",
   caseList = "Case list",
-  createCase = "Create case",
+  createCase = "Create Case",
   noticeOfChange = "Notice of change",
   findCase = "Find case",
 }

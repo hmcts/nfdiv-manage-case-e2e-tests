@@ -2,9 +2,8 @@ import {Page} from "@playwright/test";
 import {caseType, UserRole} from "../../../../../common/types.ts";
 import {SolicitorCreatePage} from "../../../../../pages/manageCase/solicitorCreateCase/solicitorCreateCase.ts";
 import {CommonPage} from "../../../../CommonPage.ts";
-import Config from "../../../../../config.ts";
 
-interface SolicitorCreateCaseOptions {
+interface SolicitorCreateOptions {
   page: Page;
   accessibilityTest: boolean;
   caseType: string;
@@ -17,9 +16,9 @@ export class SolicitorCreateCaseStart {
  caseType,
  accessibilityTest,
  user
- } : SolicitorCreateCaseOptions ): Promise<void> {
-    await CommonPage.navigateToPage(Config.manageCasesBaseURLCase, page, {paths: ['case-filter']});
+ } : SolicitorCreateOptions ): Promise<void> {
+
+    await CommonPage.navigateToCreateCasePage(page);
     await SolicitorCreatePage.solicitorCreatePage(page, false);
-    await CommonPage.startCreateCaseEvent(page);
   }
 }

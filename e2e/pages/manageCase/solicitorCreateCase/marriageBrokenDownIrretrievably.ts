@@ -1,11 +1,19 @@
 import {Page} from "@playwright/test";
-import { Selectors } from "../../../common/selectors";
+import {Selectors} from "../../../common/selectors";
+
 import {
   HowDoYouWantToApplyForDivorce
 } from "../../../fixtures/manageCases/createCase/solicitorCreateCase/howDoYouWantToApplyForDivorce.ts";
+import {
+  SolAboutTheSolicitor
+} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/solAboutTheSolicitor.ts";
+import {
+  SolicitorCreateCaseStart
+} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/solicitorCreateCaseStart.ts";
 
-export class HowDoYouWantToApplyForDivorcePage {
-  public static async createApplicationTypePage(
+export class MarriageBrokenDownIrretrievablyPage {
+
+  public static async marriageBrokenDown(
     page: Page,
     accessibilityTest: boolean,
   ): Promise<void> {
@@ -27,10 +35,9 @@ export class HowDoYouWantToApplyForDivorcePage {
     page: Page,
   ): Promise<void> {
 
-    await page.locator(HowDoYouWantToApplyForDivorce.radioButtonDivorceId).check();
-    await page.waitForSelector(HowDoYouWantToApplyForDivorce.radioButtonSoleApplicationId);
-    await page.locator(HowDoYouWantToApplyForDivorce.radioButtonSoleApplicationId).check();
-    await page.click(`${Selectors.button}:text-is("${HowDoYouWantToApplyForDivorce.continueButton}")`,
+    await page.locator('#applicant1ScreenHasMarriageBroken_Yes').check();
+    await page.click(
+      `${Selectors.button}:text-is("${SolAboutTheSolicitor.continueButton}")`,
     );
   }
 }

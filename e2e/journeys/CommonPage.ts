@@ -5,27 +5,18 @@ import {CommonContent} from "../fixtures/CommonContent.ts";
 
 interface CaseCreationUrlParams {
   paths: string[];
-  eventId?: string;
+  eventId: string;
   queryParams?: string;
+  pageId: string
 }
 
 export class CommonPage {
-  public static async navigateToPage(baseUrl: string, page: Page, caseCreation: CaseCreationUrlParams): Promise<void> {
-    let urlCons: string = this.constructUrl(baseUrl,  caseCreation.paths, caseCreation.eventId);
-    console.log(urlCons);
-      await page.goto(baseUrl);
+
+  public static async navigateToCreateCasePage(page: Page): Promise<void> {
+    await page.goto(Config.manageCasesBaseURLCase + "/case-filter");
   }
 
-  public static async startCreateCaseEvent(page: Page): Promise<void> {
-    await page.click(
-      `${Selectors.GovukNavigationLink}:text-is("${CommonContent.createCase}")`,
-    );
-  }
-
-  private static async constructUrl(baseUrl: string, urlPaths: string[], eventId: string | undefined) : string {
-    if (eventId) {
-      urlPaths.splice(1, 0, eventId);
-    }
-    return [baseUrl, ...urlPaths].join('/');
+  public static async navigateToPage(page: Page, baseUrl: string, eventId: string, pageId: string): Promise<void> {
+      await page.goto([baseUrl, eventId, pageId].join('/'));
   }
 }

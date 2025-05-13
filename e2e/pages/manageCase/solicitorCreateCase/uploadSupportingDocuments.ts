@@ -1,0 +1,45 @@
+import {Page} from "@playwright/test";
+import {Selectors} from "../../../common/selectors";
+import {AboutApplicants} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/aboutApplicants.ts";
+import config from "../../../config.ts";
+import {
+  UploadSupportingDocuments
+} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/uploadSupportingDocuments.ts";
+
+export class UploadSupportingDocumentsPage {
+
+  public static async uploadSupportingDocuments(
+    page: Page,
+    accessibilityTest: boolean,
+  ): Promise<void> {
+
+    await this.checkPageLoads(page, accessibilityTest);
+    await this.fillInFields(page);
+  }
+
+  private static async checkPageLoads(
+    page: Page,
+    accessibilityTest: boolean,
+  ): Promise<void> {
+    await page.waitForSelector(
+      `${Selectors.GovukCaptionL}:text-is("${AboutApplicants.pageTitle}")`,
+    );
+  }
+
+  private static async fillInFields(
+    page: Page,
+  ): Promise<void> {
+
+    await page.click(
+      `${Selectors.button}:text-is("${UploadSupportingDocuments.addNewButton}")`,
+    );
+
+    await page.waitForSelector('h3:text("Applicant 1 uploaded documents")');
+    const fileInput = page.locator('#applicant1DocumentsUploaded_0_documentLink');
+    await fileInput.setInputFiles(config.testPdfFile);
+
+    await page.click(
+      `${Selectors.button}:text-is("${UploadSupportingDocuments.continueButton}")`,
+    );
+  }
+}

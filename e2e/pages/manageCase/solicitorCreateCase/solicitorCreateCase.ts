@@ -1,9 +1,6 @@
 import {Page} from "@playwright/test";
 import { Selectors } from "../../../common/selectors";
-import {Helpers} from "../../../common/helpers.ts";
 import {SolicitorCreateCaseStart} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/solicitorCreateCaseStart.ts";
-import AccessibilityTestHelper from "../../../common/accessibilityTestHelper.ts";
-import {chromium} from "playwright/test";
 
 enum fieldIds {
   jurisdiction = "#cc-jurisdiction",
@@ -16,11 +13,8 @@ export class SolicitorCreatePage {
     page: Page,
     accessibilityTest: boolean,
   ): Promise<void> {
-    console.log('page load started');
 
     await this.checkPageLoads(page, accessibilityTest);
-    console.log('page load finished');
-
     await this.fillInFields(page);
   }
 
