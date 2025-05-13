@@ -10,7 +10,7 @@ interface SolicitorCreateCaseOptions {
 export class UploadSupportingDocuments {
   public static async uploadSupportingDocuments({
      page,
-  }: SolicitorCreateCaseOptions): Promise<string> {
+  }: SolicitorCreateCaseOptions): Promise<void> {
 
     await UploadSupportingDocumentsPage.uploadSupportingDocuments(page, false);
   }

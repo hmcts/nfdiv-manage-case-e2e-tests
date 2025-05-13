@@ -10,7 +10,7 @@ interface SolicitorCreateCaseOptions {
 export class JurisdictionApplyForDivorceOrDissolution {
   public static async jurisdictionConnection({
      page,
-  }: SolicitorCreateCaseOptions): Promise<string> {
+  }: SolicitorCreateCaseOptions): Promise<void> {
 
     await JurisdictionApplyForDivorceOrDissolutionPage.jurisdictionConnection(page, false);
   }

@@ -10,7 +10,7 @@ interface SolicitorCreateCaseOptions {
 export class HowDoYouWantToApplyForDivorce {
   public static async applicationType({
      page,
-  }: SolicitorCreateCaseOptions): Promise<string> {
+  }: SolicitorCreateCaseOptions): Promise<void> {
 
     await HowDoYouWantToApplyForDivorcePage.createApplicationTypePage(page, false);
   }

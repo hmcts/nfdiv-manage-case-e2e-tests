@@ -10,7 +10,7 @@ interface SolicitorCreateCaseOptions {
 export class MarriageCertificateDetails {
   public static async marriageCertificateDetails({
      page,
-  }: SolicitorCreateCaseOptions): Promise<string> {
+  }: SolicitorCreateCaseOptions): Promise<void> {
 
     await MarriageCertificateDetailsPage.marriageCertificateDetails(page, false);
   }

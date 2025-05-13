@@ -10,7 +10,7 @@ interface SolicitorCreateCaseOptions {
 export class MarriageBrokenDownIrretrievably {
   public static async marriageBrokenDown({
                                            page,
-                                         }: SolicitorCreateCaseOptions): Promise<string> {
+                                         }: SolicitorCreateCaseOptions): Promise<void> {
 
     await MarriageBrokenDownIrretrievablyPage.marriageBrokenDown(page, false);
   }

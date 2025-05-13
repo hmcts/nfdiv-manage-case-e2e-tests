@@ -8,7 +8,7 @@ interface SolicitorCreateCaseOptions {
 export class SolAboutTheSolicitor {
   public static async solAboutTheSolicitor({
      page,
-  }: SolicitorCreateCaseOptions): Promise<string> {
+  }: SolicitorCreateCaseOptions): Promise<void> {
 
     await SolAboutTheSolicitorPage.solAboutTheSolicitor(page, false);
   }

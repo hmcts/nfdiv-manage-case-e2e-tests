@@ -10,7 +10,7 @@ interface SolicitorCreateCaseOptions {
 export class CheckYourAnswersAndSubmit {
   public static async checkYourAnswers({
      page,
-  }: SolicitorCreateCaseOptions): Promise<string> {
+  }: SolicitorCreateCaseOptions): Promise<void> {
 
     await CheckYourAnswersAndSubmitPage.checkYourAnswers(page, false);
   }

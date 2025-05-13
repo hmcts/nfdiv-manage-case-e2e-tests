@@ -10,7 +10,7 @@ interface SolicitorCreateCaseOptions {
 export class AboutRespondentOrAppTwo {
   public static async aboutRespondentOrAppTwo({
      page,
-  }: SolicitorCreateCaseOptions): Promise<string> {
+  }: SolicitorCreateCaseOptions): Promise<void> {
 
     await AboutRespOrApplicantTwoPage.aboutRespondentOrApplicantTwo(page, false);
   }
