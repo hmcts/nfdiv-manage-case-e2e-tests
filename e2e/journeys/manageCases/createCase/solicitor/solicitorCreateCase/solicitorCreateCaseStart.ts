@@ -1,5 +1,5 @@
 import {Page} from "@playwright/test";
-import {caseType, UserRole} from "../../../../../common/types.ts";
+import { UserRole} from "../../../../../common/types.ts";
 import {SolicitorCreatePage} from "../../../../../pages/manageCase/solicitorCreateCase/solicitorCreateCase.ts";
 import {CommonPage} from "../../../../CommonPage.ts";
 
@@ -13,12 +13,9 @@ interface SolicitorCreateOptions {
 export class SolicitorCreateCaseStart {
   public static async solicitorCreateCase({
  page,
- caseType,
- accessibilityTest,
- user
  } : SolicitorCreateOptions ): Promise<void> {
 
     await CommonPage.navigateToCreateCasePage(page);
-    await SolicitorCreatePage.solicitorCreatePage(page, false);
+    await SolicitorCreatePage.solicitorCreatePage(page);
   }
 }

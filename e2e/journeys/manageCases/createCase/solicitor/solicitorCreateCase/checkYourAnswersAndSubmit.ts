@@ -12,6 +12,6 @@ export class CheckYourAnswersAndSubmit {
      page,
   }: SolicitorCreateCaseOptions): Promise<void> {
 
-    await CheckYourAnswersAndSubmitPage.checkYourAnswers(page, false);
+    await CheckYourAnswersAndSubmitPage.checkYourAnswers(page);
   }
 }

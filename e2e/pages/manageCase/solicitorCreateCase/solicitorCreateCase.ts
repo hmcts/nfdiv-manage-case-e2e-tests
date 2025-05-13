@@ -11,16 +11,14 @@ enum fieldIds {
 export class SolicitorCreatePage {
   public static async solicitorCreatePage(
     page: Page,
-    accessibilityTest: boolean,
   ): Promise<void> {
 
-    await this.checkPageLoads(page, accessibilityTest);
+    await this.checkPageLoads(page);
     await this.fillInFields(page);
   }
 
   private static async checkPageLoads(
     page: Page,
-    accessibilityTest: boolean,
   ): Promise<void> {
     await page.waitForSelector(
       `${Selectors.GovukHeadingXL}:text-is("${SolicitorCreateCaseStart.pageTitle}")`,

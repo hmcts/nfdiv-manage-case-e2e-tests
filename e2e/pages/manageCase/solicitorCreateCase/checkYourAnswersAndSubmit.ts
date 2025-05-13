@@ -1,24 +1,19 @@
 import {Page} from "@playwright/test";
 import {Selectors} from "../../../common/selectors";
-import {
-  SolAboutTheSolicitor
-} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/solAboutTheSolicitor.ts";
 import {AboutApplicants} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/aboutApplicants.ts";
 
 export class CheckYourAnswersAndSubmitPage {
 
   public static async checkYourAnswers(
     page: Page,
-    accessibilityTest: boolean,
   ): Promise<void> {
 
-    await this.checkPageLoads(page, accessibilityTest);
+    await this.checkPageLoads(page);
     await this.fillInFields(page);
   }
 
   private static async checkPageLoads(
     page: Page,
-    accessibilityTest: boolean,
   ): Promise<void> {
     await page.waitForSelector(
       `${Selectors.GovukCaptionL}:text-is("${AboutApplicants.pageTitle}")`,
@@ -29,8 +24,7 @@ export class CheckYourAnswersAndSubmitPage {
     page: Page,
   ): Promise<void> {
 
-    const button = await page.locator(`${Selectors.button}:text-is("${AboutApplicants.saveApplication}")`);
-    await button.scrollIntoViewIfNeeded();
+    const button = page.locator(`${Selectors.button}:text-is("${AboutApplicants.saveApplication}")`);
     await button.click();
     await page.waitForTimeout(10000);
   }

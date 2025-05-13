@@ -10,6 +10,6 @@ export class FinancialOrders {
      page,
   }: SolicitorCreateCaseOptions): Promise<void> {
 
-    await FinancialOrdersPage.financialOrders(page, false);
+    await FinancialOrdersPage.financialOrders(page);
   }
 }

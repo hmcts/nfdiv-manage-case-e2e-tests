@@ -1,6 +1,4 @@
 import {Page} from "@playwright/test";
-import {CommonPage} from "../../../../CommonPage.ts";
-import Config from "../../../../../config.ts";
 import {AboutRespOrApplicantTwoPage} from "../../../../../pages/manageCase/solicitorCreateCase/aboutRespOrApplicantTwo.ts";
 
 interface SolicitorCreateCaseOptions {
@@ -12,6 +10,6 @@ export class AboutRespondentOrAppTwo {
      page,
   }: SolicitorCreateCaseOptions): Promise<void> {
 
-    await AboutRespOrApplicantTwoPage.aboutRespondentOrApplicantTwo(page, false);
+    await AboutRespOrApplicantTwoPage.aboutRespondentOrApplicantTwo(page);
   }
 }

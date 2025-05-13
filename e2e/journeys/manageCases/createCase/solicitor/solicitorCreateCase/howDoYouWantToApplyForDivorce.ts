@@ -12,6 +12,6 @@ export class HowDoYouWantToApplyForDivorce {
      page,
   }: SolicitorCreateCaseOptions): Promise<void> {
 
-    await HowDoYouWantToApplyForDivorcePage.createApplicationTypePage(page, false);
+    await HowDoYouWantToApplyForDivorcePage.createApplicationTypePage(page);
   }
 }

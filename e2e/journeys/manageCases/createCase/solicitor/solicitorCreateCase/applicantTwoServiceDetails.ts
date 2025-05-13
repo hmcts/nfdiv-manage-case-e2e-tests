@@ -12,6 +12,6 @@ export class ApplicantTwoServiceDetails {
      page,
   }: SolicitorCreateCaseOptions): Promise<void> {
 
-    await ApplicantTwoServiceDetailsPage.applicantTwoServiceDetails(page, false);
+    await ApplicantTwoServiceDetailsPage.applicantTwoServiceDetails(page);
   }
 }

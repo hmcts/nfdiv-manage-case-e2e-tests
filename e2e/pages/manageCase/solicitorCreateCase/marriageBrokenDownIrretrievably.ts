@@ -1,30 +1,24 @@
 import {Page} from "@playwright/test";
 import {Selectors} from "../../../common/selectors";
-
 import {
   HowDoYouWantToApplyForDivorce
 } from "../../../fixtures/manageCases/createCase/solicitorCreateCase/howDoYouWantToApplyForDivorce.ts";
 import {
   SolAboutTheSolicitor
 } from "../../../fixtures/manageCases/createCase/solicitorCreateCase/solAboutTheSolicitor.ts";
-import {
-  SolicitorCreateCaseStart
-} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/solicitorCreateCaseStart.ts";
 
 export class MarriageBrokenDownIrretrievablyPage {
 
   public static async marriageBrokenDown(
     page: Page,
-    accessibilityTest: boolean,
   ): Promise<void> {
 
-    await this.checkPageLoads(page, accessibilityTest);
+    await this.checkPageLoads(page);
     await this.fillInFields(page);
   }
 
   private static async checkPageLoads(
     page: Page,
-    accessibilityTest: boolean,
   ): Promise<void> {
     await page.waitForSelector(
       `${Selectors.GovukHeadingL}:text-is("${HowDoYouWantToApplyForDivorce.pageTitle}")`,

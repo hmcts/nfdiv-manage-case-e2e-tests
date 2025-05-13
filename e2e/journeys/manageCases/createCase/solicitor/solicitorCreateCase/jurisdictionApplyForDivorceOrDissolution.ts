@@ -12,6 +12,6 @@ export class JurisdictionApplyForDivorceOrDissolution {
      page,
   }: SolicitorCreateCaseOptions): Promise<void> {
 
-    await JurisdictionApplyForDivorceOrDissolutionPage.jurisdictionConnection(page, false);
+    await JurisdictionApplyForDivorceOrDissolutionPage.jurisdictionConnection(page);
   }
 }

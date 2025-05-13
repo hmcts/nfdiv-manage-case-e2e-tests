@@ -10,6 +10,6 @@ export class SolAboutTheSolicitor {
      page,
   }: SolicitorCreateCaseOptions): Promise<void> {
 
-    await SolAboutTheSolicitorPage.solAboutTheSolicitor(page, false);
+    await SolAboutTheSolicitorPage.solAboutTheSolicitor(page);
   }
 }

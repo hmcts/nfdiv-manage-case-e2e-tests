@@ -12,6 +12,6 @@ export class MarriageCertificateDetails {
      page,
   }: SolicitorCreateCaseOptions): Promise<void> {
 
-    await MarriageCertificateDetailsPage.marriageCertificateDetails(page, false);
+    await MarriageCertificateDetailsPage.marriageCertificateDetails(page);
   }
 }

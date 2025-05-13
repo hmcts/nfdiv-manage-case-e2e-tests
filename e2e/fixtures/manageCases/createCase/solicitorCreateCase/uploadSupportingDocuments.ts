@@ -3,7 +3,6 @@ export enum UploadSupportingDocuments {
 
   addNewButton = 'Add new',
   continueButton = 'Continue',
-
 }
 
 

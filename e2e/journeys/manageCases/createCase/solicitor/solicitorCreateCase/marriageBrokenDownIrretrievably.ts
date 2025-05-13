@@ -12,6 +12,6 @@ export class MarriageBrokenDownIrretrievably {
                                            page,
                                          }: SolicitorCreateCaseOptions): Promise<void> {
 
-    await MarriageBrokenDownIrretrievablyPage.marriageBrokenDown(page, false);
+    await MarriageBrokenDownIrretrievablyPage.marriageBrokenDown(page);
   }
 }

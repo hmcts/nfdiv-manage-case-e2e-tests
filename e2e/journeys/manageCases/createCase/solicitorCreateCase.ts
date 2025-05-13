@@ -1,7 +1,5 @@
 import {Page} from "@playwright/test";
-import Config from "../../../config.ts";
 import {SolicitorCreateCaseStart} from "./solicitor/solicitorCreateCase/solicitorCreateCaseStart.ts";
-import idamLoginHelper from "../../../common/userHelpers/idamLoginHelper.ts";
 import {HowDoYouWantToApplyForDivorce} from "./solicitor/solicitorCreateCase/howDoYouWantToApplyForDivorce.ts";
 import {UserRole} from "../../../common/types.ts";
 import {SolAboutTheSolicitor} from "./solicitor/solicitorCreateCase/solAboutTheSolicitor.ts";

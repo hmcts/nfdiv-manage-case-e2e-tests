@@ -8,16 +8,14 @@ export class SolAboutTheSolicitorPage {
 
   public static async solAboutTheSolicitor(
     page: Page,
-    accessibilityTest: boolean,
   ): Promise<void> {
 
-    await this.checkPageLoads(page, accessibilityTest);
+    await this.checkPageLoads(page);
     await this.fillInFields(page);
   }
 
   private static async checkPageLoads(
     page: Page,
-    accessibilityTest: boolean,
   ): Promise<void> {
     await page.waitForSelector(
       `${Selectors.GovukHeadingL}:text-is("${SolAboutTheSolicitor.pageTitle}")`,
@@ -33,7 +31,7 @@ export class SolAboutTheSolicitorPage {
       {selector: '#applicant1SolicitorName', input: SolAboutTheSolicitor.solicitorName},
       {selector: '#applicant1SolicitorReference', input: SolAboutTheSolicitor.solicitorReference},
       {selector: '#applicant1SolicitorPhone', input: SolAboutTheSolicitor.solicitorPhone},
-      {selector: '#applicant1SolicitorEmail', input: process.env.SOLICITOR_USERNAME},
+      {selector: '#applicant1SolicitorEmail', input: process.env.SOLICITOR_USERNAME ?? 'TEST_SOLICITORONLY_USER@mailinator.com'},
       {selector: '#search-org-text', input: SolAboutTheSolicitor.solicitorOrganisation}
     ];
 

@@ -3,16 +3,11 @@ import {
   BrowserContext,
   Page,
 } from "@playwright/test";
-import {
-  UserRole,
-} from "./types";
-import Config from "../config.ts";
 
 export class Helpers {
 
   public static async openNewBrowserWindow(
     browser: Browser,
-    user: UserRole,
   ): Promise<Page> {
     const newBrowser = await browser.browserType().launch();
     const newContext: BrowserContext = await newBrowser.newContext();

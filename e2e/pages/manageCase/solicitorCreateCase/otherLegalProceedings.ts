@@ -6,16 +6,14 @@ export class OtherLegalProceedingsPage {
 
   public static async otherLegalProceedings(
     page: Page,
-    accessibilityTest: boolean,
   ): Promise<void> {
 
-    await this.checkPageLoads(page, accessibilityTest);
+    await this.checkPageLoads(page);
     await this.fillInFields(page);
   }
 
   private static async checkPageLoads(
     page: Page,
-    accessibilityTest: boolean,
   ): Promise<void> {
     await page.waitForSelector(
       `${Selectors.GovukCaptionL}:text-is("${AboutApplicants.pageTitle}")`,

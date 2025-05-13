@@ -10,6 +10,6 @@ export class OtherLegalProceedings {
      page,
   }: SolicitorCreateCaseOptions): Promise<void> {
 
-    await OtherLegalProceedingsPage.otherLegalProceedings(page, false);
+    await OtherLegalProceedingsPage.otherLegalProceedings(page);
   }
 }
