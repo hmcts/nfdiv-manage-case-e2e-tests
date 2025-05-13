@@ -31,7 +31,7 @@ export class SolAboutTheSolicitorPage {
       {selector: '#applicant1SolicitorName', input: SolAboutTheSolicitor.solicitorName},
       {selector: '#applicant1SolicitorReference', input: SolAboutTheSolicitor.solicitorReference},
       {selector: '#applicant1SolicitorPhone', input: SolAboutTheSolicitor.solicitorPhone},
-      {selector: '#applicant1SolicitorEmail', input: process.env.SOLICITOR_USERNAME},
+      {selector: '#applicant1SolicitorEmail', input: process.env.SOLICITOR_USERNAME as string},
       {selector: '#search-org-text', input: SolAboutTheSolicitor.solicitorOrganisation}
     ];
 
