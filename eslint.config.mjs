@@ -6,7 +6,7 @@ export default tseslint.config(
   { ignores: [".yarn/**", "eslint.config.mjs", ".pnp.cjs", ".pnp.loader.mjs"] },
   {
     files: ["**/*.ts"],
-    ignores:["playwright-e2e/**/*.ts"],
+    ignores:["playwright-e2e-old/**/*.ts"],
     plugins: {
       "@typescript-eslint": tseslint.plugin,
     },
