@@ -1,5 +1,0 @@
-services:
-  case:
-    checkDivCases: false
-  idam:
-    caching: true
