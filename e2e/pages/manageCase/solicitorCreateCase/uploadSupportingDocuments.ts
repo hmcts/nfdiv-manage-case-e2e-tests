@@ -1,10 +1,7 @@
 import {Page} from "@playwright/test";
 import {Selectors} from "../../../common/selectors";
-import {AboutApplicants} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/aboutApplicants.ts";
 import config from "../../../config.ts";
-import {
-  UploadSupportingDocuments
-} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/uploadSupportingDocuments.ts";
+import {CommonContent} from "../../../fixtures/CommonContent.ts";
 
 export class UploadSupportingDocumentsPage {
 
@@ -20,7 +17,7 @@ export class UploadSupportingDocumentsPage {
     page: Page,
   ): Promise<void> {
     await page.waitForSelector(
-      `${Selectors.GovukCaptionL}:text-is("${AboutApplicants.pageTitle}")`,
+      `${Selectors.GovukCaptionL}:text-is("${CommonContent.uploadDocumentPageTitle}")`,
     );
   }
 
@@ -29,7 +26,7 @@ export class UploadSupportingDocumentsPage {
   ): Promise<void> {
 
     await page.click(
-      `${Selectors.button}:text-is("${UploadSupportingDocuments.addNewButton}")`,
+      `${Selectors.button}:text-is("${CommonContent.addNewButton}")`,
     );
 
     await page.waitForSelector('h3:text("Applicant 1 uploaded documents")');
@@ -37,7 +34,7 @@ export class UploadSupportingDocumentsPage {
     await fileInput.setInputFiles(config.testPdfFile);
 
     await page.click(
-      `${Selectors.button}:text-is("${UploadSupportingDocuments.continueButton}")`,
+      `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
     );
   }
 }

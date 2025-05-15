@@ -1,10 +1,28 @@
 import {Page} from "@playwright/test";
 import {Selectors} from "../../../common/selectors";
-
-import {
-  SolAboutTheSolicitor
-} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/solAboutTheSolicitor.ts";
 import {AboutApplicants} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/aboutApplicants.ts";
+import {CommonContent} from "../../../fixtures/CommonContent.ts";
+
+enum InputFieldElementIds {
+  applicant1FirstName = '#applicant1FirstName',
+  applicant1MiddleName = '#applicant1MiddleName',
+  applicant1LastName = '#applicant1LastName',
+  applicant1Email = '#applicant1Email',
+  applicant1PhoneNumber = '#applicant1PhoneNumber',
+  applicant1Postcode = '#applicant1NonConfidentialAddress_applicant1NonConfidentialAddress_postcodeInput',
+}
+
+enum RadioButtonElementIds {
+  radioButtonApplicant1NameDifferentNo = '#applicant1NameDifferentToMarriageCertificate_No',
+  radioButtonMarriageFormationTypeOppositeSexCouple = '#marriageFormationType-oppositeSexCouple',
+  radioButtonApplicant1AddressOverseasNo = '#applicant1AddressOverseas_No',
+  radioButtonApplicant1ContactDetailsPublic = '#applicant1ContactDetailsType-public'
+}
+
+enum SelectOptionsElementIds {
+  addressList = '#applicant1NonConfidentialAddress_applicant1NonConfidentialAddress_addressList',
+  divorceWho = '#divorceWho',
+}
 
 export class AboutApplicantPage {
 
@@ -20,7 +38,7 @@ export class AboutApplicantPage {
     page: Page,
   ): Promise<void> {
     await page.waitForSelector(
-      `${Selectors.GovukHeadingL}:text-is("${AboutApplicants.pageTitle}")`,
+      `${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,
     );
   }
 
@@ -29,15 +47,12 @@ export class AboutApplicantPage {
   ): Promise<void> {
 
     const textFields: { elementId: string, fieldValue: string }[] = [
-      {elementId: '#applicant1FirstName', fieldValue: AboutApplicants.applicant1FirstName},
-      {elementId: '#applicant1MiddleName', fieldValue: AboutApplicants.applicant1MiddleName},
-      {elementId: '#applicant1LastName', fieldValue: AboutApplicants.applicant1LastName},
-      {elementId: '#applicant1Email', fieldValue: AboutApplicants.applicant1Email},
-      {elementId: '#applicant1PhoneNumber', fieldValue: AboutApplicants.applicant1PhoneNumber},
-      {
-        elementId: '#applicant1NonConfidentialAddress_applicant1NonConfidentialAddress_postcodeInput',
-        fieldValue: AboutApplicants.applicant1Postcode
-      },
+      {elementId: InputFieldElementIds.applicant1FirstName, fieldValue: AboutApplicants.applicant1FirstName},
+      {elementId: InputFieldElementIds.applicant1MiddleName, fieldValue: AboutApplicants.applicant1MiddleName},
+      {elementId: InputFieldElementIds.applicant1LastName, fieldValue: AboutApplicants.applicant1LastName},
+      {elementId: InputFieldElementIds.applicant1Email, fieldValue: AboutApplicants.applicant1Email},
+      {elementId: InputFieldElementIds.applicant1PhoneNumber, fieldValue: AboutApplicants.applicant1PhoneNumber},
+      {elementId: InputFieldElementIds.applicant1Postcode, fieldValue: AboutApplicants.applicant1Postcode},
     ];
 
     for (const textField of textFields) {
@@ -45,22 +60,17 @@ export class AboutApplicantPage {
     }
 
     await page.click(
-      `${Selectors.button}:text-is("${AboutApplicants.findAddressButton}")`,
+      `${Selectors.button}:text-is("${CommonContent.findAddressButton}")`,
     );
 
-    await page.waitForSelector('#applicant1NonConfidentialAddress_applicant1NonConfidentialAddress_addressList');
-    await page.selectOption('#applicant1NonConfidentialAddress_applicant1NonConfidentialAddress_addressList', {value: '1: Object'});
-    await page.selectOption('#divorceWho', {value: ['1: husband', '2: wife'][Math.floor(Math.random() * 2)]});
+    await page.waitForSelector(SelectOptionsElementIds.addressList);
+    await page.selectOption(SelectOptionsElementIds.addressList, {value: '1: Object'});
+    await page.selectOption(SelectOptionsElementIds.divorceWho, {value: ['1: husband', '2: wife'][Math.floor(Math.random() * 2)]});
 
-    for (const elementId of ['#applicant1NameDifferentToMarriageCertificate_No',
-      '#marriageFormationType-oppositeSexCouple',
-      '#applicant1AddressOverseas_No',
-      '#applicant1ContactDetailsType-public']) {
-      await page.locator(elementId).check();
+    for (const id in RadioButtonElementIds) {
+      await page.locator(RadioButtonElementIds[id as keyof typeof RadioButtonElementIds]).check();
     }
 
-    const button = page.locator(`${Selectors.button}:text-is("${SolAboutTheSolicitor.continueButton}")`);
-    await button.scrollIntoViewIfNeeded();
-    await button.click();
+    await page.click(`${Selectors.button}:text-is("${CommonContent.continueButton}")`);
   }
 }

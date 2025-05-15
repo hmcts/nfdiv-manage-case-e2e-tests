@@ -1,8 +1,11 @@
 import {Page} from "@playwright/test";
 import { Selectors } from "../../../common/selectors";
-import {
-  HowDoYouWantToApplyForDivorce
-} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/howDoYouWantToApplyForDivorce.ts";
+import {CommonContent} from "../../../fixtures/CommonContent.ts";
+
+enum RadioButtonElementIds {
+  radioButtonDivorce = '#divorceOrDissolution-divorce',
+  radioButtonSoleApplication = '#applicationType-soleApplication',
+}
 
 export class HowDoYouWantToApplyForDivorcePage {
   public static async createApplicationTypePage(
@@ -17,7 +20,7 @@ export class HowDoYouWantToApplyForDivorcePage {
     page: Page,
   ): Promise<void> {
     await page.waitForSelector(
-      `${Selectors.GovukHeadingL}:text-is("${HowDoYouWantToApplyForDivorce.pageTitle}")`,
+      `${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,
       );
   }
 
@@ -25,10 +28,10 @@ export class HowDoYouWantToApplyForDivorcePage {
     page: Page,
   ): Promise<void> {
 
-    await page.locator(HowDoYouWantToApplyForDivorce.radioButtonDivorceId).check();
-    await page.waitForSelector(HowDoYouWantToApplyForDivorce.radioButtonSoleApplicationId);
-    await page.locator(HowDoYouWantToApplyForDivorce.radioButtonSoleApplicationId).check();
-    await page.click(`${Selectors.button}:text-is("${HowDoYouWantToApplyForDivorce.continueButton}")`,
+    await page.locator(RadioButtonElementIds.radioButtonDivorce).check();
+    await page.waitForSelector(RadioButtonElementIds.radioButtonSoleApplication);
+    await page.locator(RadioButtonElementIds.radioButtonSoleApplication).check();
+    await page.click(`${Selectors.button}:text-is("${CommonContent.continueButton}")`,
     );
   }
 }

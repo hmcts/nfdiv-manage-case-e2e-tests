@@ -1,6 +1,6 @@
 import {Page} from "@playwright/test";
 import {Selectors} from "../../../common/selectors";
-import {AboutApplicants} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/aboutApplicants.ts";
+import {CommonContent} from "../../../fixtures/CommonContent.ts";
 
 export class CheckYourAnswersAndSubmitPage {
 
@@ -16,7 +16,7 @@ export class CheckYourAnswersAndSubmitPage {
     page: Page,
   ): Promise<void> {
     await page.waitForSelector(
-      `${Selectors.GovukCaptionL}:text-is("${AboutApplicants.pageTitle}")`,
+      `${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,
     );
   }
 
@@ -24,8 +24,6 @@ export class CheckYourAnswersAndSubmitPage {
     page: Page,
   ): Promise<void> {
 
-    const button = page.locator(`${Selectors.button}:text-is("${AboutApplicants.saveApplication}")`);
-    await button.click();
-    await page.waitForTimeout(10000);
+    await page.click(`${Selectors.button}:text-is("${CommonContent.saveApplication}")`);
   }
 }

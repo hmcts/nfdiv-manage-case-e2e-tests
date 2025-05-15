@@ -1,11 +1,10 @@
 import {Page} from "@playwright/test";
 import {Selectors} from "../../../common/selectors";
-import {
-  HowDoYouWantToApplyForDivorce
-} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/howDoYouWantToApplyForDivorce.ts";
-import {
-  SolAboutTheSolicitor
-} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/solAboutTheSolicitor.ts";
+import {CommonContent} from "../../../fixtures/CommonContent.ts";
+
+enum RadioButtonElementIds {
+  applicant1ScreenHasMarriageBrokenYes = '#applicant1ScreenHasMarriageBroken_Yes',
+}
 
 export class MarriageBrokenDownIrretrievablyPage {
 
@@ -21,7 +20,7 @@ export class MarriageBrokenDownIrretrievablyPage {
     page: Page,
   ): Promise<void> {
     await page.waitForSelector(
-      `${Selectors.GovukHeadingL}:text-is("${HowDoYouWantToApplyForDivorce.pageTitle}")`,
+      `${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,
       );
   }
 
@@ -29,9 +28,10 @@ export class MarriageBrokenDownIrretrievablyPage {
     page: Page,
   ): Promise<void> {
 
-    await page.locator('#applicant1ScreenHasMarriageBroken_Yes').check();
+    await page.locator(RadioButtonElementIds.applicant1ScreenHasMarriageBrokenYes).check();
+
     await page.click(
-      `${Selectors.button}:text-is("${SolAboutTheSolicitor.continueButton}")`,
+      `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
     );
   }
 }

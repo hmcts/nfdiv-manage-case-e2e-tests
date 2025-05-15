@@ -1,6 +1,6 @@
 import {Page} from "@playwright/test";
 import { Selectors } from "../../../common/selectors";
-import {SolicitorCreateCaseStart} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/solicitorCreateCaseStart.ts";
+import {CommonContent} from "../../../fixtures/CommonContent.ts";
 
 enum fieldIds {
   jurisdiction = "#cc-jurisdiction",
@@ -21,15 +21,15 @@ export class SolicitorCreatePage {
     page: Page,
   ): Promise<void> {
     await page.waitForSelector(
-      `${Selectors.GovukHeadingXL}:text-is("${SolicitorCreateCaseStart.pageTitle}")`,
+      `${Selectors.GovukHeadingXL}:text-is("${CommonContent.pageTitle}")`,
       );
   }
 
   private static async fillInFields(
     page: Page,
   ): Promise<void> {
-    await page.selectOption(fieldIds.jurisdiction, SolicitorCreateCaseStart.jurisdictionOption);
-    await page.selectOption(fieldIds.caseType, SolicitorCreateCaseStart.caseTypeOption);
+    await page.selectOption(fieldIds.jurisdiction, CommonContent.jurisdictionOption);
+    await page.selectOption(fieldIds.caseType, CommonContent.caseTypeOption);
     // If event dropdown fails to load then fail the test fast - interim solution until the underlying problem is fixed
     const eventDropdown = page.locator(fieldIds.event);
     const eventOptions = await eventDropdown.evaluate((el: HTMLSelectElement) =>
@@ -41,10 +41,10 @@ export class SolicitorCreatePage {
       await this.fillInFields(page);
     }
 
-    await page.selectOption(fieldIds.event, SolicitorCreateCaseStart.solicitorCreateApplication);
+    await page.selectOption(fieldIds.event, CommonContent.pageTitle);
 
     await page.click(
-      `${Selectors.button}:text-is("${SolicitorCreateCaseStart.button}")`,
+      `${Selectors.button}:text-is("${CommonContent.button}")`,
     );
   }
 }

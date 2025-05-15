@@ -3,6 +3,19 @@ import {Selectors} from "../../../common/selectors";
 import {
   SolAboutTheSolicitor
 } from "../../../fixtures/manageCases/createCase/solicitorCreateCase/solAboutTheSolicitor.ts";
+import {CommonContent} from "../../../fixtures/CommonContent.ts";
+
+enum InputFieldElementIds {
+  applicant1SolicitorName = '#applicant1SolicitorName',
+  applicant1SolicitorReference = '#applicant1SolicitorReference',
+  applicant1SolicitorPhone = '#applicant1SolicitorPhone',
+  applicant1SolicitorEmail = '#applicant1SolicitorEmail',
+  searchOrgText = '#search-org-text',
+}
+
+enum RadioButtonElementIds {
+  applicant1SolicitorAgreeToReceiveEmailsCheckboxYes = '#applicant1SolicitorAgreeToReceiveEmailsCheckbox-Yes',
+}
 
 export class SolAboutTheSolicitorPage {
 
@@ -28,23 +41,23 @@ export class SolAboutTheSolicitorPage {
 
     type FillData = { selector: string, input: string };
     const fillDataArray: FillData[] = [
-      {selector: '#applicant1SolicitorName', input: SolAboutTheSolicitor.solicitorName},
-      {selector: '#applicant1SolicitorReference', input: SolAboutTheSolicitor.solicitorReference},
-      {selector: '#applicant1SolicitorPhone', input: SolAboutTheSolicitor.solicitorPhone},
-      {selector: '#applicant1SolicitorEmail', input: process.env.SOLICITOR_USERNAME as string},
-      {selector: '#search-org-text', input: SolAboutTheSolicitor.solicitorOrganisation}
+      {selector: InputFieldElementIds.applicant1SolicitorName, input: SolAboutTheSolicitor.solicitorName},
+      {selector: InputFieldElementIds.applicant1SolicitorReference, input: SolAboutTheSolicitor.solicitorReference},
+      {selector: InputFieldElementIds.applicant1SolicitorPhone, input: SolAboutTheSolicitor.solicitorPhone},
+      {selector: InputFieldElementIds.applicant1SolicitorEmail, input: process.env.SOLICITOR_USERNAME as string},
+      {selector: InputFieldElementIds.searchOrgText, input: SolAboutTheSolicitor.solicitorOrganisation}
     ];
 
     for (const fillData of fillDataArray) {
       await page.fill(fillData.selector, fillData.input);
     }
 
-    await page.locator('#applicant1SolicitorAgreeToReceiveEmailsCheckbox-Yes').check();
+    await page.locator(RadioButtonElementIds.applicant1SolicitorAgreeToReceiveEmailsCheckboxYes).check();
     await page.waitForSelector('#organisation-table');
     await page.click(`a[title="Select the organisation ${SolAboutTheSolicitor.solicitorOrganisation}"]`);
 
     await page.click(
-      `${Selectors.button}:text-is("${SolAboutTheSolicitor.continueButton}")`,
+      `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
     );
   }
 }

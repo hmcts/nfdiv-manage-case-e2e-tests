@@ -1,9 +1,11 @@
 export enum CommonContent {
-  logo = "MyHMCTS",
-  manageCases = "Manage Cases",
-  signOut = "Sign out",
-  caseList = "Case list",
-  createCase = "Create Case",
-  noticeOfChange = "Notice of change",
-  findCase = "Find case",
+  pageTitle = 'Apply: divorce or dissolution',
+  uploadDocumentPageTitle = 'Upload your documents',
+  continueButton = "Continue",
+  findAddressButton = "Find address",
+  saveApplication = 'Save Application',
+  jurisdictionOption = "Family Divorce",
+  caseTypeOption = "New Law Case",
+  button = "Start",
+  addNewButton = 'Add new',
 }

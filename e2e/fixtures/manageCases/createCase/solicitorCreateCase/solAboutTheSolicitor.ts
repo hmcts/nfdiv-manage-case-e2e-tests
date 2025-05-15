@@ -4,7 +4,6 @@ export enum SolAboutTheSolicitor {
   solicitorPhone = '00000000000',
   solicitorReference = 'Ref123',
   solicitorOrganisation = 'NFD Solicitor Organisation',
-  continueButton = 'Continue',
 }
 
 

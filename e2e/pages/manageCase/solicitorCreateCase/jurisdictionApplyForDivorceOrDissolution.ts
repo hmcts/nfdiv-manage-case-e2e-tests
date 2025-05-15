@@ -1,9 +1,6 @@
 import {Page} from "@playwright/test";
 import {Selectors} from "../../../common/selectors";
-import {
-  SolAboutTheSolicitor
-} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/solAboutTheSolicitor.ts";
-import {AboutApplicants} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/aboutApplicants.ts";
+import {CommonContent} from "../../../fixtures/CommonContent.ts";
 
 export class JurisdictionApplyForDivorceOrDissolutionPage {
 
@@ -19,7 +16,7 @@ export class JurisdictionApplyForDivorceOrDissolutionPage {
     page: Page,
   ): Promise<void> {
     await page.waitForSelector(
-      `${Selectors.GovukCaptionL}:text-is("${AboutApplicants.pageTitle}")`,
+      `${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,
     );
   }
 
@@ -33,7 +30,7 @@ export class JurisdictionApplyForDivorceOrDissolutionPage {
     }
 
     await page.click(
-      `${Selectors.button}:text-is("${SolAboutTheSolicitor.continueButton}")`,
+      `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
     );
   }
 }
