@@ -15,9 +15,7 @@ export class CheckYourAnswersAndSubmitPage {
   private static async checkPageLoads(
     page: Page,
   ): Promise<void> {
-    await page.waitForSelector(
-      `${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,
-    );
+    await page.locator(`${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
   }
 
   private static async fillInFields(

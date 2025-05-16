@@ -19,9 +19,7 @@ export class HowDoYouWantToApplyForDivorcePage {
   private static async checkPageLoads(
     page: Page,
   ): Promise<void> {
-    await page.waitForSelector(
-      `${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,
-      );
+    await page.locator(`${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
   }
 
   private static async fillInFields(
@@ -29,8 +27,11 @@ export class HowDoYouWantToApplyForDivorcePage {
   ): Promise<void> {
 
     await page.locator(RadioButtonElementIds.radioButtonDivorce).check();
-    await page.waitForSelector(RadioButtonElementIds.radioButtonSoleApplication);
-    await page.locator(RadioButtonElementIds.radioButtonSoleApplication).check();
+
+    let radioButtonSoleApplication =  await page.locator(RadioButtonElementIds.radioButtonSoleApplication);
+    await radioButtonSoleApplication.waitFor();
+    await radioButtonSoleApplication.check();
+
     await page.click(`${Selectors.button}:text-is("${CommonContent.continueButton}")`,
     );
   }

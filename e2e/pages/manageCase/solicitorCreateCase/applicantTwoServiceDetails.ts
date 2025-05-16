@@ -30,9 +30,7 @@ export class ApplicantTwoServiceDetailsPage {
   private static async checkPageLoads(
     page: Page,
   ): Promise<void> {
-    await page.waitForSelector(
-      `${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,
-    );
+    await page.locator(`${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
   }
 
   private static async fillInFields(
@@ -40,7 +38,7 @@ export class ApplicantTwoServiceDetailsPage {
   ): Promise<void> {
 
     await page.locator(RadioButtonElementIds.applicant2SolicitorRepresentedNo).check();
-    await page.waitForSelector('h1:text("Respondent service details")');
+    await page.locator('h1:text("Respondent service details")').waitFor();
 
     const textFields: { elementId: string, fieldValue: string }[] = [
       {elementId: InputFieldElementIds.applicant2Email, fieldValue: AboutApplicants.applicant2Email},
@@ -55,7 +53,7 @@ export class ApplicantTwoServiceDetailsPage {
       `${Selectors.button}:text-is("${CommonContent.findAddressButton}")`,
     );
 
-    await page.waitForSelector(SelectOptionsElementIds.addressList);
+    await page.locator(SelectOptionsElementIds.addressList).waitFor();
     await page.selectOption(SelectOptionsElementIds.addressList, {value: '1: Object'});
     await page.locator(RadioButtonElementIds.applicant2AddressOverseasNo).check();
 

@@ -30,9 +30,7 @@ export class SolAboutTheSolicitorPage {
   private static async checkPageLoads(
     page: Page,
   ): Promise<void> {
-    await page.waitForSelector(
-      `${Selectors.GovukHeadingL}:text-is("${SolAboutTheSolicitor.pageTitle}")`,
-      );
+    await page.locator(`${Selectors.GovukHeadingL}:text-is("${SolAboutTheSolicitor.pageTitle}")`,).waitFor();
   }
 
   private static async fillInFields(
@@ -53,7 +51,7 @@ export class SolAboutTheSolicitorPage {
     }
 
     await page.locator(RadioButtonElementIds.applicant1SolicitorAgreeToReceiveEmailsCheckboxYes).check();
-    await page.waitForSelector('#organisation-table');
+    await page.locator('#organisation-table').waitFor();
     await page.click(`a[title="Select the organisation ${SolAboutTheSolicitor.solicitorOrganisation}"]`);
 
     await page.click(

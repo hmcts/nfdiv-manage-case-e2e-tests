@@ -16,9 +16,7 @@ export class UploadSupportingDocumentsPage {
   private static async checkPageLoads(
     page: Page,
   ): Promise<void> {
-    await page.waitForSelector(
-      `${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,
-    );
+    await page.locator(`${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
   }
 
   private static async fillInFields(
@@ -29,7 +27,7 @@ export class UploadSupportingDocumentsPage {
       `${Selectors.button}:text-is("${CommonContent.addNewButton}")`,
     );
 
-    await page.waitForSelector('h3:text("Applicant 1 uploaded documents")');
+    await page.locator('h3:text("Applicant 1 uploaded documents")').waitFor();
     const fileInput = page.locator('#applicant1DocumentsUploaded_0_documentLink');
     await fileInput.setInputFiles(config.testPdfFile);
 

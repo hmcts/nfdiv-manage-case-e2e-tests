@@ -20,9 +20,7 @@ export class SolicitorCreatePage {
   private static async checkPageLoads(
     page: Page,
   ): Promise<void> {
-    await page.waitForSelector(
-      `${Selectors.GovukHeadingXL}:text-is("${CommonContent.createCase}")`,
-      );
+    await page.locator(`${Selectors.GovukHeadingXL}:text-is("${CommonContent.createCase}")`,).waitFor();
   }
 
   private static async fillInFields(

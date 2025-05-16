@@ -19,9 +19,7 @@ export class MarriageBrokenDownIrretrievablyPage {
   private static async checkPageLoads(
     page: Page,
   ): Promise<void> {
-    await page.waitForSelector(
-      `${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,
-      );
+    await page.locator(`${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
   }
 
   private static async fillInFields(

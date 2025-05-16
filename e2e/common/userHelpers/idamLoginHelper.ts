@@ -21,11 +21,9 @@ export class IdamLoginHelper {
       await page.goto(application);
     }
     if (page.url().includes("demo")) {
-      await page.waitForSelector(`#skiplinktarget:text("Sign in")`);
+      await page.locator(`#skiplinktarget:text("Sign in")`).waitFor();
     } else {
-      await page.waitForSelector(
-        `#skiplinktarget:text("Sign in or create an account")`,
-      );
+      await page.locator(`#skiplinktarget:text("Sign in or create an account")`,).waitFor();
     }
 
     await page.fill(this.fields.username, username);

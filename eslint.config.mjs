@@ -28,9 +28,9 @@ export default tseslint.config(
       ...playwright.configs["flat/recommended"].rules,
       "playwright/expect-expect": "off",
       // This should be enabled when waitForSelector calls are changed to locator.waitFor()
-      "playwright/no-wait-for-selector": "off",
+      "playwright/no-wait-for-selector": "on",
       // This should be enabled when waitForTimeout calls are changed to explicit waits (where possible)
-      "playwright/no-wait-for-timeout": "off",
+      "playwright/no-wait-for-timeout": "on",
     },
     ignores: ["e2e/common/helpers.ts"],
     files: ["e2e/**/*.ts"],
