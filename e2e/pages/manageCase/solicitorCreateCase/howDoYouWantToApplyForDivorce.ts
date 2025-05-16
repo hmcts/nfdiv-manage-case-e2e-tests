@@ -28,7 +28,7 @@ export class HowDoYouWantToApplyForDivorcePage {
 
     await page.locator(RadioButtonElementIds.radioButtonDivorce).check();
 
-    let radioButtonSoleApplication =  await page.locator(RadioButtonElementIds.radioButtonSoleApplication);
+    const radioButtonSoleApplication = page.locator(RadioButtonElementIds.radioButtonSoleApplication);
     await radioButtonSoleApplication.waitFor();
     await radioButtonSoleApplication.check();
 
