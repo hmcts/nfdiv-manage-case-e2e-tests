@@ -12,7 +12,7 @@ enum InputFieldElementIds {
 }
 
 enum RadioButtonElementIds {
-  marriageMarriedInUkYes = '#applicant1ScreenHasMarriageBroken_Yes',
+  marriageMarriedInUkYes = '#marriageMarriedInUk_Yes',
 }
 
 export class MarriageCertificateDetailsPage {

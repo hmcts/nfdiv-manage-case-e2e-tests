@@ -4,9 +4,9 @@ import {AboutApplicants} from "../../../fixtures/manageCases/createCase/solicito
 import {CommonContent} from "../../../fixtures/CommonContent.ts";
 
 enum InputFieldElementIds {
-  applicant2FirstName = '#applicant1FirstName',
-  applicant2MiddleName = '#applicant1MiddleName',
-  applicant2LastName = '#applicant1LastName',
+  applicant2FirstName = '#applicant2FirstName',
+  applicant2MiddleName = '#applicant2MiddleName',
+  applicant2LastName = '#applicant2LastName',
 }
 
 enum RadioButtonElementIds {
@@ -27,7 +27,7 @@ export class AboutRespOrApplicantTwoPage {
     page: Page,
   ): Promise<void> {
     await page.waitForSelector(
-      `${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,
+      `${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,
     );
   }
 

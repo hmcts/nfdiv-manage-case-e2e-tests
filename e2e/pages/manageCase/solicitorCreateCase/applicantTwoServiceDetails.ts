@@ -14,7 +14,7 @@ enum RadioButtonElementIds {
 }
 
 enum SelectOptionsElementIds {
-  addressList = '#applicant2NonConfidentialAddress_applicant1NonConfidentialAddress_addressList',
+  addressList = '#applicant2NonConfidentialAddress_applicant2NonConfidentialAddress_addressList',
 }
 
 export class ApplicantTwoServiceDetailsPage {

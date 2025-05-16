@@ -1,6 +1,6 @@
 export enum CommonContent {
   pageTitle = 'Apply: divorce or dissolution',
-  uploadDocumentPageTitle = 'Upload your documents',
+  createCase = 'Create Case',
   continueButton = "Continue",
   findAddressButton = "Find address",
   saveApplication = 'Save Application',

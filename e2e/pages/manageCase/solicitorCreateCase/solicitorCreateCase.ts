@@ -21,7 +21,7 @@ export class SolicitorCreatePage {
     page: Page,
   ): Promise<void> {
     await page.waitForSelector(
-      `${Selectors.GovukHeadingXL}:text-is("${CommonContent.pageTitle}")`,
+      `${Selectors.GovukHeadingXL}:text-is("${CommonContent.createCase}")`,
       );
   }
 

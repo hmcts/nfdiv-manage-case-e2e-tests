@@ -17,7 +17,7 @@ export class UploadSupportingDocumentsPage {
     page: Page,
   ): Promise<void> {
     await page.waitForSelector(
-      `${Selectors.GovukCaptionL}:text-is("${CommonContent.uploadDocumentPageTitle}")`,
+      `${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,
     );
   }
 
