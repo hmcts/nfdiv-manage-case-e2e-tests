@@ -10,11 +10,11 @@ properties([
           [$class: 'GitHubPushTrigger']
   ]),
   parameters([
-    string(
-      name: 'CITIZEN_FRONTEND_BASE_URL',
-      defaultValue: 'https://nfdiv.aat.platform.hmcts.net/',
-      description: 'The Citizen URL to test against'
-    ),
+//    string(
+//      name: 'CITIZEN_FRONTEND_BASE_URL',
+//      defaultValue: 'https://nfdiv.aat.platform.hmcts.net/',
+//      description: 'The Citizen URL to test against'
+//    ),
     string(
       name: 'MANAGE_CASES_BASE_URL',
       defaultValue: 'https://manage-case.aat.platform.hmcts.net/cases',
@@ -24,11 +24,11 @@ properties([
       name: 'FUNCTIONAL_TESTS_WORKERS',
       description: 'Number of workers running functional tests'
     ),
-    booleanParam(
-      name: 'skipCitizenTests',
-      defaultValue: false,
-      description: 'Tick the checkbox for skipping Citizen application tests.'
-    ),
+//    booleanParam(
+//      name: 'skipCitizenTests',
+//      defaultValue: false,
+//      description: 'Tick the checkbox for skipping Citizen application tests.'
+//    ),
     booleanParam(
       name: 'skipManageCasesTests',
       defaultValue: false,
