@@ -51,7 +51,7 @@ export class SolAboutTheSolicitorPage {
     }
 
     await page.locator(RadioButtonElementIds.applicant1SolicitorAgreeToReceiveEmailsCheckboxYes).check();
-    await page.locator('#organisation-table').waitFor();
+    await page.locator('#organisation-table').nth(0).waitFor();
     await page.click(`a[title="Select the organisation ${SolAboutTheSolicitor.solicitorOrganisation}"]`);
 
     await page.click(

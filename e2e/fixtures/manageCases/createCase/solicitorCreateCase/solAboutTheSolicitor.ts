@@ -5,5 +5,3 @@ export enum SolAboutTheSolicitor {
   solicitorReference = 'Ref123',
   solicitorOrganisation = 'NFD Solicitor Organisation',
 }
-
-
