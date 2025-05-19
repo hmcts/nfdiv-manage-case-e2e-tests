@@ -2,13 +2,13 @@
 //https://github.com/hmcts/nfdiv-manage-case-e2e-tests
 
 
-pipeline([
+properties([
   [$class: 'GitHubProjectProperty',
    displayName: 'nfdiv manage case e2e tests',
    projectUrlStr: 'https://github.com/hmcts/nfdiv-manage-case-e2e-tests'
   ],
   pipelineTriggers([
-    [$class: 'GitHubPushTrigger']
+    [$class: 'GitHubPushTrigger'] // Remove or comment out to disable push builds
   ]),
   parameters([
     string(

@@ -2,34 +2,46 @@
 
 
 
-pipeline {
-  agent any
-  triggers {
-    cron('H 8 * * 1-5')
-  }
-  parameters {
+properties([
+  // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
+  pipelineTriggers([cron('H 8 * * 1-5')]),
+  parameters([
+    string(
+      name: 'CITIZEN_FRONTEND_BASE_URL',
+      defaultValue: 'https://privatelaw.aat.platform.hmcts.net/',
+      description: 'The Citizen URL to test against'
+    ),
     string(
       name: 'MANAGE_CASES_BASE_URL',
       defaultValue: 'https://manage-case.aat.platform.hmcts.net/cases',
       description: 'The Manage Cases URL to test against'
-    )
+    ),
     string(
       name: 'FUNCTIONAL_TESTS_WORKERS',
-      defaultValue: '',
       description: 'Number of workers running functional tests'
-    )
+    ),
+    booleanParam(
+      name: 'skipCitizenTests',
+      defaultValue: false,
+      description: 'Tick the checkbox for skipping Citizen application tests.'
+    ),
+    booleanParam(
+      name: 'skipManageCasesTests',
+      defaultValue: false,
+      description: 'Tick the checkbox for skipping Manage Cases application tests.'
+    ),
     string(
       name: 'tag',
       defaultValue: '',
       description: 'Test tag to be used'
-    )
+    ),
     choice(
       name: 'browser',
       choices: ['chromium', 'firefox', 'webkit', 'MicrosoftEdge', 'MobileChrome', 'MobileSafari'],
       description: 'Which browser to use'
-    )
-  }
-}
+    ),
+  ])
+])
 
 @Library("Infrastructure")
 
