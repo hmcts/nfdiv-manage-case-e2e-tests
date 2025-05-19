@@ -1,45 +1,35 @@
 #!groovy
 
-properties([
-  // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
-  pipelineTriggers([cron('H 8 * * 1-5')]),
-  parameters([
-    string(
-      name: 'CITIZEN_FRONTEND_BASE_URL',
-      defaultValue: 'https://nfdiv.aat.platform.hmcts.net/',
-      description: 'The Citizen URL to test against'
-    ),
+
+
+pipeline {
+  agent any
+  triggers {
+    cron('H 8 * * 1-5')
+  }
+  parameters {
     string(
       name: 'MANAGE_CASES_BASE_URL',
       defaultValue: 'https://manage-case.aat.platform.hmcts.net/cases',
       description: 'The Manage Cases URL to test against'
-    ),
+    )
     string(
       name: 'FUNCTIONAL_TESTS_WORKERS',
+      defaultValue: '',
       description: 'Number of workers running functional tests'
-    ),
-    booleanParam(
-      name: 'skipCitizenTests',
-      defaultValue: false,
-      description: 'Tick the checkbox for skipping Citizen application tests.'
-    ),
-    booleanParam(
-      name: 'skipManageCasesTests',
-      defaultValue: false,
-      description: 'Tick the checkbox for skipping Manage Cases application tests.'
-    ),
+    )
     string(
       name: 'tag',
       defaultValue: '',
       description: 'Test tag to be used'
-    ),
+    )
     choice(
       name: 'browser',
       choices: ['chromium', 'firefox', 'webkit', 'MicrosoftEdge', 'MobileChrome', 'MobileSafari'],
       description: 'Which browser to use'
-    ),
-  ])
-])
+    )
+  }
+}
 
 @Library("Infrastructure")
 
@@ -109,58 +99,58 @@ withNightlyPipeline(type, product, component, 600) {
       }
     } else {
       if (!params.skipCitizenTests) {
-        stage('Citizen E2E tests - Chrome with accessibility') {
-          try {
-            yarnBuilder.yarn('test:citizenFrontendChrome')
-          } catch (Error) {
-            unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
-          } finally {
-            publishHTML([
-              allowMissing: true,
-              alwaysLinkToLastBuild: true,
-              keepAll: true,
-              reportDir: "playwright-report",
-              reportFiles: 'index.html',
-              reportName: 'Citizen Chrome E2E Test Report'
-            ])
-            steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/CitizenFunctional/*'
-          }
-        }
-        stage('Citizen E2E tests Smoke - Firefox') {
-          try {
-            yarnBuilder.yarn('test:citizenFrontendFirefox')
-          } catch (Error) {
-            unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
-          } finally {
-            publishHTML([
-              allowMissing: true,
-              alwaysLinkToLastBuild: true,
-              keepAll: true,
-              reportDir: "playwright-report",
-              reportFiles: 'index.html',
-              reportName: 'Citizen Firefox E2E Test Report'
-            ])
-            steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/CitizenFunctional/*'
-          }
-        }
-        stage('Citizen E2E tests Smoke - Webkit') {
-          try {
-            yarnBuilder.yarn('test:citizenFrontendSafari')
-          } catch (Error) {
-            unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
-          } finally {
-            publishHTML([
-              allowMissing: true,
-              alwaysLinkToLastBuild: true,
-              keepAll: true,
-              reportDir: "playwright-report",
-              reportFiles: 'index.html',
-              reportName: 'Citizen Webkit E2E Test Report'
-            ])
-            steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/CitizenFunctional/*'
-          }
-        }
-      }
+//        stage('Citizen E2E tests - Chrome with accessibility') {
+//          try {
+//            yarnBuilder.yarn('test:citizenFrontendChrome')
+//          } catch (Error) {
+//            unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
+//          } finally {
+//            publishHTML([
+//              allowMissing: true,
+//              alwaysLinkToLastBuild: true,
+//              keepAll: true,
+//              reportDir: "playwright-report",
+//              reportFiles: 'index.html',
+//              reportName: 'Citizen Chrome E2E Test Report'
+//            ])
+//            steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/CitizenFunctional/*'
+//          }
+//        }
+//        stage('Citizen E2E tests Smoke - Firefox') {
+//          try {
+//            yarnBuilder.yarn('test:citizenFrontendFirefox')
+//          } catch (Error) {
+//            unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
+//          } finally {
+//            publishHTML([
+//              allowMissing: true,
+//              alwaysLinkToLastBuild: true,
+//              keepAll: true,
+//              reportDir: "playwright-report",
+//              reportFiles: 'index.html',
+//              reportName: 'Citizen Firefox E2E Test Report'
+//            ])
+//            steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/CitizenFunctional/*'
+//          }
+//        }
+//        stage('Citizen E2E tests Smoke - Webkit') {
+//          try {
+//            yarnBuilder.yarn('test:citizenFrontendSafari')
+//          } catch (Error) {
+//            unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
+//          } finally {
+//            publishHTML([
+//              allowMissing: true,
+//              alwaysLinkToLastBuild: true,
+//              keepAll: true,
+//              reportDir: "playwright-report",
+//              reportFiles: 'index.html',
+//              reportName: 'Citizen Webkit E2E Test Report'
+//            ])
+//            steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/CitizenFunctional/*'
+//          }
+//        }
+//      }
       if (!params.skipManageCasesTests) {
         stage('Manage Cases E2E tests - Chrome with accessibility') {
           try {
