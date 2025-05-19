@@ -1,29 +1,148 @@
 #!groovy
+
+properties([
+  [
+          $class       : 'GithubProjectProperty',
+          displayName  : 'nfdiv manage case e2e tests',
+          projectUrlStr: 'https://github.com/hmcts/nfdiv-manage-case-e2e-tests'
+  ],
+  pipelineTriggers([
+          [$class: 'GitHubPushTrigger']
+  ]),
+  parameters([
+    string(
+      name: 'CITIZEN_FRONTEND_BASE_URL',
+      defaultValue: 'https://nfdiv.aat.platform.hmcts.net/',
+      description: 'The Citizen URL to test against'
+    ),
+    string(
+      name: 'MANAGE_CASES_BASE_URL',
+      defaultValue: 'https://manage-case.aat.platform.hmcts.net/cases',
+      description: 'The Manage Cases URL to test against'
+    ),
+    string(
+      name: 'FUNCTIONAL_TESTS_WORKERS',
+      description: 'Number of workers running functional tests'
+    ),
+    booleanParam(
+      name: 'skipCitizenTests',
+      defaultValue: false,
+      description: 'Tick the checkbox for skipping Citizen application tests.'
+    ),
+    booleanParam(
+      name: 'skipManageCasesTests',
+      defaultValue: false,
+      description: 'Tick the checkbox for skipping Manage Cases application tests.'
+    ),
+  ])
+])
+
 @Library("Infrastructure")
 
-// Need to replace these with TCoE team once available
 def type = "nodejs"
-def product = "dtsse"
-def component = "e2e-tests"
-def channel = "#tcoe-builds"
+def product = "nfdiv"
+def component = "manage-case-e2e-tests"
+def channel = "#no-fault-divorce-builds"
+
+static Map < String, Object > secret(String secretName, String envVariable) {
+  [
+    $class: 'AzureKeyVaultSecret',
+    secretType: 'Secret',
+    name: secretName,
+    envVariable: envVariable
+  ]
+}
+
+def matchingEnv = "aat"
+
+if(params.skipManageCasesTests) {
+  matchingEnv = params.CITIZEN_FRONTEND_BASE_URL.contains("demo") ? "demo" : matchingEnv
+} else {
+  matchingEnv = params.MANAGE_CASES_BASE_URL.contains("demo") ? "demo" : matchingEnv
+}
+
+def secrets = [
+        'nfdiv-${env}'    :[
+                secret('e2e-test-user-password', 'TEST_PASSWORD'),
+                secret('frontend-secret', 'SERVICE_AUTH_SECRET'),
+                secret('idam-secret', 'IDAM_SECRET'),
+                secret('pcq-token-key', 'PCQ_TOKEN'),
+                secret('playwright-service-url', 'PLAYWRIGHT_SERVICE_URL'),
+                secret('playwright-token', 'PLAYWRIGHT_SERVICE_ACCESS_TOKEN'),
+                secret('idam-solicitor-username', 'SOLICITOR_USERNAME'),
+                secret('idam-solicitor-password', 'SOLICITOR_PASSWORD'),
+        ]
+]
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
-
-/**
-* As this repo is not a part of any service or application, withNightlyPipeline is used
-* Typically, withPipeline would be used as it contains additional steps needed to release & deploy
-* See https://github.com/hmcts/cnp-jenkins-library for more info on the opinionated pipeline
-*/
-withNightlyPipeline(type, product, component) {
+withNightlyPipeline(type, product, component, 600) {
+  loadVaultSecrets(secrets)
+  env.CITIZEN_FRONTEND_BASE_URL = params.CITIZEN_FRONTEND_BASE_URL
+  env.MANAGE_CASES_BASE_URL = params.MANAGE_CASES_BASE_URL
+  env.FUNCTIONAL_TESTS_WORKERS = params.FUNCTIONAL_TESTS_WORKERS
   enableSlackNotifications(channel)
-  afterAlways('DependencyCheckNightly') {
-    stage('Lint') {
+  onPR() {
+    afterAlways('DependencyCheckNightly') {
+      stage('Run changed tests - Chrome') {
         try {
-          yarnBuilder.yarn('lint')
+          yarnBuilder.yarn('test:changes')
         } catch (Error) {
           unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
+        } finally {
+          publishHTML([
+                  allowMissing         : true,
+                  alwaysLinkToLastBuild: true,
+                  keepAll              : true,
+                  reportDir            : "playwright-report",
+                  reportFiles          : 'index.html',
+                  reportName           : 'Changed Chrome E2E Test Report'
+          ])
+          steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/ChangedTests/*'
         }
       }
+    }
+  }
+  onMaster() {
+    afterAlways('DependencyCheckNightly') {
+      if (!params.skipCitizenTests) {
+        stage('Citizen E2E smoke tests - Chrome') {
+          try {
+            yarnBuilder.yarn('test:citizenSmoke')
+          } catch (Error) {
+            unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
+          } finally {
+            publishHTML([
+                    allowMissing         : true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll              : true,
+                    reportDir            : "playwright-report",
+                    reportFiles          : 'index.html',
+                    reportName           : 'Citizen Chrome E2E Smoke Test Report'
+            ])
+            steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/CitizenFunctional/*'
+          }
+        }
+      }
+      if (!params.skipManageCasesTests) {
+        stage('Manage Cases E2E smoke tests - Chrome') {
+          try {
+            yarnBuilder.yarn('test:manageCasesSmoke')
+          } catch (Error) {
+            unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
+          } finally {
+            publishHTML([
+                    allowMissing         : true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll              : true,
+                    reportDir            : "playwright-report",
+                    reportFiles          : 'index.html',
+                    reportName           : 'Manage Cases Chrome E2E Smoke Test Report'
+            ])
+            steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/ManageCasesFunctional/*'
+          }
+        }
+      }
+    }
   }
 }
