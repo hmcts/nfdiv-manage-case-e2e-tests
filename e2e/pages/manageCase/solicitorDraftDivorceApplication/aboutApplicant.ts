@@ -53,9 +53,9 @@ export class AboutApplicantPage {
       {elementId: InputFieldElementIds.applicant1Postcode, fieldValue: AboutApplicants.applicant1Postcode},
     ];
 
-    const textFieldsInput = textFields.map(textField => page.fill(textField.elementId, textField.fieldValue));
-
-    await Promise.all(textFieldsInput);
+    for (const textField of textFields) {
+      await page.fill(textField.elementId, textField.fieldValue);
+    }
 
     await page.click(
       `${Selectors.button}:text-is("${CommonContent.findAddressButton}")`,
