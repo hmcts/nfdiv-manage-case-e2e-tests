@@ -13,7 +13,7 @@ enum RadioButtonElementIds {
   radioButtonApplicant2NameDifferentNo = '#applicant2NameDifferentToMarriageCertificate_No',
 }
 
-export class AboutRespOrApplicantTwoPage {
+export class AboutRespondentOrApplicantTwoPage {
 
   public static async aboutRespondentOrApplicantTwo(
     page: Page,

@@ -16,9 +16,6 @@ test.describe("Solicitor create application tests", (): void => {
     await idamLoginHelper.signInLongLivedUser(page, 'solicitor', Config.manageCasesBaseURLCase);
     await CreateCase.createCase({
       page: page,
-      user: "solicitor",
-      accessibilityTest: false,
-      caseType: 'NFD',
     });
     await context.close();
     await browser.close();
