@@ -98,7 +98,7 @@ withNightlyPipeline(type, product, component, 600) {
       }
     } else {
       if (!params.skipManageCasesTests) {
-        stage('Manage Cases E2E tests Smoke - Chrome with accessibility') {
+        stage('Manage Cases E2E tests - Chrome with accessibility') {
           try {
             yarnBuilder.yarn('test:chrome')
           } catch (Error) {
@@ -115,7 +115,7 @@ withNightlyPipeline(type, product, component, 600) {
             steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/ManageCasesFunctional/*'
           }
         }
-        stage('Manage Cases E2E tests Smoke - Firefox') {
+        stage('Manage Cases E2E tests smoke - Firefox') {
           try {
             yarnBuilder.yarn('test:firefox')
           } catch (Error) {
@@ -132,7 +132,7 @@ withNightlyPipeline(type, product, component, 600) {
             steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/ManageCasesFunctional/*'
           }
         }
-        stage('Manage Cases E2E tests Smoke - Webkit') {
+        stage('Manage Cases E2E tests smoke - Webkit') {
           try {
             yarnBuilder.yarn('test:safari')
           } catch (Error) {
