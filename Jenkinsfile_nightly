@@ -117,7 +117,7 @@ withNightlyPipeline(type, product, component, 600) {
         }
         stage('Manage Cases E2E tests Smoke - Firefox') {
           try {
-            yarnBuilder.yarn('test:manageCasesFirefox')
+            yarnBuilder.yarn('test:firefox')
           } catch (Error) {
             unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
           } finally {
@@ -134,7 +134,7 @@ withNightlyPipeline(type, product, component, 600) {
         }
         stage('Manage Cases E2E tests Smoke - Webkit') {
           try {
-            yarnBuilder.yarn('test:manageCasesSafari')
+            yarnBuilder.yarn('test:safari')
           } catch (Error) {
             unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
           } finally {
