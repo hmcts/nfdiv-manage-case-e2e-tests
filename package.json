@@ -39,7 +39,7 @@
     "test:changes": "yarn pwinstall && ts-node ./e2e/common/changedTestsRunner.ts",
     "test:Chrome": "yarn pwinstall && yarn playwright test tests/ --project chromium --grep @nightly",
     "test:firefox": "yarn pwinstall && yarn playwright test tests/ --project firefox --grep @nightly --headed",
-    "test:webkit": "yarn pwinstall && yarn playwright test tests/ --project chromium --grep @nightly",
+    "test:webkit": "yarn pwinstall && yarn playwright test tests/ --project webkit --grep @nightly",
     "test:edge": "yarn playwright test tests/ --project=edge --grep-invert='(@a11y)|(@performance)|(@visual)'",
     "test:tabletchrome": "yarn playwright test tests/ --project=tabletchrome --grep-invert='(@a11y)|(@performance)|(@visual)'",
     "test:tabletwebkit": "yarn playwright test tests/ --project=tabletwebkit --grep-invert='(@a11y)|(@performance)|(@visual)'",
