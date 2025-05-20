@@ -95,7 +95,7 @@ withNightlyPipeline(type, product, component, 600) {
   onMaster() {
     afterAlways('DependencyCheckNightly') {
       if (!params.skipManageCasesTests) {
-        stage('Manage Cases E2E smoke tests - Chrome') {
+        stage('Manage Cases E2E tests - Chrome') {
           try {
             yarnBuilder.yarn('test:Chrome')
           } catch (Error) {
