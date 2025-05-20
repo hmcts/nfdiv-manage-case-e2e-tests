@@ -100,7 +100,7 @@ withNightlyPipeline(type, product, component, 600) {
       if (!params.skipManageCasesTests) {
         stage('Manage Cases E2E tests Smoke - Chrome with accessibility') {
           try {
-            yarnBuilder.yarn('test:Chrome')
+            yarnBuilder.yarn('test:chrome')
           } catch (Error) {
             unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
           } finally {
