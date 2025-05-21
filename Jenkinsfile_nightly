@@ -110,7 +110,7 @@ withNightlyPipeline(type, product, component, 600) {
               keepAll: true,
               reportDir: "playwright-report",
               reportFiles: 'index.html',
-              reportName: 'Manage Cases Firefox E2E Test Report'
+              reportName: 'Manage Cases chrome E2E Test Report'
             ])
             steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/ManageCasesFunctional/*'
           }
@@ -134,7 +134,7 @@ withNightlyPipeline(type, product, component, 600) {
         }
         stage('Manage Cases E2E tests smoke - Webkit') {
           try {
-            yarnBuilder.yarn('test:safari')
+            yarnBuilder.yarn('test:webkit')
           } catch (Error) {
             unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
           } finally {
