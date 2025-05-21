@@ -11,11 +11,6 @@ properties([
   ]),
   parameters([
     string(
-      name: 'CITIZEN_FRONTEND_BASE_URL',
-      defaultValue: 'https://nfdiv.aat.platform.hmcts.net/',
-      description: 'The Citizen URL to test against'
-    ),
-    string(
       name: 'MANAGE_CASES_BASE_URL',
       defaultValue: 'https://manage-case.aat.platform.hmcts.net/cases',
       description: 'The Manage Cases URL to test against'
@@ -23,11 +18,6 @@ properties([
     string(
       name: 'FUNCTIONAL_TESTS_WORKERS',
       description: 'Number of workers running functional tests'
-    ),
-    booleanParam(
-      name: 'skipCitizenTests',
-      defaultValue: false,
-      description: 'Tick the checkbox for skipping Citizen application tests.'
     ),
     booleanParam(
       name: 'skipManageCasesTests',
@@ -78,7 +68,6 @@ def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
 withNightlyPipeline(type, product, component, 600) {
   loadVaultSecrets(secrets)
-  env.CITIZEN_FRONTEND_BASE_URL = params.CITIZEN_FRONTEND_BASE_URL
   env.MANAGE_CASES_BASE_URL = params.MANAGE_CASES_BASE_URL
   env.FUNCTIONAL_TESTS_WORKERS = params.FUNCTIONAL_TESTS_WORKERS
   enableSlackNotifications(channel)
@@ -105,29 +94,10 @@ withNightlyPipeline(type, product, component, 600) {
   }
   onMaster() {
     afterAlways('DependencyCheckNightly') {
-      if (!params.skipCitizenTests) {
-        stage('Citizen E2E smoke tests - Chrome') {
-          try {
-            yarnBuilder.yarn('test:citizenSmoke')
-          } catch (Error) {
-            unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
-          } finally {
-            publishHTML([
-                    allowMissing         : true,
-                    alwaysLinkToLastBuild: true,
-                    keepAll              : true,
-                    reportDir            : "playwright-report",
-                    reportFiles          : 'index.html',
-                    reportName           : 'Citizen Chrome E2E Smoke Test Report'
-            ])
-            steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/CitizenFunctional/*'
-          }
-        }
-      }
       if (!params.skipManageCasesTests) {
-        stage('Manage Cases E2E smoke tests - Chrome') {
+        stage('Manage Cases E2E tests - Chrome') {
           try {
-            yarnBuilder.yarn('test:manageCasesSmoke')
+            yarnBuilder.yarn('test:chrome')
           } catch (Error) {
             unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
           } finally {
@@ -137,7 +107,7 @@ withNightlyPipeline(type, product, component, 600) {
                     keepAll              : true,
                     reportDir            : "playwright-report",
                     reportFiles          : 'index.html',
-                    reportName           : 'Manage Cases Chrome E2E Smoke Test Report'
+                    reportName           : 'Manage Cases Chrome E2E Test Report'
             ])
             steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/ManageCasesFunctional/*'
           }

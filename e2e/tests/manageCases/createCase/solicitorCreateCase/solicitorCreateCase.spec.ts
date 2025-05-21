@@ -7,7 +7,7 @@ test.describe("Solicitor create application tests", (): void => {
   test(`Log in as a solicitor and start creating a:
   Not Accessibility testing,
   Error message testing,
-  saying yes to all options, @regression @errorMessage`, async ({
+  saying yes to all options, @nightly @regression`, async ({
                                                                           browser,
                                                                         }): Promise<void> => {
 
