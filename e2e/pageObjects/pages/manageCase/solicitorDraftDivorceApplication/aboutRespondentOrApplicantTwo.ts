@@ -1,7 +1,7 @@
 import {Page} from "@playwright/test";
 import {Selectors} from "../../../../common/selectors.ts";
-import {AboutApplicantsContent} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/aboutApplicantsContent.ts";
-import {CommonContent} from "../../../fixtures/CommonContent.ts";
+import {AboutApplicantsContent} from "../../../content/manageCases/createCase/solicitorCreateCase/aboutApplicantsContent.ts";
+import {CommonContent} from "../../../content/CommonContent.ts";
 
 enum InputFieldElementIds {
   applicant2FirstName = '#applicant2FirstName',

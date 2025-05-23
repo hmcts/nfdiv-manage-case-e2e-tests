@@ -1,6 +1,6 @@
 import {Page} from "@playwright/test";
 import {Selectors} from "../../../../common/selectors.ts";
-import {CommonContent} from "../../../fixtures/CommonContent.ts";
+import {CommonContent} from "../../../content/CommonContent.ts";
 import {config} from "../../../../config.ts";
 
 export class UploadSupportingDocumentsPage {
