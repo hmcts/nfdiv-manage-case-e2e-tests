@@ -42,7 +42,7 @@ export const config: Config = {
       password: getEnvVar("SOLICITOR_PASSWORD"),
       sessionFile:
         path.join(fileURLToPath(import.meta.url), "./e2e/.sessions/") +
-        `${getEnvVar("CASEMANAGER_USERNAME")}.json`,
+        `${getEnvVar("SOLICITOR_USERNAME")}.json`,
       cookieName: "xui-webapp",
     },
     caseworker: {
@@ -50,7 +50,7 @@ export const config: Config = {
       password: getEnvVar("CASEWORKER_PASSWORD"),
       sessionFile:
         path.join(fileURLToPath(import.meta.url), "./e2e/.sessions/") +
-        `${getEnvVar("JUDGE_USERNAME")}.json`,
+        `${getEnvVar("CASEWORKER_USERNAME")}.json`,
       cookieName: "xui-webapp",
     },
     legalAdvisor: {
@@ -58,7 +58,7 @@ export const config: Config = {
       password: getEnvVar("LEGALADVISOR_PASSWORD"),
       sessionFile:
         path.join(fileURLToPath(import.meta.url), "./e2e/.sessions/") +
-        `${getEnvVar("CITIZEN_USERNAME")}.json`,
+        `${getEnvVar("LEGALADVISOR_USERNAME")}.json`,
     },
   },
   urls: {

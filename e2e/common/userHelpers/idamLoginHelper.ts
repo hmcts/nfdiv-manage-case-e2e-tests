@@ -1,5 +1,4 @@
 import {expect, Page} from "@playwright/test";
-import Config from "../../config.ts";
 import {UserLoginInfo} from "../types.ts";
 
 export class IdamLoginHelper {
@@ -41,7 +40,7 @@ export class IdamLoginHelper {
 
   public static async signInLongLivedUser(
     page: Page,
-    user: keyof typeof Config.userCredentials,
+    user: keyof typeof config.users,
     application: string,
   ): Promise<void> {
     const userCredentials = Config.getUserCredentials(user);
