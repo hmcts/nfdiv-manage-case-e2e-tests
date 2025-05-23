@@ -11,14 +11,14 @@ export class Config {
       email: process.env.SOLICITOR_USERNAME as string,
       password: process.env.SOLICITOR_PASSWORD as string,
     },
-    citizen: {
-      email: process.env.CITIZEN_USERNAME as string,
-      password: process.env.CITIZEN_PASSWORD as string,
-    },
     caseworker: {
       email: process.env.CASEWORKER_USERNAME as string,
       password: process.env.CASEWORKER_PASSWORD as string,
     },
+    legalAdvisor: {
+      email: process.env.LEGALADVISOR_USERNAME as string,
+      password: process.env.LEGALADVISOR_USERNAME as string,
+    }
   };
 
   public static readonly sessionStoragePath: string = path.join(

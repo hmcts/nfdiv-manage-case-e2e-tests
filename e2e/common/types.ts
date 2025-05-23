@@ -15,8 +15,8 @@ export interface UserCredentialsLong extends UserCredentials {
 
 const UserRoles = {
   solicitor: "solicitor",
-  citizen: "citizen",
   caseworker: "caseworker",
+  legalAdvisor: "legalAdvisor"
 } as const;
 
 export type UserRole = (typeof UserRoles)[keyof typeof UserRoles];
