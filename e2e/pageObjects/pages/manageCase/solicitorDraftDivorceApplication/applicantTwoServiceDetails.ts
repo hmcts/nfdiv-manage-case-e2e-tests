@@ -1,6 +1,6 @@
 import {Page} from "@playwright/test";
-import {Selectors} from "../../../common/selectors";
-import {AboutApplicants} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/aboutApplicants.ts";
+import {Selectors} from "../../../../common/selectors.ts";
+import {AboutApplicantsContent} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/aboutApplicantsContent.ts";
 import {CommonContent} from "../../../fixtures/CommonContent.ts";
 
 enum InputFieldElementIds {
@@ -41,8 +41,8 @@ export class ApplicantTwoServiceDetailsPage {
     await page.locator('h1:text("Respondent service details")').waitFor();
 
     const textFields: { elementId: string, fieldValue: string }[] = [
-      {elementId: InputFieldElementIds.applicant2Email, fieldValue: AboutApplicants.applicant2Email},
-      {elementId: InputFieldElementIds.applicant2Postcode, fieldValue: AboutApplicants.applicant2Postcode},
+      {elementId: InputFieldElementIds.applicant2Email, fieldValue: AboutApplicantsContent.applicant2Email},
+      {elementId: InputFieldElementIds.applicant2Postcode, fieldValue: AboutApplicantsContent.applicantPostcode},
     ];
 
     for (const textField of textFields) {

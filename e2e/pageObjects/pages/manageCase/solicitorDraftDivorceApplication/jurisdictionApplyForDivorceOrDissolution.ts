@@ -1,11 +1,10 @@
 import {Page} from "@playwright/test";
-import {Selectors} from "../../../common/selectors";
-import config from "../../../config.ts";
+import {Selectors} from "../../../../common/selectors.ts";
 import {CommonContent} from "../../../fixtures/CommonContent.ts";
 
-export class UploadSupportingDocumentsPage {
+export class JurisdictionApplyForDivorceOrDissolutionPage {
 
-  public static async uploadSupportingDocuments(
+  public static async jurisdictionConnection(
     page: Page,
   ): Promise<void> {
 
@@ -23,13 +22,10 @@ export class UploadSupportingDocumentsPage {
     page: Page,
   ): Promise<void> {
 
-    await page.click(
-      `${Selectors.button}:text-is("${CommonContent.addNewButton}")`,
-    );
-
-    await page.locator('h3:text("Applicant 1 uploaded documents")').waitFor();
-    const fileInput = page.locator('#applicant1DocumentsUploaded_0_documentLink');
-    await fileInput.setInputFiles(config.testPdfFile);
+    for (let i = 0; i <= 3; i++) {
+      const character = String.fromCharCode('A'.charCodeAt(0) + i);
+      await page.check(`#jurisdictionConnections-${character}`);
+    }
 
     await page.click(
       `${Selectors.button}:text-is("${CommonContent.continueButton}")`,

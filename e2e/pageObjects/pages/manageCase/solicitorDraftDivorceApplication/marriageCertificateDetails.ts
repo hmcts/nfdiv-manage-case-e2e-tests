@@ -1,6 +1,6 @@
 import {Page} from "@playwright/test";
-import {Selectors} from "../../../common/selectors";
-import {AboutApplicants} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/aboutApplicants.ts";
+import {Selectors} from "../../../../common/selectors.ts";
+import {AboutApplicantsContent} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/aboutApplicantsContent.ts";
 import {CommonContent} from "../../../fixtures/CommonContent.ts";
 
 enum InputFieldElementIds {
@@ -35,13 +35,13 @@ export class MarriageCertificateDetailsPage {
     page: Page,
   ): Promise<void> {
 
-    const marriageDate: string[] = AboutApplicants.marriageDate.split('/');
+    const marriageDate: string[] = AboutApplicantsContent.marriageDate.split('/');
     const textFields: { elementId: string, fieldValue: string }[] = [
       {elementId: InputFieldElementIds.marriageDateDay, fieldValue: marriageDate[0]},
       {elementId: InputFieldElementIds.marriageDateMonth, fieldValue: marriageDate[1]},
       {elementId: InputFieldElementIds.marriageDateYear, fieldValue: marriageDate[2]},
-      {elementId: InputFieldElementIds.marriageApplicant1Name, fieldValue: AboutApplicants.marriageApplicant1Name},
-      {elementId: InputFieldElementIds.marriageApplicant2Name, fieldValue: AboutApplicants.marriageApplicant2Name},
+      {elementId: InputFieldElementIds.marriageApplicant1Name, fieldValue: AboutApplicantsContent.marriageApplicant1Name},
+      {elementId: InputFieldElementIds.marriageApplicant2Name, fieldValue: AboutApplicantsContent.marriageApplicant2Name},
     ];
 
     for (const textField of textFields) {

@@ -1,14 +1,11 @@
 import {Page} from "@playwright/test";
-import {Selectors} from "../../../common/selectors";
+import {Selectors} from "../../../../common/selectors.ts";
+import config from "../../../../config.ts";
 import {CommonContent} from "../../../fixtures/CommonContent.ts";
 
-enum RadioButtonElementIds {
-  applicant1FinancialOrderNo = '#applicant1FinancialOrder_No',
-}
+export class UploadSupportingDocumentsPage {
 
-export class FinancialOrdersPage {
-
-  public static async financialOrders(
+  public static async uploadSupportingDocuments(
     page: Page,
   ): Promise<void> {
 
@@ -26,7 +23,13 @@ export class FinancialOrdersPage {
     page: Page,
   ): Promise<void> {
 
-    await page.locator(RadioButtonElementIds.applicant1FinancialOrderNo).check();
+    await page.click(
+      `${Selectors.button}:text-is("${CommonContent.addNewButton}")`,
+    );
+
+    await page.locator('h3:text("Applicant 1 uploaded documents")').waitFor();
+    const fileInput = page.locator('#applicant1DocumentsUploaded_0_documentLink');
+    await fileInput.setInputFiles(config.testPdfFile);
 
     await page.click(
       `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
