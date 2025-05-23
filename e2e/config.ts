@@ -17,7 +17,7 @@ export class Config {
     },
     legalAdvisor: {
       email: process.env.LEGALADVISOR_USERNAME as string,
-      password: process.env.LEGALADVISOR_USERNAME as string,
+      password: process.env.LEGALADVISOR_PASSWORD as string,
     }
   };
 
