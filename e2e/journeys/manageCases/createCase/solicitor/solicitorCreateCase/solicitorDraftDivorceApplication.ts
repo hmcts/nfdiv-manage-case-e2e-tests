@@ -1,34 +1,34 @@
 import {CommonPage} from "../../../../CommonPage.ts";
 import {Page} from "@playwright/test";
-import {SolicitorCreatePage} from "../../../../../pages/manageCase/solicitorDraftDivorceApplication/solicitorCreateCase.ts";
+import {SolicitorCreatePage} from "../../../../../pageObjects/pages/manageCase/solicitorDraftDivorceApplication/solicitorCreateCase.ts";
 import {
   AboutRespondentOrApplicantTwoPage
-} from "../../../../../pages/manageCase/solicitorDraftDivorceApplication/aboutRespondentOrApplicantTwo.ts";
+} from "../../../../../pageObjects/pages/manageCase/solicitorDraftDivorceApplication/aboutRespondentOrApplicantTwo.ts";
 import {
   ApplicantTwoServiceDetailsPage
-} from "../../../../../pages/manageCase/solicitorDraftDivorceApplication/applicantTwoServiceDetails.ts";
+} from "../../../../../pageObjects/pages/manageCase/solicitorDraftDivorceApplication/applicantTwoServiceDetails.ts";
 import {
   HowDoYouWantToApplyForDivorcePage
-} from "../../../../../pages/manageCase/solicitorDraftDivorceApplication/howDoYouWantToApplyForDivorce.ts";
-import {SolAboutTheSolicitorPage} from "../../../../../pages/manageCase/solicitorDraftDivorceApplication/solAboutTheSolicitor.ts";
+} from "../../../../../pageObjects/pages/manageCase/solicitorDraftDivorceApplication/howDoYouWantToApplyForDivorce.ts";
+import {SolAboutTheSolicitorPage} from "../../../../../pageObjects/pages/manageCase/solicitorDraftDivorceApplication/solAboutTheSolicitor.ts";
 import {
   MarriageBrokenDownIrretrievablyPage
-} from "../../../../../pages/manageCase/solicitorDraftDivorceApplication/marriageBrokenDownIrretrievably.ts";
-import {AboutApplicantPage} from "../../../../../pages/manageCase/solicitorDraftDivorceApplication/aboutApplicant.ts";
+} from "../../../../../pageObjects/pages/manageCase/solicitorDraftDivorceApplication/marriageBrokenDownIrretrievably.ts";
+import {AboutApplicantPage} from "../../../../../pageObjects/pages/manageCase/solicitorDraftDivorceApplication/aboutApplicant.ts";
 import {
   MarriageCertificateDetailsPage
-} from "../../../../../pages/manageCase/solicitorDraftDivorceApplication/marriageCertificateDetails.ts";
+} from "../../../../../pageObjects/pages/manageCase/solicitorDraftDivorceApplication/marriageCertificateDetails.ts";
 import {
   JurisdictionApplyForDivorceOrDissolutionPage
-} from "../../../../../pages/manageCase/solicitorDraftDivorceApplication/jurisdictionApplyForDivorceOrDissolution.ts";
-import {OtherLegalProceedingsPage} from "../../../../../pages/manageCase/solicitorDraftDivorceApplication/otherLegalProceedings.ts";
-import {FinancialOrdersPage} from "../../../../../pages/manageCase/solicitorDraftDivorceApplication/financialOrders.ts";
+} from "../../../../../pageObjects/pages/manageCase/solicitorDraftDivorceApplication/jurisdictionApplyForDivorceOrDissolution.ts";
+import {OtherLegalProceedingsPage} from "../../../../../pageObjects/pages/manageCase/solicitorDraftDivorceApplication/otherLegalProceedings.ts";
+import {FinancialOrdersPage} from "../../../../../pageObjects/pages/manageCase/solicitorDraftDivorceApplication/financialOrders.ts";
 import {
   UploadSupportingDocumentsPage
-} from "../../../../../pages/manageCase/solicitorDraftDivorceApplication/uploadSupportingDocuments.ts";
+} from "../../../../../pageObjects/pages/manageCase/solicitorDraftDivorceApplication/uploadSupportingDocuments.ts";
 import {
   CheckYourAnswersAndSubmitPage
-} from "../../../../../pages/manageCase/solicitorDraftDivorceApplication/checkYourAnswersAndSubmit.ts";
+} from "../../../../../pageObjects/pages/manageCase/solicitorDraftDivorceApplication/checkYourAnswersAndSubmit.ts";
 
 interface SolicitorCreateOptions {
   page: Page;

@@ -1,10 +1,10 @@
 import {Page} from "@playwright/test";
-import {Selectors} from "../../../common/selectors";
+import {Selectors} from "../../../../common/selectors.ts";
 import {CommonContent} from "../../../fixtures/CommonContent.ts";
 
-export class CheckYourAnswersAndSubmitPage {
+export class JurisdictionApplyForDivorceOrDissolutionPage {
 
-  public static async checkYourAnswers(
+  public static async jurisdictionConnection(
     page: Page,
   ): Promise<void> {
 
@@ -22,6 +22,13 @@ export class CheckYourAnswersAndSubmitPage {
     page: Page,
   ): Promise<void> {
 
-    await page.click(`${Selectors.button}:text-is("${CommonContent.saveApplication}")`);
+    for (let i = 0; i <= 3; i++) {
+      const character = String.fromCharCode('A'.charCodeAt(0) + i);
+      await page.check(`#jurisdictionConnections-${character}`);
+    }
+
+    await page.click(
+      `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
+    );
   }
 }

@@ -1,5 +1,5 @@
 import {Page} from "@playwright/test";
-import {Selectors} from "../../../common/selectors";
+import {Selectors} from "../../../../common/selectors.ts";
 import {
   SolAboutTheSolicitor
 } from "../../../fixtures/manageCases/createCase/solicitorCreateCase/solAboutTheSolicitor.ts";

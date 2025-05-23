@@ -1,7 +1,10 @@
 import { test } from "@playwright/test";
 import { CreateCase } from "../../../../journeys/manageCases/createCase/solicitorCreateCase"
-import idamLoginHelper from "../../../../common/userHelpers/idamLoginHelper.ts";
-import Config from "../../../../config.ts";
+import {config} from "../../../../config.ts";
+
+test.use({
+  storageState: config.users.solicitor.sessionFile,
+});
 
 test.describe("Solicitor create application tests", (): void => {
   test(`Log in as a solicitor and start creating a:
@@ -13,7 +16,6 @@ test.describe("Solicitor create application tests", (): void => {
 
     const context = await browser.newContext();
     const page = await context.newPage();
-    await idamLoginHelper.signInLongLivedUser(page, 'solicitor', Config.manageCasesBaseURLCase);
     await CreateCase.createCase({
       page: page,
     });

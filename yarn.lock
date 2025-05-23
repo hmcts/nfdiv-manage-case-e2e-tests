@@ -552,6 +552,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hmcts/playwright-common@npm:1.0.15":
+  version: 1.0.15
+  resolution: "@hmcts/playwright-common@npm:1.0.15"
+  dependencies:
+    "@axe-core/playwright": "npm:^4.10.0"
+    "@playwright/test": "npm:^1.48.2"
+    get-port: "npm:^7.1.0"
+    globals: "npm:^15.10.0"
+    lighthouse: "npm:^12.2.1"
+    playwright: "npm:^1.48.2"
+    playwright-core: "npm:^1.48.2"
+    playwright-lighthouse: "npm:^4.0.0"
+  checksum: 10c0/4ed91f2e178be1f5e624f0f18f2058467c0fcab984c877323bb9e60c380609f6756ee1932083a7eab79102966c095dbd03a99131dad2bd0176b605aa6dbda20a
+  languageName: node
+  linkType: hard
+
 "@humanfs/core@npm:^0.19.1":
   version: 0.19.1
   resolution: "@humanfs/core@npm:0.19.1"
@@ -4390,6 +4406,7 @@ __metadata:
   dependencies:
     "@axe-core/playwright": "npm:^4.10.0"
     "@eslint/js": "npm:^9.11.1"
+    "@hmcts/playwright-common": "npm:1.0.15"
     "@jest/globals": "npm:^29.7.0"
     "@jest/types": "npm:^29.6.3"
     "@playwright/test": "npm:^1.48.2"

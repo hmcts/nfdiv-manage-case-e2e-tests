@@ -1,10 +1,14 @@
 import {Page} from "@playwright/test";
-import {Selectors} from "../../../common/selectors";
+import {Selectors} from "../../../../common/selectors.ts";
 import {CommonContent} from "../../../fixtures/CommonContent.ts";
 
-export class JurisdictionApplyForDivorceOrDissolutionPage {
+enum RadioButtonElementIds {
+  applicant1FinancialOrderNo = '#applicant1FinancialOrder_No',
+}
 
-  public static async jurisdictionConnection(
+export class FinancialOrdersPage {
+
+  public static async financialOrders(
     page: Page,
   ): Promise<void> {
 
@@ -22,10 +26,7 @@ export class JurisdictionApplyForDivorceOrDissolutionPage {
     page: Page,
   ): Promise<void> {
 
-    for (let i = 0; i <= 3; i++) {
-      const character = String.fromCharCode('A'.charCodeAt(0) + i);
-      await page.check(`#jurisdictionConnections-${character}`);
-    }
+    await page.locator(RadioButtonElementIds.applicant1FinancialOrderNo).check();
 
     await page.click(
       `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
