@@ -1,100 +1,87 @@
-import path from "path";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 
-import { UserCredentials, UserRole } from "./common/types";
-
+// This needs to be placed somewhere before attempting to access any environment variables
 dotenv.config();
 
-export class Config {
-  public static readonly userCredentials: Record<UserRole, UserCredentials> = {
-    solicitor: {
-      email: process.env.SOLICITOR_USERNAME as string,
-      password: process.env.SOLICITOR_PASSWORD as string,
-    },
-    caseworker: {
-      email: process.env.CASEWORKER_USERNAME as string,
-      password: process.env.CASEWORKER_PASSWORD as string,
-    },
-    legalAdvisor: {
-      email: process.env.LEGALADVISOR_USERNAME as string,
-      password: process.env.LEGALADVISOR_PASSWORD as string,
-    }
-  };
-
-  public static readonly sessionStoragePath: string = path.join(
-    __dirname,
-    ".sessions/",
-  );
-
-  public static readonly citizenFrontendBaseURL: string =
-    Config.ensureTrailingSlash(
-      process.env.CITIZEN_FRONTEND_BASE_URL ||
-        "https://nfdiv.aat.platform.hmcts.net/",
-    );
-
-  public static readonly manageCasesBaseURLCase: string =
-    Config.ensureNoTrailingSlash(
-      process.env.MANAGE_CASES_BASE_URL ||
-        "https://manage-case.aat.platform.hmcts.net/cases",
-    );
-  public static readonly manageCasesBaseURL: string = Config.removeCasesPath(
-    process.env.MANAGE_CASES_BASE_URL ||
-      "https://manage-case.aat.platform.hmcts.net",
-  );
-
-  private static removeCasesPath(url: string): string {
-    return url.replace(/\/cases$/, ""); // Removes `/cases` only if it's at the end
-  }
-  //ensures url is in the correct format (with a trailing slash for citizenFrontendBaseURL, and without trailing slash for manageCasesBaseURLCase)
-  private static ensureTrailingSlash(url: string): string {
-    return url.endsWith("/") ? url : `${url}/`;
-  }
-  private static ensureNoTrailingSlash(url: string): string {
-    return url.endsWith("/") ? url.slice(0, -1) : url;
-  }
-
-  public static getEnvironment(url: string): string {
-    return (
-      ["aat", "demo", "preview", "ithc"].find((env) => url.includes(env)) ||
-      "unknown"
-    );
-  }
-
-  public static setEnvironmentVariables(): void {
-    process.env.CITIZEN_TEST_ENV = this.getEnvironment(
-      this.citizenFrontendBaseURL,
-    );
-    process.env.MANAGE_CASES_TEST_ENV = this.getEnvironment(
-      this.manageCasesBaseURLCase,
-    );
-  }
-
-  public static readonly testFile: string = path.resolve(
-    __dirname,
-    "./assets/mockFile.txt",
-  );
-  public static readonly testPdfFile: string = path.resolve(
-    __dirname,
-    "./assets/mockFile.pdf",
-  );
-  public static readonly testWordFile: string = path.resolve(
-    __dirname,
-    "./assets/mockFile.docx",
-  );
-  public static readonly testOdtFile: string = path.resolve(
-    __dirname,
-    "./assets/mockFile.odt",
-  );
-  public static readonly testMP3File: string = path.resolve(
-    __dirname,
-    "./assets/mockFile.mp3",
-  );
-
-  public static getUserCredentials(role: UserRole): UserCredentials {
-    return this.userCredentials[role];
-  }
+export interface UserCredentials {
+  username: string;
+  password: string;
+  sessionFile: string;
+  cookieName?: string;
 }
 
-Config.setEnvironmentVariables();
+interface Urls {
+  exuiDefaultUrl: string;
+  manageCaseBaseUrl: string;
+}
 
-export default Config;
+interface Files {
+  doc: string;
+  mp3: string;
+  odt: string;
+  pdf: string;
+  txt: string;
+}
+
+export interface Config {
+  users: {
+    solicitor: UserCredentials;
+    caseworker: UserCredentials;
+    legalAdvisor: UserCredentials;
+  };
+  urls: Urls;
+  files: Files;
+}
+
+export const config: Config = {
+  users: {
+    solicitor: {
+      username: getEnvVar("SOLICITOR_USERNAME"),
+      password: getEnvVar("SOLICITOR_PASSWORD"),
+      sessionFile:
+        path.join(fileURLToPath(import.meta.url), "./e2e/.sessions/") +
+        `${getEnvVar("CASEMANAGER_USERNAME")}.json`,
+      cookieName: "xui-webapp",
+    },
+    caseworker: {
+      username: getEnvVar("CASEWORKER_USERNAME"),
+      password: getEnvVar("CASEWORKER_PASSWORD"),
+      sessionFile:
+        path.join(fileURLToPath(import.meta.url), "./e2e/.sessions/") +
+        `${getEnvVar("JUDGE_USERNAME")}.json`,
+      cookieName: "xui-webapp",
+    },
+    legalAdvisor: {
+      username: getEnvVar("LEGALADVISOR_USERNAME"),
+      password: getEnvVar("LEGALADVISOR_PASSWORD"),
+      sessionFile:
+        path.join(fileURLToPath(import.meta.url), "./e2e/.sessions/") +
+        `${getEnvVar("CITIZEN_USERNAME")}.json`,
+    },
+  },
+  urls: {
+    exuiDefaultUrl: "https://manage-case.aat.platform.hmcts.net",
+    manageCaseBaseUrl:
+      process.env.MANAGE_CASES_BASE_URL ||
+      "https://manage-case.aat.platform.hmcts.net/cases",
+  },
+  files: {
+    doc: './assets/mockFile.docx',
+    mp3: './assets/mockFile.mp3',
+    odt: './assets/mockFile.odt',
+    pdf: './assets/mockFile.pdf',
+    txt: './assets/mockFile.txt',
+  }
+};
+
+function getEnvVar(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`Error: ${name} environment variable is not set`);
+  }
+  return value;
+}
+
+
