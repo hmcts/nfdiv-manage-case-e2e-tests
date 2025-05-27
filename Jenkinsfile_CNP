@@ -61,6 +61,10 @@ def secrets = [
                 secret('playwright-token', 'PLAYWRIGHT_SERVICE_ACCESS_TOKEN'),
                 secret('idam-solicitor-username', 'SOLICITOR_USERNAME'),
                 secret('idam-solicitor-password', 'SOLICITOR_PASSWORD'),
+                secret('idam-caseworker-username', 'CASEWORKER_USERNAME'),
+                secret('idam-caseworker-password', 'CASEWORKER_PASSWORD'),
+                secret('idam-legal-advisor-username', 'LEGALADVISOR_USERNAME'),
+                secret('idam-legal-advisor-password', 'LEGALADVISOR_PASSWORD'),
         ]
 ]
 
