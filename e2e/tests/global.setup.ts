@@ -19,7 +19,6 @@ setup(
     await page.goto(config.urls.manageCaseBaseUrl);
     await idamPage.login(user);
     await cookieUtils.addAnalyticsCookie(config.users.caseworker);
-
   }
 );
 
