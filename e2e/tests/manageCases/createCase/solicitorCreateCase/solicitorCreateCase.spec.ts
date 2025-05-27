@@ -8,7 +8,7 @@ test.describe("Solicitor create application tests", (): void => {
     storageState: config.users.solicitor.sessionFile,
   });
 
-  test(`Log in as a solicitor and start creating a:
+  test(`Log in as a solicitor/ and start creating a:
   Not Accessibility testing,
   Error message testing,
   saying yes to all options, @nightly @regression @smoke`, async ({
