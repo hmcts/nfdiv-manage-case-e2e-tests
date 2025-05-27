@@ -15,5 +15,10 @@
     "allowJs": true,
     "noImplicitAny": false,
   },
-  "include":["**/*.ts"],
+  "include": [
+    "e2e/**/*",
+    "__tests__/**/*",
+    "jest.config.ts",
+    "playwright.config.ts",
+    ]
 }
