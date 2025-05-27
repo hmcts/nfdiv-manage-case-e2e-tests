@@ -1,31 +1,35 @@
 import { test as setup } from "./fixtures";
 
 setup(
-  "Setup case manager user",
-  async ({ page, config, idamPage, SessionUtils }) => {
+  "Setup solicitor user",
+  async ({ page, config, idamPage, SessionUtils, cookieUtils }) => {
     const user = config.users.solicitor;
     if (SessionUtils.isSessionValid(user.sessionFile, user.cookieName!)) return;
     await page.goto(config.urls.manageCaseBaseUrl);
     await idamPage.login(user);
+    await cookieUtils.addAnalyticsCookie(config.users.solicitor);
   }
 );
 
 setup(
-  "Setup judge user",
-  async ({ page, config, idamPage, SessionUtils }) => {
+  "Setup caseworker user",
+  async ({ page, config, idamPage, SessionUtils, cookieUtils }) => {
     const user = config.users.caseworker;
     if (SessionUtils.isSessionValid(user.sessionFile, user.cookieName!)) return;
     await page.goto(config.urls.manageCaseBaseUrl);
     await idamPage.login(user);
+    await cookieUtils.addAnalyticsCookie(config.users.caseworker);
+
   }
 );
 
 setup(
-  "Setup judge user",
-  async ({ page, config, idamPage, SessionUtils }) => {
+  "Setup legal advisor user",
+  async ({ page, config, idamPage, SessionUtils, cookieUtils }) => {
     const user = config.users.legalAdvisor;
     if (SessionUtils.isSessionValid(user.sessionFile, user.cookieName!)) return;
     await page.goto(config.urls.manageCaseBaseUrl);
     await idamPage.login(user);
+    await cookieUtils.addAnalyticsCookie(config.users.legalAdvisor);
   }
 );

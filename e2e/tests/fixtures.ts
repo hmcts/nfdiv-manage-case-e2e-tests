@@ -1,19 +1,24 @@
 import { test as baseTest } from "@playwright/test";
+import {utilsFixtures, UtilsFixtures} from "../common/utils.fixtures.ts";
+import {pageFixtures, PageFixtures} from "../pageObjects/pageFixtures.ts";
 import getPort from "get-port";
-import {PageFixtures, pageFixtures} from "../pageObjects/pageFixtures.ts";
-import {UtilsFixtures, utilsFixtures} from "../common/utils.fixtures.ts";
 
+// Combine your fixtures into one type
 export type CustomFixtures = PageFixtures & UtilsFixtures;
 
-// Gather all fixture types into a common type
-export const test = baseTest.extend<{ LighthousePort: number }, CustomFixtures>({
-  ...pageFixtures,
-  ...utilsFixtures,
-  LighthousePort: [
-    async ({}, use) => {
-      const port = await getPort();
-      await use(port);
-    },
-    { scope: 'worker' },
-  ],
-});
+// Create test with just the fixtures you want
+export const test = baseTest.extend<CustomFixtures, { lighthousePort: number }>(
+  {
+    ...pageFixtures,
+    ...utilsFixtures,
+    // Worker scoped fixtures need to be defined separately
+    lighthousePort: [
+      async ({}, use) => {
+        const port = await getPort();
+        await use(port);
+      },
+      { scope: "worker" },
+    ],
+  }
+);
+
