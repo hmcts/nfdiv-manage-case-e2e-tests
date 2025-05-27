@@ -55,7 +55,7 @@ export const config: Config = {
       sessionFile: path.join(
         __dirname,
         ".sessions",
-        `${getEnvVar("CASEWORKER_PASSWORD")}.json`),
+        `${getEnvVar("CASEWORKER_USERNAME")}.json`),
       cookieName: "xui-webapp",
     },
     legalAdvisor: {
