@@ -1,7 +1,7 @@
 import {Page} from "@playwright/test";
-import {Selectors} from "../../../common/selectors";
-import config from "../../../config.ts";
-import {CommonContent} from "../../../fixtures/CommonContent.ts";
+import {Selectors} from "../../../../common/selectors.ts";
+import {CommonContent} from "../../../content/CommonContent.ts";
+import {config} from "../../../../config.ts";
 
 export class UploadSupportingDocumentsPage {
 
@@ -29,7 +29,7 @@ export class UploadSupportingDocumentsPage {
 
     await page.locator('h3:text("Applicant 1 uploaded documents")').waitFor();
     const fileInput = page.locator('#applicant1DocumentsUploaded_0_documentLink');
-    await fileInput.setInputFiles(config.testPdfFile);
+    await fileInput.setInputFiles(config.files.pdf);
 
     await page.click(
       `${Selectors.button}:text-is("${CommonContent.continueButton}")`,

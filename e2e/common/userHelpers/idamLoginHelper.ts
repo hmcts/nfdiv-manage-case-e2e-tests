@@ -1,6 +1,6 @@
 import {expect, Page} from "@playwright/test";
-import Config from "../../config.ts";
 import {UserLoginInfo} from "../types.ts";
+import {config} from "../../config.ts";
 
 export class IdamLoginHelper {
   private static fields: UserLoginInfo = {
@@ -41,15 +41,15 @@ export class IdamLoginHelper {
 
   public static async signInLongLivedUser(
     page: Page,
-    user: keyof typeof Config.userCredentials,
+    user: keyof typeof config.users,
     application: string,
   ): Promise<void> {
-    const userCredentials = Config.getUserCredentials(user);
+    const userCredentials = config.users[user];
     if (!userCredentials) return;
 
     await this.signIn(
       page,
-      userCredentials.email,
+      userCredentials.username,
       userCredentials.password,
       application,
       user,

@@ -1,7 +1,7 @@
 import {Page} from "@playwright/test";
-import {Selectors} from "../../../common/selectors";
-import {AboutApplicants} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/aboutApplicants.ts";
-import {CommonContent} from "../../../fixtures/CommonContent.ts";
+import {Selectors} from "../../../../common/selectors.ts";
+import {AboutApplicantsContent} from "../../../content/manageCases/createCase/solicitorCreateCase/aboutApplicantsContent.ts";
+import {CommonContent} from "../../../content/CommonContent.ts";
 
 enum InputFieldElementIds {
   applicant1FirstName = '#applicant1FirstName',
@@ -45,12 +45,12 @@ export class AboutApplicantPage {
   ): Promise<void> {
 
     const textFields: { elementId: string, fieldValue: string }[] = [
-      {elementId: InputFieldElementIds.applicant1FirstName, fieldValue: AboutApplicants.applicant1FirstName},
-      {elementId: InputFieldElementIds.applicant1MiddleName, fieldValue: AboutApplicants.applicant1MiddleName},
-      {elementId: InputFieldElementIds.applicant1LastName, fieldValue: AboutApplicants.applicant1LastName},
-      {elementId: InputFieldElementIds.applicant1Email, fieldValue: AboutApplicants.applicant1Email},
-      {elementId: InputFieldElementIds.applicant1PhoneNumber, fieldValue: AboutApplicants.applicant1PhoneNumber},
-      {elementId: InputFieldElementIds.applicant1Postcode, fieldValue: AboutApplicants.applicant1Postcode},
+      {elementId: InputFieldElementIds.applicant1FirstName, fieldValue: AboutApplicantsContent.applicant1FirstName},
+      {elementId: InputFieldElementIds.applicant1MiddleName, fieldValue: AboutApplicantsContent.applicant1MiddleName},
+      {elementId: InputFieldElementIds.applicant1LastName, fieldValue: AboutApplicantsContent.applicant1LastName},
+      {elementId: InputFieldElementIds.applicant1Email, fieldValue: AboutApplicantsContent.applicant1Email},
+      {elementId: InputFieldElementIds.applicant1PhoneNumber, fieldValue: AboutApplicantsContent.applicant1PhoneNumber},
+      {elementId: InputFieldElementIds.applicant1Postcode, fieldValue: AboutApplicantsContent.applicantPostcode},
     ];
 
     for (const textField of textFields) {

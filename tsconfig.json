@@ -1,23 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es2021",
-    "module": "commonjs",
+    "module": "ESNext",
     "moduleResolution": "node",
-    "types": ["node", "jest"],
+    "target": "ES2022",
+    "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
+    "useDefineForClassFields": false,
     "noEmit": true,
-    "outDir": "dist",
-    "allowJs": false,
-    "resolveJsonModule": true
+    "allowJs": true,
+    "noImplicitAny": false,
   },
-  "include": [
-    "e2e/**/*",
-    "__tests__/**/*",
-    "playwright.config.ts"
-  ],
-  "exclude": ["node_modules"]
+  "include":["**/*.ts"],
 }

@@ -1,7 +1,7 @@
 import {Page} from "@playwright/test";
-import {Selectors} from "../../../common/selectors";
-import {AboutApplicants} from "../../../fixtures/manageCases/createCase/solicitorCreateCase/aboutApplicants.ts";
-import {CommonContent} from "../../../fixtures/CommonContent.ts";
+import {Selectors} from "../../../../common/selectors.ts";
+import {AboutApplicantsContent} from "../../../content/manageCases/createCase/solicitorCreateCase/aboutApplicantsContent.ts";
+import {CommonContent} from "../../../content/CommonContent.ts";
 
 enum InputFieldElementIds {
   applicant2FirstName = '#applicant2FirstName',
@@ -34,9 +34,9 @@ export class AboutRespondentOrApplicantTwoPage {
   ): Promise<void> {
 
     const textFields: { elementId: string, fieldValue: string }[] = [
-      {elementId: InputFieldElementIds.applicant2FirstName, fieldValue: AboutApplicants.applicant2FirstName},
-      {elementId: InputFieldElementIds.applicant2MiddleName, fieldValue: AboutApplicants.applicant2MiddleName},
-      {elementId: InputFieldElementIds.applicant2LastName, fieldValue: AboutApplicants.applicant2LastName},
+      {elementId: InputFieldElementIds.applicant2FirstName, fieldValue: AboutApplicantsContent.applicant2FirstName},
+      {elementId: InputFieldElementIds.applicant2MiddleName, fieldValue: AboutApplicantsContent.applicant2MiddleName},
+      {elementId: InputFieldElementIds.applicant2LastName, fieldValue: AboutApplicantsContent.applicant2LastName},
     ];
 
     for (const textField of textFields) {

@@ -1,14 +1,14 @@
 import {Page} from "@playwright/test";
-import {Selectors} from "../../../common/selectors";
-import {CommonContent} from "../../../fixtures/CommonContent.ts";
+import {Selectors} from "../../../../common/selectors.ts";
+import {CommonContent} from "../../../content/CommonContent.ts";
 
 enum RadioButtonElementIds {
-  applicant1FinancialOrderNo = '#applicant1FinancialOrder_No',
+  applicant1LegalProceedingsNo = '#applicant1LegalProceedings_No',
 }
 
-export class FinancialOrdersPage {
+export class OtherLegalProceedingsPage {
 
-  public static async financialOrders(
+  public static async otherLegalProceedings(
     page: Page,
   ): Promise<void> {
 
@@ -26,7 +26,7 @@ export class FinancialOrdersPage {
     page: Page,
   ): Promise<void> {
 
-    await page.locator(RadioButtonElementIds.applicant1FinancialOrderNo).check();
+    await page.locator(RadioButtonElementIds.applicant1LegalProceedingsNo).check();
 
     await page.click(
       `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
