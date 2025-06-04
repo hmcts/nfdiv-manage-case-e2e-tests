@@ -1,9 +1,9 @@
 import {Page} from "@playwright/test";
-import {Selectors} from "../../../../common/selectors.ts";
+import {Selectors} from "../../../../../common/selectors.ts";
 import {
   SolAboutTheSolicitor
-} from "../../../content/manageCases/createCase/solicitorCreateCase/solAboutTheSolicitor.ts";
-import {CommonContent} from "../../../content/CommonContent.ts";
+} from "../../../../content/manageCases/solicitor/solicitorCreateCase/solAboutTheSolicitor.ts";
+import {CommonContent} from "../../../../content/CommonContent.ts";
 
 enum InputFieldElementIds {
   applicant1SolicitorName = '#applicant1SolicitorName',
