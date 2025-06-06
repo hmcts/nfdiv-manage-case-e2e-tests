@@ -15,7 +15,8 @@ test.describe("Solicitor create application tests", (): void => {
     page,
   }): Promise<void> => {
     await CreateCase.createCase({
-      page,
+      page: page,
+      solicitorPayment: "PBA"
     });
   });
 });

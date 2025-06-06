@@ -1,14 +1,10 @@
 import {Page} from "@playwright/test";
-import {Selectors} from "../../../../common/selectors.ts";
-import {CommonContent} from "../../../content/CommonContent.ts";
+import {Selectors} from "../../../../../common/selectors.ts";
+import {CommonContent} from "../../../../content/CommonContent.ts";
 
-enum RadioButtonElementIds {
-  applicant1LegalProceedingsNo = '#applicant1LegalProceedings_No',
-}
+export class JurisdictionApplyForDivorceOrDissolutionPage {
 
-export class OtherLegalProceedingsPage {
-
-  public static async otherLegalProceedings(
+  public static async jurisdictionConnection(
     page: Page,
   ): Promise<void> {
 
@@ -26,7 +22,10 @@ export class OtherLegalProceedingsPage {
     page: Page,
   ): Promise<void> {
 
-    await page.locator(RadioButtonElementIds.applicant1LegalProceedingsNo).check();
+    for (let i = 0; i <= 3; i++) {
+      const character = String.fromCharCode('A'.charCodeAt(0) + i);
+      await page.check(`#jurisdictionConnections-${character}`);
+    }
 
     await page.click(
       `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
