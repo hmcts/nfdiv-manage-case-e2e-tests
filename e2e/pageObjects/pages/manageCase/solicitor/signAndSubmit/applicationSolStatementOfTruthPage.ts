@@ -54,8 +54,8 @@ export class ApplicationSolStatementOfTruthPage {
     }
 
     await Promise.all([
-      expect(page.locator(`${Selectors.strong}:text-is${ApplicationSolStatementOfTruthContent.strong}:`)).toBeVisible(),
-      expect(page.locator(`${Selectors.GovukFormHint}:text-is${ApplicationSolStatementOfTruthContent.formHint}:`)).toBeVisible(),
+      expect(page.locator(`${Selectors.strong}:text-is("${ApplicationSolStatementOfTruthContent.strong}")`)).toBeVisible(),
+      expect(page.locator(`${Selectors.GovukFormHint}:text-is("${ApplicationSolStatementOfTruthContent.formHint}")`)).toBeVisible(),
     ]);
   }
 
