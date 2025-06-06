@@ -3,6 +3,7 @@ import {Selectors} from "../../../../../common/selectors.ts";
 import {
   ApplicationSolPaymentContent
 } from "../../../../content/manageCases/solicitor/signAndSubmit/applicationSolPaymentContent.ts";
+import {CommonContent} from "../../../../../common/commonContent.ts";
 
 enum RadioButtons {
   PBA = "#solPaymentHowToPay-feePayByAccount",
@@ -72,5 +73,6 @@ export class ApplicationSolPaymentPage {
     } else {
       throw new Error("Please select a solicitor payment method")
     }
+    await page.click(`${Selectors.button}:text-is("${CommonContent.continue}")`);
   }
 }
