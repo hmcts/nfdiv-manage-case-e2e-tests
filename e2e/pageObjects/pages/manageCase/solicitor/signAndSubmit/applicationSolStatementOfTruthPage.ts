@@ -3,6 +3,7 @@ import {Selectors} from "../../../../../common/selectors.ts";
 import {
   ApplicationSolStatementOfTruthContent
 } from "../../../../content/manageCases/solicitor/signAndSubmit/applicationSolStatementOfTruthContent.ts";
+import {CommonContent} from "../../../../../common/commonContent.ts";
 
 enum textBoxes {
   name = "#solStatementOfReconciliationName",
@@ -67,5 +68,6 @@ export class ApplicationSolStatementOfTruthPage {
   }
     await page.fill(textBoxes.name, ApplicationSolStatementOfTruthContent.name);
     await page.fill(textBoxes.firmName, ApplicationSolStatementOfTruthContent.firmName);
+    await page.click(`${Selectors.button}:text-is("${CommonContent.continue}")`);
   }
 }
