@@ -19,9 +19,9 @@ interface ApplicationSolPaymentOptions {
 
 export class ApplicationSolPaymentPage {
   public static async applicationSolPaymentPage({
-                                                           page,
-                                                  solicitorPayment
-                                                         }: ApplicationSolPaymentOptions): Promise<void> {
+    page,
+    solicitorPayment
+  }: ApplicationSolPaymentOptions): Promise<void> {
     await this.checkPageLoads({
       page: page,
     });
@@ -32,8 +32,8 @@ export class ApplicationSolPaymentPage {
   }
 
   private static async checkPageLoads({
-                                        page,
-                                      }: Partial<ApplicationSolPaymentOptions>): Promise<void> {
+    page,
+  }: Partial<ApplicationSolPaymentOptions>): Promise<void> {
     if (!page) {
       throw new Error("Page is not defined)");
     }
@@ -60,9 +60,9 @@ export class ApplicationSolPaymentPage {
   }
 
   private static async fillInFields({
-                                      page,
-                                      solicitorPayment
-                                    }: ApplicationSolPaymentOptions): Promise<void> {
+    page,
+    solicitorPayment
+  }: ApplicationSolPaymentOptions): Promise<void> {
     if (solicitorPayment === "PBA") {
       await page.click(RadioButtons.PBA)
     } else if (solicitorPayment === "HWF") {
