@@ -54,7 +54,7 @@ export class ApplicationSolPayAccountPage {
                                       page,
                                     }: ApplicationSolPayAccountOptions): Promise<void> {
     await page.selectOption(UniqueSelectors.accountNumberSelectOption, ApplicationSolPayAccountContent.pbaNumber);
-    await page.fill(UniqueSelectors.accountNumberSelectOption, ApplicationSolPayAccountContent.reference);
+    await page.fill(UniqueSelectors.paymentReferenceTextBox, ApplicationSolPayAccountContent.reference);
     await page.click(`${Selectors.button}:text-is("${CommonContent.continue}")`);
   }
 }
