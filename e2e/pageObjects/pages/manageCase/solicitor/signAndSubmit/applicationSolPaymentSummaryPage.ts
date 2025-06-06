@@ -1,9 +1,6 @@
 
 import {Page, expect} from "@playwright/test";
 import {Selectors} from "../../../../../common/selectors.ts";
-import {
-  ApplicationSolPaymentContent
-} from "../../../../content/manageCases/solicitor/signAndSubmit/applicationSolPaymentContent.ts";
 import {CommonContent} from "../../../../../common/commonContent.ts";
 import {
   ApplicationSolPaymentSummaryContent
