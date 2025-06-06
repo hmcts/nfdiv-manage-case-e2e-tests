@@ -9,6 +9,9 @@ import {
 import {
   ApplicationSolPayAccountPage
 } from "../../../../../pageObjects/pages/manageCase/solicitor/signAndSubmit/applicationSolPayAccountPage.ts";
+import {
+  ApplicationSolPaymentSummaryPage
+} from "../../../../../pageObjects/pages/manageCase/solicitor/signAndSubmit/applicationSolPaymentSummaryPage.ts";
 
 
 interface SignAndSubmitOptions {
@@ -25,5 +28,6 @@ export class SignAndSubmit {
     await ApplicationSolStatementOfTruthPage.applicationSolStatementOfTruthPage({page});
     await ApplicationSolPaymentPage.applicationSolPaymentPage({page, solicitorPayment});
     await ApplicationSolPayAccountPage.applicationSolPayAccountPage({page});
+    await ApplicationSolPaymentSummaryPage.applicationSolPaymentSummaryPage({page});
   }
 }

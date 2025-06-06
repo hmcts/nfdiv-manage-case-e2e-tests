@@ -9,6 +9,7 @@ export class Helpers {
     page: Page,
     chosenEvent: string,
   ): Promise<void> {
+    await page.waitForLoadState("load");
     await expect(page.locator("#next-step")).toBeVisible({ timeout: 60000});
     await page.selectOption("#next-step", chosenEvent);
     const goButton: Locator = page.getByRole("button", { name: "Go" });
