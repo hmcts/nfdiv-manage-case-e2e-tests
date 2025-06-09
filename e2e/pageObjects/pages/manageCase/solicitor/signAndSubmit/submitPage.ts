@@ -13,8 +13,8 @@ interface SignAndSubmitSubmitOptions {
 
 export class SignAndSubmitSubmitPage {
   public static async signAndSubmitSubmitPage({
-                                                         page,
-                                                       }: SignAndSubmitSubmitOptions): Promise<void> {
+  page,
+  }: SignAndSubmitSubmitOptions): Promise<void> {
     await this.checkPageLoads({
       page: page,
     });
