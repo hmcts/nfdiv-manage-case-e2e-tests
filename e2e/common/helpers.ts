@@ -17,7 +17,7 @@ export class Helpers {
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
     await expect.poll(
       async () => {
-        await delay(3000);
+        await delay(2000);
         const stillVisible = await goButton.isVisible();
         if (stillVisible) await goButton.click();
         return stillVisible;
