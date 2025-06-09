@@ -9,13 +9,16 @@ test.describe("Solicitor create application tests", (): void => {
   });
 
   test(`Log in as a solicitor and start creating a:
-  Not Accessibility testing,
+  Accessibility testing,
   Error message testing,
   saying yes to all options, @nightly @regression @smoke`, async ({
     page,
+    axeUtils
   }): Promise<void> => {
     await CreateCase.createCase({
       page: page,
+      accessibility: true,
+      axeUtil: axeUtils,
       solicitorPayment: "PBA"
     });
   });

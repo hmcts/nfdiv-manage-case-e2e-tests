@@ -4,6 +4,7 @@ import {
   ApplicationSolStatementOfTruthContent
 } from "../../../../content/manageCases/solicitor/signAndSubmit/applicationSolStatementOfTruthContent.ts";
 import {CommonContent} from "../../../../../common/commonContent.ts";
+import {AxeUtils} from "@hmcts/playwright-common";
 
 enum textBoxes {
   name = "#solStatementOfReconciliationName",
@@ -22,23 +23,33 @@ enum RadioButtons {
 
 interface ApplicationSolStatementOfTruthOptions {
   page: Page;
+  accessibility: boolean;
+  axeUtil: AxeUtils;
 }
 
 export class ApplicationSolStatementOfTruthPage {
   public static async applicationSolStatementOfTruthPage({
-                                        page,
-                                      }: ApplicationSolStatementOfTruthOptions): Promise<void> {
+    page,
+    accessibility,
+    axeUtil
+  }: ApplicationSolStatementOfTruthOptions): Promise<void> {
     await this.checkPageLoads({
       page: page,
     });
     await this.fillInFields({
       page: page,
     });
+    if (accessibility) {
+      await axeUtil.audit();
+    }
   }
 
   private static async checkPageLoads({
     page,
-  }: ApplicationSolStatementOfTruthOptions): Promise<void> {
+  }: Partial<ApplicationSolStatementOfTruthOptions>): Promise<void> {
+    if (!page) {
+      throw new Error("Page is not defined)");
+    }
     await page.locator(
       `${Selectors.GovukHeadingL}:text-is("${ApplicationSolStatementOfTruthContent.pageTitle}")`
     ).waitFor();
@@ -61,8 +72,11 @@ export class ApplicationSolStatementOfTruthPage {
   }
 
   private static async fillInFields({
-                                      page,
-                                    }: ApplicationSolStatementOfTruthOptions): Promise<void> {
+    page,
+  }: Partial<ApplicationSolStatementOfTruthOptions>): Promise<void> {
+    if (!page) {
+      throw new Error("Page is not defined)");
+    }
     for (const selector of Object.values(RadioButtons)) {
       await page.click(selector);
   }

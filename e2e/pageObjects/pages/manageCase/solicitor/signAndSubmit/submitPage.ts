@@ -6,14 +6,19 @@ import {
   ApplicationSolPayAccountContent
 } from "../../../../content/manageCases/solicitor/signAndSubmit/applicationSolPayAccountContent.ts";
 import {SignAndSubmitSubmitContent} from "../../../../content/manageCases/solicitor/signAndSubmit/submitContent.ts";
+import {AxeUtils} from "@hmcts/playwright-common";
 
 interface SignAndSubmitSubmitOptions {
   page: Page;
+  accessibility: boolean;
+  axeUtil: AxeUtils;
 }
 
 export class SignAndSubmitSubmitPage {
   public static async signAndSubmitSubmitPage({
-  page,
+    page,
+    accessibility,
+    axeUtil
   }: SignAndSubmitSubmitOptions): Promise<void> {
     await this.checkPageLoads({
       page: page,
@@ -21,6 +26,9 @@ export class SignAndSubmitSubmitPage {
     await this.fillInFields({
       page: page,
     });
+    if (accessibility) {
+      await axeUtil.audit()
+    }
   }
 
   private static async checkPageLoads({
@@ -63,7 +71,10 @@ export class SignAndSubmitSubmitPage {
 
   private static async fillInFields({
   page,
-  }: SignAndSubmitSubmitOptions): Promise<void> {
+  }: Partial<SignAndSubmitSubmitOptions>): Promise<void> {
+    if (!page) {
+      throw new Error("Page is not defined)");
+    }
     await page.click(`${Selectors.button}:text-is("${CommonContent.submitApplication}")`);
   }
 }

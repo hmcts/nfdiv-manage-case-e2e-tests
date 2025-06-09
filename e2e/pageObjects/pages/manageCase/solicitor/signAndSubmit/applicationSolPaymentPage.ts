@@ -4,6 +4,7 @@ import {
   ApplicationSolPaymentContent
 } from "../../../../content/manageCases/solicitor/signAndSubmit/applicationSolPaymentContent.ts";
 import {CommonContent} from "../../../../../common/commonContent.ts";
+import {AxeUtils} from "@hmcts/playwright-common";
 
 enum RadioButtons {
   PBA = "#solPaymentHowToPay-feePayByAccount",
@@ -14,12 +15,16 @@ export type paymentMethod = "PBA" | "HWF";
 
 interface ApplicationSolPaymentOptions {
   page: Page;
+  accessibility: boolean;
+  axeUtil: AxeUtils;
   solicitorPayment: paymentMethod;
 }
 
 export class ApplicationSolPaymentPage {
   public static async applicationSolPaymentPage({
     page,
+    accessibility,
+    axeUtil,
     solicitorPayment
   }: ApplicationSolPaymentOptions): Promise<void> {
     await this.checkPageLoads({
@@ -29,6 +34,9 @@ export class ApplicationSolPaymentPage {
       page: page,
       solicitorPayment
     });
+    if (accessibility) {
+      await axeUtil.audit()
+    }
   }
 
   private static async checkPageLoads({
@@ -65,7 +73,10 @@ export class ApplicationSolPaymentPage {
   private static async fillInFields({
     page,
     solicitorPayment
-  }: ApplicationSolPaymentOptions): Promise<void> {
+  }: Partial<ApplicationSolPaymentOptions>): Promise<void> {
+    if (!page) {
+      throw new Error("Page is not defined)");
+    }
     if (solicitorPayment === "PBA") {
       await page.click(RadioButtons.PBA)
     } else if (solicitorPayment === "HWF") {

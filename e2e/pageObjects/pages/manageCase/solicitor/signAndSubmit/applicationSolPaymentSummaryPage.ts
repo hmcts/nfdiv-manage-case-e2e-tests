@@ -8,14 +8,19 @@ import {
 import {
   ApplicationSolPayAccountContent
 } from "../../../../content/manageCases/solicitor/signAndSubmit/applicationSolPayAccountContent.ts";
+import {AxeUtils} from "@hmcts/playwright-common";
 
 interface ApplicationSolPaymentSummaryOptions {
   page: Page;
+  accessibility: boolean;
+  axeUtil: AxeUtils;
 }
 
 export class ApplicationSolPaymentSummaryPage {
   public static async applicationSolPaymentSummaryPage({
                                                   page,
+    accessibility,
+    axeUtil
                                                 }: ApplicationSolPaymentSummaryOptions): Promise<void> {
     await this.checkPageLoads({
       page: page,
@@ -23,6 +28,9 @@ export class ApplicationSolPaymentSummaryPage {
     await this.fillInFields({
       page: page,
     });
+    if (accessibility) {
+      await axeUtil.audit()
+    }
   }
 
   private static async checkPageLoads({
@@ -42,8 +50,11 @@ export class ApplicationSolPaymentSummaryPage {
   }
 
   private static async fillInFields({
-                                      page,
-                                    }: ApplicationSolPaymentSummaryOptions): Promise<void> {
+    page,
+  }: Partial<ApplicationSolPaymentSummaryOptions>): Promise<void> {
+    if (!page) {
+      throw new Error("Page is not defined)");
+    }
     await page.click(`${Selectors.button}:text-is("${CommonContent.continue}")`);
   }
 }

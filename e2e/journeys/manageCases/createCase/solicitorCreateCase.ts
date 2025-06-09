@@ -4,18 +4,23 @@ import {SignAndSubmit} from "./solicitor/signAndSubmit/signAndSubmit.ts";
 import {
   paymentMethod
 } from "../../../pageObjects/pages/manageCase/solicitor/signAndSubmit/applicationSolPaymentPage.ts";
+import {AxeUtils} from "@hmcts/playwright-common";
 
 interface CreateCaseOptions {
   page: Page;
+  accessibility: boolean;
+  axeUtil: AxeUtils;
   solicitorPayment: paymentMethod;
 }
 
 export class CreateCase {
   public static async createCase({
-                                   page,
-                                   solicitorPayment
-                                 }: CreateCaseOptions): Promise<void> {
+    page,
+    accessibility,
+    axeUtil,
+    solicitorPayment
+  }: CreateCaseOptions): Promise<void> {
     await SolicitorDraftDivorceApplication.draftApplication({page});
-    await SignAndSubmit.signAndSubmit({page, solicitorPayment});
+    await SignAndSubmit.signAndSubmit({page, accessibility, axeUtil, solicitorPayment});
   }
 }

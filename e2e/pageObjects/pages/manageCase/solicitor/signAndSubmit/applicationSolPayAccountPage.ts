@@ -4,6 +4,9 @@ import {CommonContent} from "../../../../../common/commonContent.ts";
 import {
   ApplicationSolPayAccountContent
 } from "../../../../content/manageCases/solicitor/signAndSubmit/applicationSolPayAccountContent.ts";
+import {AxeUtils} from "@hmcts/playwright-common";
+
+
 
 enum UniqueSelectors {
   accountNumberSelectOption = "#pbaNumbers",
@@ -12,23 +15,30 @@ enum UniqueSelectors {
 
 interface ApplicationSolPayAccountOptions {
   page: Page;
+  accessibility: boolean;
+  axeUtil: AxeUtils;
 }
 
 export class ApplicationSolPayAccountPage {
   public static async applicationSolPayAccountPage({
-                                                  page,
-                                                }: ApplicationSolPayAccountOptions): Promise<void> {
+  page,
+                                                     accessibility,
+    axeUtil
+  }: ApplicationSolPayAccountOptions): Promise<void> {
     await this.checkPageLoads({
       page: page,
     });
     await this.fillInFields({
       page: page,
     });
+    if (accessibility) {
+      await axeUtil.audit()
+    }
   }
 
   private static async checkPageLoads({
-                                        page,
-                                      }: Partial<ApplicationSolPayAccountOptions>): Promise<void> {
+  page,
+  }: Partial<ApplicationSolPayAccountOptions>): Promise<void> {
     if (!page) {
       throw new Error("Page is not defined)");
     }
@@ -52,7 +62,10 @@ export class ApplicationSolPayAccountPage {
 
   private static async fillInFields({
                                       page,
-                                    }: ApplicationSolPayAccountOptions): Promise<void> {
+                                    }: Partial<ApplicationSolPayAccountOptions>): Promise<void> {
+    if (!page) {
+      throw new Error("Page is not defined)");
+    }
     await page.selectOption(UniqueSelectors.accountNumberSelectOption, ApplicationSolPayAccountContent.pbaNumber);
     await page.fill(UniqueSelectors.paymentReferenceTextBox, ApplicationSolPayAccountContent.reference);
     await page.click(`${Selectors.button}:text-is("${CommonContent.continue}")`);
