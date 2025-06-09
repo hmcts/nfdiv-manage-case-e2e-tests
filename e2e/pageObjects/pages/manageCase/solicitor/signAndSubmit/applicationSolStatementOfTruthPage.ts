@@ -54,10 +54,10 @@ export class ApplicationSolStatementOfTruthPage {
       `${Selectors.GovukHeadingL}:text-is("${ApplicationSolStatementOfTruthContent.pageTitle}")`
     ).waitFor();
     const headings = [
-      ApplicationSolStatementOfTruthContent.h21,
-      ApplicationSolStatementOfTruthContent.h22,
-      ApplicationSolStatementOfTruthContent.h23,
-      ApplicationSolStatementOfTruthContent.h24,
+      ApplicationSolStatementOfTruthContent.h2_1,
+      ApplicationSolStatementOfTruthContent.h2_2,
+      ApplicationSolStatementOfTruthContent.h2_3,
+      ApplicationSolStatementOfTruthContent.h2_4,
     ];
 
     for (const text of headings) {
