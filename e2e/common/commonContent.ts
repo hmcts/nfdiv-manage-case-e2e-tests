@@ -1,3 +1,5 @@
 export enum CommonContent {
-  continue = "Continue"
+  continue = "Continue",
+  Yes = "Yes",
+  submitApplication = "Submit Application"
 }
