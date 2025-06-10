@@ -19,7 +19,7 @@ export default tseslint.config(
       "@typescript-eslint/no-floating-promises": "error",
       // This rule should be enabled when enums are converted
       "@typescript-eslint/no-duplicate-enum-values": "off",
-      "indent": ["error", 4]
+      "indent": ["error", 2]
     },
   },
   {

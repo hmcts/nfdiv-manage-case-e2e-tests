@@ -39,56 +39,56 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const config: Config = {
-    users: {
-        solicitor: {
-            username: getEnvVar("SOLICITOR_USERNAME"),
-            password: getEnvVar("SOLICITOR_PASSWORD"),
-            sessionFile: path.join(
-                __dirname,
-                ".sessions",
-                `${getEnvVar("SOLICITOR_USERNAME")}.json`),
-            cookieName: "xui-webapp",
-        },
-        caseworker: {
-            username: getEnvVar("CASEWORKER_USERNAME"),
-            password: getEnvVar("CASEWORKER_PASSWORD"),
-            sessionFile: path.join(
-                __dirname,
-                ".sessions",
-                `${getEnvVar("CASEWORKER_USERNAME")}.json`),
-            cookieName: "xui-webapp",
-        },
-        legalAdvisor: {
-            username: getEnvVar("LEGALADVISOR_USERNAME"),
-            password: getEnvVar("LEGALADVISOR_PASSWORD"),
-            sessionFile: path.join(
-                __dirname,
-                ".sessions",
-                `${getEnvVar("LEGALADVISOR_USERNAME")}.json`),
-            cookieName: "xui-webapp",
-        },
+  users: {
+    solicitor: {
+      username: getEnvVar("SOLICITOR_USERNAME"),
+      password: getEnvVar("SOLICITOR_PASSWORD"),
+      sessionFile: path.join(
+        __dirname,
+        ".sessions",
+        `${getEnvVar("SOLICITOR_USERNAME")}.json`),
+      cookieName: "xui-webapp",
     },
-    urls: {
-        exuiDefaultUrl: "https://manage-case.aat.platform.hmcts.net",
-        manageCaseBaseUrl:
+    caseworker: {
+      username: getEnvVar("CASEWORKER_USERNAME"),
+      password: getEnvVar("CASEWORKER_PASSWORD"),
+      sessionFile: path.join(
+        __dirname,
+        ".sessions",
+        `${getEnvVar("CASEWORKER_USERNAME")}.json`),
+      cookieName: "xui-webapp",
+    },
+    legalAdvisor: {
+      username: getEnvVar("LEGALADVISOR_USERNAME"),
+      password: getEnvVar("LEGALADVISOR_PASSWORD"),
+      sessionFile: path.join(
+        __dirname,
+        ".sessions",
+        `${getEnvVar("LEGALADVISOR_USERNAME")}.json`),
+      cookieName: "xui-webapp",
+    },
+  },
+  urls: {
+    exuiDefaultUrl: "https://manage-case.aat.platform.hmcts.net",
+    manageCaseBaseUrl:
       process.env.MANAGE_CASES_BASE_URL ||
       "https://manage-case.aat.platform.hmcts.net/cases",
-    },
-    files: {
-        doc: path.resolve(__dirname, './assets/mockFile.docx'),
-        mp3: path.resolve(__dirname, './assets/mockFile.mp3'),
-        odt: path.resolve(__dirname, './assets/mockFile.odt'),
-        pdf: path.resolve(__dirname, './assets/mockFile.pdf'),
-        txt: path.resolve(__dirname, './assets/mockFile.txt'),
-    }
+  },
+  files: {
+    doc: path.resolve(__dirname, './assets/mockFile.docx'),
+    mp3: path.resolve(__dirname, './assets/mockFile.mp3'),
+    odt: path.resolve(__dirname, './assets/mockFile.odt'),
+    pdf: path.resolve(__dirname, './assets/mockFile.pdf'),
+    txt: path.resolve(__dirname, './assets/mockFile.txt'),
+  }
 };
 
 function getEnvVar(name: string): string {
-    const value = process.env[name];
-    if (!value) {
-        throw new Error(`Error: ${name} environment variable is not set`);
-    }
-    return value;
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`Error: ${name} environment variable is not set`);
+  }
+  return value;
 }
 
 
