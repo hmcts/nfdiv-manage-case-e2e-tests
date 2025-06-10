@@ -19,46 +19,46 @@ enum SelectOptionsElementIds {
 
 export class ApplicantTwoServiceDetailsPage {
 
-  public static async applicantTwoServiceDetails(
-    page: Page,
-  ): Promise<void> {
+    public static async applicantTwoServiceDetails(
+        page: Page,
+    ): Promise<void> {
 
-    await this.checkPageLoads(page);
-    await this.fillInFields(page);
-  }
-
-  private static async checkPageLoads(
-    page: Page,
-  ): Promise<void> {
-    await page.locator(`${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
-  }
-
-  private static async fillInFields(
-    page: Page,
-  ): Promise<void> {
-
-    await page.locator(RadioButtonElementIds.applicant2SolicitorRepresentedNo).check();
-    await page.locator('h1:text("Respondent service details")').waitFor();
-
-    const textFields: { elementId: string, fieldValue: string }[] = [
-      {elementId: InputFieldElementIds.applicant2Email, fieldValue: AboutApplicantsContent.applicant2Email},
-      {elementId: InputFieldElementIds.applicant2Postcode, fieldValue: AboutApplicantsContent.applicantPostcode},
-    ];
-
-    for (const textField of textFields) {
-      await page.fill(textField.elementId, textField.fieldValue);
+        await this.checkPageLoads(page);
+        await this.fillInFields(page);
     }
 
-    await page.click(
-      `${Selectors.button}:text-is("${CommonContent.findAddressButton}")`,
-    );
+    private static async checkPageLoads(
+        page: Page,
+    ): Promise<void> {
+        await page.locator(`${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
+    }
 
-    await page.locator(SelectOptionsElementIds.addressList).waitFor();
-    await page.selectOption(SelectOptionsElementIds.addressList, {value: '1: Object'});
-    await page.locator(RadioButtonElementIds.applicant2AddressOverseasNo).check();
+    private static async fillInFields(
+        page: Page,
+    ): Promise<void> {
 
-    await page.click(
-      `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
-    );
-  }
+        await page.locator(RadioButtonElementIds.applicant2SolicitorRepresentedNo).check();
+        await page.locator('h1:text("Respondent service details")').waitFor();
+
+        const textFields: { elementId: string, fieldValue: string }[] = [
+            {elementId: InputFieldElementIds.applicant2Email, fieldValue: AboutApplicantsContent.applicant2Email},
+            {elementId: InputFieldElementIds.applicant2Postcode, fieldValue: AboutApplicantsContent.applicantPostcode},
+        ];
+
+        for (const textField of textFields) {
+            await page.fill(textField.elementId, textField.fieldValue);
+        }
+
+        await page.click(
+            `${Selectors.button}:text-is("${CommonContent.findAddressButton}")`,
+        );
+
+        await page.locator(SelectOptionsElementIds.addressList).waitFor();
+        await page.selectOption(SelectOptionsElementIds.addressList, {value: '1: Object'});
+        await page.locator(RadioButtonElementIds.applicant2AddressOverseasNo).check();
+
+        await page.click(
+            `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
+        );
+    }
 }

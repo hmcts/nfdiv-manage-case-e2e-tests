@@ -1,7 +1,7 @@
 import {
-  AxeUtils,
-  LighthouseUtils,
-  SessionUtils,
+    AxeUtils,
+    LighthouseUtils,
+    SessionUtils,
 } from "@hmcts/playwright-common";
 import {config, Config} from "../config.ts";
 import path from "path";
@@ -20,36 +20,36 @@ export interface UtilsFixtures {
 }
 
 export const utilsFixtures = {
-  config: async ({}, use) => {
-    await use(config);
-  },
-  cookieUtils: async ({}, use) => {
-    await use(new CookieUtils());
-  },
-  SessionUtils: async ({}, use) => {
-    await use(SessionUtils);
-  },
-  axeUtils: async ({ page }, use) => {
-    await use(new AxeUtils(page));
-  },
-  lighthousePage: async ({ lighthousePort, page }, use, testInfo) => {
+    config: async ({}, use) => {
+        await use(config);
+    },
+    cookieUtils: async ({}, use) => {
+        await use(new CookieUtils());
+    },
+    SessionUtils: async ({}, use) => {
+        await use(SessionUtils);
+    },
+    axeUtils: async ({ page }, use) => {
+        await use(new AxeUtils(page));
+    },
+    lighthousePage: async ({ lighthousePort, page }, use, testInfo) => {
     // Prevent creating performance page if not needed
-    if (testInfo.tags.includes("@performance")) {
-      // Lighthouse opens a new page and as playwright doesn't share context we need to
-      // explicitly create a new browser with shared context
-      const userDataDir = path.join(os.tmpdir(), "pw", String(Math.random()));
-      const context = await chromium.launchPersistentContext(userDataDir, {
-        args: [`--remote-debugging-port=${lighthousePort}`],
-      });
-      // Using the cookies from global setup, inject to the new browser
-      await context.addCookies(
-        SessionUtils.getCookies(config.users.solicitor.sessionFile)
-      );
-      // Provide the page to the test
-      await use(context.pages()[0]);
-      await context.close();
-    } else {
-      await use(page);
-    }
-  },
+        if (testInfo.tags.includes("@performance")) {
+            // Lighthouse opens a new page and as playwright doesn't share context we need to
+            // explicitly create a new browser with shared context
+            const userDataDir = path.join(os.tmpdir(), "pw", String(Math.random()));
+            const context = await chromium.launchPersistentContext(userDataDir, {
+                args: [`--remote-debugging-port=${lighthousePort}`],
+            });
+            // Using the cookies from global setup, inject to the new browser
+            await context.addCookies(
+                SessionUtils.getCookies(config.users.solicitor.sessionFile)
+            );
+            // Provide the page to the test
+            await use(context.pages()[0]);
+            await context.close();
+        } else {
+            await use(page);
+        }
+    },
 }

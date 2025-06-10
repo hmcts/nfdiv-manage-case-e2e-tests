@@ -1,6 +1,5 @@
 export enum ApplicationSolPaymentContent {
   pageTitle = "Payment for this application",
-  price = "£612",
   div = "Order Summary",
   td = "FEE0002",
   formLabel1 = "How is payment being made?",

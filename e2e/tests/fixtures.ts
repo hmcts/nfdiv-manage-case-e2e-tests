@@ -8,17 +8,17 @@ export type CustomFixtures = PageFixtures & UtilsFixtures;
 
 // Create test with just the fixtures you want
 export const test = baseTest.extend<CustomFixtures, { lighthousePort: number }>(
-  {
-    ...pageFixtures,
-    ...utilsFixtures,
-    // Worker scoped fixtures need to be defined separately
-    lighthousePort: [
-      async ({}, use) => {
-        const port = await getPort();
-        await use(port);
-      },
-      { scope: "worker" },
-    ],
-  }
+    {
+        ...pageFixtures,
+        ...utilsFixtures,
+        // Worker scoped fixtures need to be defined separately
+        lighthousePort: [
+            async ({}, use) => {
+                const port = await getPort();
+                await use(port);
+            },
+            { scope: "worker" },
+        ],
+    }
 );
 

@@ -1,5 +1,6 @@
 export enum CommonContent {
   continue = "Continue",
   Yes = "Yes",
-  submitApplication = "Submit Application"
+  submitApplication = "Submit Application",
+  fee = "£612.00",
 }

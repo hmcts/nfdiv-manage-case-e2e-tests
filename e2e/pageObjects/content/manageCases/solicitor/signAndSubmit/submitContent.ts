@@ -9,5 +9,4 @@ export enum SignAndSubmitSubmitContent {
   text165 = "Solicitor fee account (PBA)",
   text166 = "PBA0082311",
   text167 = "Test",
-  text168 = "£612.00",
 }
