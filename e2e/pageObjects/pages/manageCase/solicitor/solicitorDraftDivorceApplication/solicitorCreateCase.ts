@@ -1,6 +1,6 @@
 import {Page} from "@playwright/test";
-import { Selectors } from "../../../../common/selectors.ts";
-import {CommonContent} from "../../../content/CommonContent.ts";
+import { Selectors } from "../../../../../common/selectors.ts";
+import {CommonContent} from "../../../../content/CommonContent.ts";
 
 enum fieldIds {
   jurisdiction = "#cc-jurisdiction",

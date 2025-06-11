@@ -1,4 +1,5 @@
 import {
+  AxeUtils,
   LighthouseUtils,
   SessionUtils,
 } from "@hmcts/playwright-common";
@@ -13,6 +14,7 @@ export interface UtilsFixtures {
   config: Config;
   cookieUtils: CookieUtils;
   SessionUtils: typeof SessionUtils;
+  axeUtils: AxeUtils;
   lighthouseUtils: LighthouseUtils;
   lighthousePage: Page;
 }
@@ -26,6 +28,9 @@ export const utilsFixtures = {
   },
   SessionUtils: async ({}, use) => {
     await use(SessionUtils);
+  },
+  axeUtils: async ({ page }, use) => {
+    await use(new AxeUtils(page));
   },
   lighthousePage: async ({ lighthousePort, page }, use, testInfo) => {
     // Prevent creating performance page if not needed
