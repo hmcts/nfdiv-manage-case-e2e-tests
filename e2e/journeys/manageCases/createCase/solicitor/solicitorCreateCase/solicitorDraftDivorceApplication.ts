@@ -38,9 +38,7 @@ export class SolicitorDraftDivorceApplication {
   public static async draftApplication({
     page,
   } : SolicitorCreateOptions ): Promise<void> {
-
     await CommonPage.navigateToCreateCasePage(page);
-
     await SolicitorCreatePage.solicitorCreatePage(page);
     await HowDoYouWantToApplyForDivorcePage.createApplicationTypePage(page);
     await SolAboutTheSolicitorPage.solAboutTheSolicitor(page);

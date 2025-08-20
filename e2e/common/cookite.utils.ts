@@ -9,29 +9,7 @@ export class CookieUtils {
     analytics cookies manually and then check the added cookie under Application -> Cookies in developer tools
      */
     if (user === config.users.solicitor) {
-      await this.addCitizenAnalyticsCookie(user.sessionFile);
-    } else {
       await this.addManageCasesAnalyticsCookie(user.sessionFile);
-    }
-  }
-
-  private async addCitizenAnalyticsCookie(sessionPath: string): Promise<void> {
-    try {
-      const domain = (config.urls.manageCaseBaseUrl as string).replace("https://", "");
-      const state = JSON.parse(fs.readFileSync(sessionPath, "utf-8"));
-      state.cookies.push({
-        name: `prl-cookie-preferences`,
-        value: JSON.stringify({ analytics: "on", apm: "on" }),
-        domain: `${domain}`,
-        path: "/",
-        expires: -1,
-        httpOnly: false,
-        secure: false,
-        sameSite: "Lax",
-      });
-      fs.writeFileSync(sessionPath, JSON.stringify(state, null, 2));
-    } catch (error) {
-      throw new Error(`Failed to read or write session data: ${error}`);
     }
   }
 
