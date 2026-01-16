@@ -39,7 +39,7 @@ export class ApplicationSolPaymentSummaryPage {
     if (!page) {
       throw new Error("Page is not defined)");
     }
-    await page.locator(`${Selectors.GovukHeadingL}:text-is("${ApplicationSolPayAccountContent.pageTitle}")`).waitFor();
+    await page.locator(`${Selectors.GovukCaptionL}:text-is("${ApplicationSolPayAccountContent.pageTitle}")`).waitFor();
     const pTag = page.locator(`${Selectors.p}:text-is("${ApplicationSolPaymentSummaryContent.p}")`);
     const strong = page.locator(`${Selectors.strong}:text-is("${ApplicationSolPayAccountContent.reference}")`);
     await Promise.all([

@@ -19,7 +19,7 @@ export class HowDoYouWantToApplyForDivorcePage {
   private static async checkPageLoads(
     page: Page,
   ): Promise<void> {
-    await page.locator(`${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
+    await page.locator(`${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
   }
 
   private static async fillInFields(
