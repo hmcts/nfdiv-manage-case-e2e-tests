@@ -7,12 +7,10 @@ enum InputFieldElementIds {
   marriageDateDay = '#marriageDate-day',
   marriageDateMonth = '#marriageDate-month',
   marriageDateYear = '#marriageDate-year',
-  marriageApplicant1Name = '#marriageApplicant1Name',
-  marriageApplicant2Name = '#marriageApplicant2Name',
 }
 
 enum RadioButtonElementIds {
-  marriageMarriedInUkYes = '#marriageMarriedInUk_Yes',
+  marriageMarriedInUkYes = 'label[for="marriageMarriedInUk_Yes"]',
 }
 
 export class MarriageCertificateDetailsPage {
@@ -40,8 +38,6 @@ export class MarriageCertificateDetailsPage {
       {elementId: InputFieldElementIds.marriageDateDay, fieldValue: marriageDate[0]},
       {elementId: InputFieldElementIds.marriageDateMonth, fieldValue: marriageDate[1]},
       {elementId: InputFieldElementIds.marriageDateYear, fieldValue: marriageDate[2]},
-    //  {elementId: InputFieldElementIds.marriageApplicant1Name, fieldValue: AboutApplicantsContent.marriageApplicant1Name},
-    //  {elementId: InputFieldElementIds.marriageApplicant2Name, fieldValue: AboutApplicantsContent.marriageApplicant2Name},
     ];
 
     for (const textField of textFields) {
@@ -50,7 +46,7 @@ export class MarriageCertificateDetailsPage {
 
     // I was getting issue with clicking the radio button.
     // AI suggested changing to this which works
-    await page.click('label[for="marriageMarriedInUk_Yes"]');
+    await page.click(RadioButtonElementIds.marriageMarriedInUkYes);
     await page.click('text="Yes"');
 
     await page.click(
