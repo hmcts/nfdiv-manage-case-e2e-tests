@@ -1,57 +1,43 @@
+import { Page, expect, type Locator } from "@playwright/test";
+import { Selectors } from "../../../../../common/selectors.ts";
+import { AccessibilityOptions } from "../../../../types.ts";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
+import { ApplicationSolPaymentSummaryContent } from "../constants/signAndSubmitContent.ts";
 
-import {Page, expect} from "@playwright/test";
-import {Selectors} from "../../../../../common/selectors.ts";
-import {CommonContent} from "../../../../../common/commonContent.ts";
-import {
-  ApplicationSolPaymentSummaryContent
-} from "../../../../content/manageCases/solicitor/signAndSubmit/applicationSolPaymentSummaryContent.ts";
-import {
-  ApplicationSolPayAccountContent
-} from "../../../../content/manageCases/solicitor/signAndSubmit/applicationSolPayAccountContent.ts";
-import {AxeUtils} from "@hmcts/playwright-common";
+export class ApplicationSolPaymentSummaryPage extends BaseJourneyPage {
+  private readonly paymentMethodP: Locator;
+  private readonly referenceStrong: Locator;
 
-interface ApplicationSolPaymentSummaryOptions {
-  page: Page;
-  accessibility: boolean;
-  axeUtil: AxeUtils;
-}
+  constructor(readonly page: Page) {
+    super(page);
+    this.paymentMethodP = page.locator(
+      `${Selectors.p}:text-is("${ApplicationSolPaymentSummaryContent.content.paymentMethod}")`,
+    );
+    this.referenceStrong = page.locator(
+      `${Selectors.strong}:text-is("${ApplicationSolPaymentSummaryContent.content.reference}")`,
+    );
+  }
 
-export class ApplicationSolPaymentSummaryPage {
-  public static async applicationSolPaymentSummaryPage({
-    page,
+  public async applicationSolPaymentSummaryPage({
     accessibility,
-    axeUtil
-  }: ApplicationSolPaymentSummaryOptions): Promise<void> {
-    await this.checkPageLoads({
-      page: page,
-    });
-    await this.fillInFields({
-      page: page,
-    });
+    axeUtil,
+  }: AccessibilityOptions): Promise<void> {
+    await this.checkPageLoads();
+    await this.fillInFields();
     if (accessibility) {
-      await axeUtil.audit()
+      await axeUtil.audit();
     }
   }
 
-  private static async checkPageLoads({
-    page,
-  }: Partial<ApplicationSolPaymentSummaryOptions>): Promise<void> {
-    if (!page) {
-      throw new Error("Page is not defined)");
-    }
-    await page.locator(`${Selectors.GovukHeadingL}:text-is("${ApplicationSolPayAccountContent.pageTitle}")`).waitFor();
-    const pTag = page.locator(`${Selectors.p}:text-is("${ApplicationSolPaymentSummaryContent.p}")`);
-    const strong = page.locator(`${Selectors.strong}:text-is("${ApplicationSolPayAccountContent.reference}")`);
+  private async checkPageLoads(): Promise<void> {
+    await this.assertPageHeading(ApplicationSolPaymentSummaryContent.content.pageTitle);
     await Promise.all([
-      expect(pTag).toBeVisible(),
-      expect(strong).toBeVisible(),
+      expect(this.paymentMethodP).toBeVisible(),
+      expect(this.referenceStrong).toBeVisible(),
     ]);
-
   }
 
-  private static async fillInFields({
-    page,
-  }: Partial<ApplicationSolPaymentSummaryOptions>): Promise<void> {
-    await page?.click(`${Selectors.button}:text-is("${CommonContent.continue}")`);
+  private async fillInFields(): Promise<void> {
+    await this.clickContinue();
   }
 }
