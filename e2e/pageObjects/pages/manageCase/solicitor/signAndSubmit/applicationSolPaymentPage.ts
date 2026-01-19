@@ -74,5 +74,6 @@ export class ApplicationSolPaymentPage {
   }:Partial<ApplicationSolPaymentOptions>): Promise<void> {
     await page?.click(solicitorPayment as string);
     await page?.click(`${Selectors.button}:text-is("${CommonContent.continue}")`);
+    await page?.waitForTimeout(1500);
   }
 }
