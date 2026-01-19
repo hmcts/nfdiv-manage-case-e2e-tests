@@ -1436,7 +1436,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.48.2":
+"@playwright/test@npm:^1.55.1":
   version: 1.57.0
   resolution: "@playwright/test@npm:1.57.0"
   dependencies:
@@ -3337,11 +3337,11 @@ __metadata:
   linkType: hard
 
 "fastq@npm:^1.6.0":
-  version: 1.19.1
-  resolution: "fastq@npm:1.19.1"
+  version: 1.20.1
+  resolution: "fastq@npm:1.20.1"
   dependencies:
     reusify: "npm:^1.0.4"
-  checksum: 10c0/ebc6e50ac7048daaeb8e64522a1ea7a26e92b3cee5cd1c7f2316cdca81ba543aa40a136b53891446ea5c3a67ec215fbaca87ad405f102dd97012f62916905630
+  checksum: 10c0/e5dd725884decb1f11e5c822221d76136f239d0236f176fab80b7b8f9e7619ae57e6b4e5b73defc21e6b9ef99437ee7b545cff8e6c2c337819633712fa9d352e
   languageName: node
   linkType: hard
 
@@ -5115,7 +5115,7 @@ __metadata:
     "@hmcts/playwright-common": "npm:1.1.0"
     "@jest/globals": "npm:^29.7.0"
     "@jest/types": "npm:^29.6.3"
-    "@playwright/test": "npm:^1.48.2"
+    "@playwright/test": "npm:^1.55.1"
     "@types/jest": "npm:^29.5.12"
     "@types/node": "npm:^22.6.1"
     "@typescript-eslint/eslint-plugin": "npm:^8.8.0"
@@ -5129,8 +5129,8 @@ __metadata:
     globals: "npm:^15.10.0"
     jest: "npm:^29.7.0"
     lighthouse: "npm:^12.2.1"
-    playwright: "npm:^1.48.2"
-    playwright-core: "npm:^1.48.2"
+    playwright: "npm:^1.55.1"
+    playwright-core: "npm:^1.55.1"
     playwright-lighthouse: "npm:^4.0.0"
     simple-git: "npm:^3.27.0"
     ts-jest: "npm:^29.2.5"
@@ -5481,16 +5481,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.54.2":
-  version: 1.54.2
-  resolution: "playwright-core@npm:1.54.2"
-  bin:
-    playwright-core: cli.js
-  checksum: 10c0/44850e20bf35237c8c3dedf1096c655f8af939dde53c5469f72cae3dd744966858a302419b909a73d7a2093323123e7ebcc0fdd55151b4193afb7812c1fd2c88
-  languageName: node
-  linkType: hard
-
-"playwright-core@npm:1.57.0, playwright-core@npm:^1.48.2":
+"playwright-core@npm:1.57.0, playwright-core@npm:^1.55.1":
   version: 1.57.0
   resolution: "playwright-core@npm:1.57.0"
   bin:
@@ -5515,7 +5506,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright@npm:1.57.0":
+"playwright@npm:1.57.0, playwright@npm:^1.55.1":
   version: 1.57.0
   resolution: "playwright@npm:1.57.0"
   dependencies:
@@ -5527,21 +5518,6 @@ __metadata:
   bin:
     playwright: cli.js
   checksum: 10c0/ab03c99a67b835bdea9059f516ad3b6e42c21025f9adaa161a4ef6bc7ca716dcba476d287140bb240d06126eb23f889a8933b8f5f1f1a56b80659d92d1358899
-  languageName: node
-  linkType: hard
-
-"playwright@npm:^1.48.2":
-  version: 1.54.2
-  resolution: "playwright@npm:1.54.2"
-  dependencies:
-    fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.54.2"
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  bin:
-    playwright: cli.js
-  checksum: 10c0/6f642fa70179eee5d5bf8a90df2a6147c9638ff926f4f3ad0a0517396b8a3fe00ccebf13377e032a75b3f0b2610ec1562293e0cfc3bde234181c7a50af8af80a
   languageName: node
   linkType: hard
 
