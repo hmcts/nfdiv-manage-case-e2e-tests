@@ -1,6 +1,6 @@
 import { test as baseTest } from "@playwright/test";
-import {utilsFixtures, UtilsFixtures} from "../common/utils.fixtures.ts";
-import {pageFixtures, PageFixtures} from "../pageObjects/pageFixtures.ts";
+import { utilsFixtures, UtilsFixtures } from "./utils.fixtures.ts";
+import { pageFixtures, PageFixtures } from "./page.fixtures.ts";
 import getPort from "get-port";
 
 // Combine your fixtures into one type
@@ -19,6 +19,5 @@ export const test = baseTest.extend<CustomFixtures, { lighthousePort: number }>(
       },
       { scope: "worker" },
     ],
-  }
+  },
 );
-
