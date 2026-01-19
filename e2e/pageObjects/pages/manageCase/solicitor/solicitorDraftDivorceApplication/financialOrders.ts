@@ -1,35 +1,28 @@
-import {Page} from "@playwright/test";
-import {Selectors} from "../../../../../common/selectors.ts";
-import {CommonContent} from "../../../../content/CommonContent.ts";
+import { Page, type Locator } from "@playwright/test";
+import { CommonContent } from "../../../../../common/commonContent.ts";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
 
-enum RadioButtonElementIds {
-  applicant1FinancialOrderNo = '#applicant1FinancialOrder_No',
-}
+export class FinancialOrdersPage extends BaseJourneyPage {
+  private readonly appFinancialOrderNoRadio: Locator;
 
-export class FinancialOrdersPage {
-
-  public static async financialOrders(
-    page: Page,
-  ): Promise<void> {
-
-    await this.checkPageLoads(page);
-    await this.fillInFields(page);
-  }
-
-  private static async checkPageLoads(
-    page: Page,
-  ): Promise<void> {
-    await page.locator(`${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
-  }
-
-  private static async fillInFields(
-    page: Page,
-  ): Promise<void> {
-
-    await page.locator(RadioButtonElementIds.applicant1FinancialOrderNo).check();
-
-    await page.click(
-      `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
+  constructor(readonly page: Page) {
+    super(page);
+    this.appFinancialOrderNoRadio = page.locator(
+      "#applicant1FinancialOrder_No",
     );
+  }
+
+  public async financialOrders() {
+    await this.checkPageLoads();
+    await this.fillInFields();
+  }
+
+  private async checkPageLoads() {
+    await this.assertPageHeading(CommonContent.pageTitle);
+  }
+
+  private async fillInFields() {
+    await this.appFinancialOrderNoRadio.check();
+    await this.clickContinue();
   }
 }

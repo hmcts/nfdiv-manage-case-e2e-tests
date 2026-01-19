@@ -1,48 +1,52 @@
-import {Page} from "@playwright/test";
+import { Page, type Locator } from "@playwright/test";
 import { Selectors } from "../../../../../common/selectors.ts";
-import {CommonContent} from "../../../../content/CommonContent.ts";
+import { CommonContent } from "../../../../../common/commonContent.ts";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
 
-enum fieldIds {
-  jurisdiction = "#cc-jurisdiction",
-  caseType = "#cc-case-type",
-  event = "#cc-event",
-}
+export class SolicitorCreatePage extends BaseJourneyPage {
+  private readonly jurisdictionSelect: Locator;
+  private readonly caseTypeSelect: Locator;
+  private readonly eventSelect: Locator;
+  private readonly goButton: Locator;
 
-export class SolicitorCreatePage {
-  public static async solicitorCreatePage(
-    page: Page,
-  ): Promise<void> {
-
-    await this.checkPageLoads(page);
-    await this.fillInFields(page);
+  constructor(page: Page) {
+    super(page);
+    this.jurisdictionSelect = page.locator("#cc-jurisdiction");
+    this.caseTypeSelect = page.locator("#cc-case-type");
+    this.eventSelect = page.locator("#cc-event");
+    this.goButton = page.locator(
+      `${Selectors.button}:text-is("${CommonContent.button}")`,
+    );
   }
 
-  private static async checkPageLoads(
-    page: Page,
-  ): Promise<void> {
-    await page.locator(`${Selectors.GovukHeadingXL}:text-is("${CommonContent.createCase}")`,).waitFor();
+  public async solicitorCreatePage(): Promise<void> {
+    await this.checkPageLoads();
+    await this.fillInFields();
   }
 
-  private static async fillInFields(
-    page: Page,
-  ): Promise<void> {
-    await page.selectOption(fieldIds.jurisdiction, CommonContent.jurisdictionOption);
-    await page.selectOption(fieldIds.caseType, CommonContent.caseTypeOption);
-    // If event dropdown fails to load then fail the test fast - interim solution until the underlying problem is fixed
-    const eventDropdown = page.locator(fieldIds.event);
-    const eventOptions = await eventDropdown.evaluate((el: HTMLSelectElement) =>
-      Array.from(el.options).map((option) => option.value),
+  private async checkPageLoads(): Promise<void> {
+    await this.page
+      .locator(
+        `${Selectors.GovukHeadingXL}:text-is("${CommonContent.createCase}")`,
+      )
+      .waitFor();
+  }
+
+  private async fillInFields(): Promise<void> {
+    await this.jurisdictionSelect.selectOption(
+      CommonContent.jurisdictionOption,
+    );
+    await this.caseTypeSelect.selectOption(CommonContent.caseTypeOption);
+    const eventOptions = await this.eventSelect.evaluate(
+      (el: HTMLSelectElement) => Array.from(el.options).map((o) => o.value),
     );
     if (eventOptions.length <= 1) {
       console.log("Event dropdown failed to load, retrying...");
-      await page.reload();
-      await this.fillInFields(page);
+      await this.page.reload();
+      await this.fillInFields();
     }
 
-    await page.selectOption(fieldIds.event, CommonContent.pageTitle);
-
-    await page.click(
-      `${Selectors.button}:text-is("${CommonContent.button}")`,
-    );
+    await this.eventSelect.selectOption(CommonContent.pageTitle);
+    await this.goButton.click();
   }
 }

@@ -1,64 +1,65 @@
-import {Page} from "@playwright/test";
-import {Selectors} from "../../../../../common/selectors.ts";
-import {AboutApplicantsContent} from "../../../../content/manageCases/solicitor/solicitorCreateCase/aboutApplicantsContent.ts";
-import {CommonContent} from "../../../../content/CommonContent.ts";
+import { Page, type Locator } from "@playwright/test";
+import { Selectors } from "../../../../../common/selectors.ts";
+import { CommonContent } from "../../../../../common/commonContent.ts";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
+import { ApplicantTwoServiceDetailsContent } from "../constants/solicitorDraftDivorceApplicationContent.ts";
 
-enum InputFieldElementIds {
-  applicant2Email = '#applicant2Email',
-  applicant2Postcode = '#applicant2NonConfidentialAddress_applicant2NonConfidentialAddress_postcodeInput',
-}
+export class ApplicantTwoServiceDetailsPage extends BaseJourneyPage {
+  private readonly representedNo: Locator;
+  private readonly heading: Locator;
+  private readonly emailInput: Locator;
+  private readonly postcodeInput: Locator;
+  private readonly findAddressButton: Locator;
+  private readonly addressList: Locator;
+  private readonly overseasNo: Locator;
 
-enum RadioButtonElementIds {
-  applicant2SolicitorRepresentedNo = '#applicant2SolicitorRepresented_No',
-  applicant2AddressOverseasNo = '#applicant2AddressOverseas_No',
-}
-
-enum SelectOptionsElementIds {
-  addressList = '#applicant2NonConfidentialAddress_applicant2NonConfidentialAddress_addressList',
-}
-
-export class ApplicantTwoServiceDetailsPage {
-
-  public static async applicantTwoServiceDetails(
-    page: Page,
-  ): Promise<void> {
-
-    await this.checkPageLoads(page);
-    await this.fillInFields(page);
-  }
-
-  private static async checkPageLoads(
-    page: Page,
-  ): Promise<void> {
-    await page.locator(`${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
-  }
-
-  private static async fillInFields(
-    page: Page,
-  ): Promise<void> {
-
-    await page.locator(RadioButtonElementIds.applicant2SolicitorRepresentedNo).check();
-    await page.locator('h1:text("Respondent service details")').waitFor();
-
-    const textFields: { elementId: string, fieldValue: string }[] = [
-      {elementId: InputFieldElementIds.applicant2Email, fieldValue: AboutApplicantsContent.applicant2Email},
-      {elementId: InputFieldElementIds.applicant2Postcode, fieldValue: AboutApplicantsContent.applicantPostcode},
-    ];
-
-    for (const textField of textFields) {
-      await page.fill(textField.elementId, textField.fieldValue);
-    }
-
-    await page.click(
+  constructor(readonly page: Page) {
+    super(page);
+    this.representedNo = page.locator(
+      ApplicantTwoServiceDetailsContent.selectors.radioButtons
+        .applicant2SolicitorRepresentedNo,
+    );
+    this.heading = page.locator('h1:text("Respondent service details")');
+    this.emailInput = page.locator(
+      ApplicantTwoServiceDetailsContent.selectors.textBoxes.applicant2Email,
+    );
+    this.postcodeInput = page.locator(
+      ApplicantTwoServiceDetailsContent.selectors.textBoxes.applicant2Postcode,
+    );
+    this.findAddressButton = page.locator(
       `${Selectors.button}:text-is("${CommonContent.findAddressButton}")`,
     );
-
-    await page.locator(SelectOptionsElementIds.addressList).waitFor();
-    await page.selectOption(SelectOptionsElementIds.addressList, {value: '1: Object'});
-    await page.locator(RadioButtonElementIds.applicant2AddressOverseasNo).check();
-
-    await page.click(
-      `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
+    this.addressList = page.locator(
+      ApplicantTwoServiceDetailsContent.selectors.dropdowns.addressList,
     );
+    this.overseasNo = page.locator(
+      ApplicantTwoServiceDetailsContent.selectors.radioButtons
+        .applicant2AddressOverseasNo,
+    );
+  }
+
+  public async applicantTwoServiceDetails(): Promise<void> {
+    await this.checkPageLoads();
+    await this.fillInFields();
+  }
+
+  private async checkPageLoads(): Promise<void> {
+    await this.assertPageHeading(CommonContent.pageTitle);
+  }
+
+  private async fillInFields(): Promise<void> {
+    await this.representedNo.check();
+    await this.heading.waitFor();
+    await this.emailInput.fill(
+      ApplicantTwoServiceDetailsContent.content.applicant2Email,
+    );
+    await this.postcodeInput.fill(
+      ApplicantTwoServiceDetailsContent.content.applicantPostcode,
+    );
+    await this.findAddressButton.click();
+    await this.addressList.waitFor();
+    await this.addressList.selectOption({ value: "2: Object" });
+    await this.overseasNo.check();
+    await this.clickContinue();
   }
 }
