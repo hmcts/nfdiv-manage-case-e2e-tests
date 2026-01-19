@@ -1,5 +1,5 @@
 export enum SolAboutTheSolicitor {
-  pageTitle = 'Is this a divorce or dissolution application?',
+  pageTitle = 'Apply: divorce or dissolution',
   solicitorName = 'Test Solicitor',
   solicitorPhone = '00000000000',
   solicitorReference = 'Ref123',

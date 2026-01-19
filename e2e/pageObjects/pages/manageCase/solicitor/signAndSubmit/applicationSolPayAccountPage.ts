@@ -42,7 +42,7 @@ export class ApplicationSolPayAccountPage {
     if (!page) {
       throw new Error('Page is required');
     }
-    await page?.locator(`${Selectors.GovukCaptionL}:text-is("${ApplicationSolPayAccountContent.pageTitle}")`).waitFor();
+    await page?.locator(`${Selectors.GovukHeadingL}:text-is("${ApplicationSolPayAccountContent.pageTitle}")`).waitFor();
 
     const headings = [
       ApplicationSolPayAccountContent.formLabel1,

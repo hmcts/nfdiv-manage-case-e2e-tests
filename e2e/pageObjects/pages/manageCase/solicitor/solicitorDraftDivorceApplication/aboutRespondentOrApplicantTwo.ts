@@ -7,7 +7,6 @@ enum InputFieldElementIds {
   applicant2FirstName = '#applicant2FirstName',
   applicant2MiddleName = '#applicant2MiddleName',
   applicant2LastName = '#applicant2LastName',
-  marriageApplicant2Name = '#marriageApplicant2Name',
 }
 
 enum RadioButtonElementIds {
@@ -38,7 +37,6 @@ export class AboutRespondentOrApplicantTwoPage {
       {elementId: InputFieldElementIds.applicant2FirstName, fieldValue: AboutApplicantsContent.applicant2FirstName},
       {elementId: InputFieldElementIds.applicant2MiddleName, fieldValue: AboutApplicantsContent.applicant2MiddleName},
       {elementId: InputFieldElementIds.applicant2LastName, fieldValue: AboutApplicantsContent.applicant2LastName},
-      {elementId: InputFieldElementIds.marriageApplicant2Name, fieldValue: AboutApplicantsContent.marriageApplicant2Name},
     ];
 
     for (const textField of textFields) {

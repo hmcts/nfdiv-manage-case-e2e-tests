@@ -37,7 +37,7 @@ export class SignAndSubmitSubmitPage {
     if (!page) {
       throw new Error("Page is not defined)");
     }
-    await page.locator(`${Selectors.GovukCaptionL}:text-is("${ApplicationSolPayAccountContent.pageTitle}")`).waitFor();
+    await page.locator(`${Selectors.GovukHeadingL}:text-is("${ApplicationSolPayAccountContent.pageTitle}")`).waitFor();
     const answers = [
       SignAndSubmitSubmitContent.text161,
       SignAndSubmitSubmitContent.text162,

@@ -51,7 +51,7 @@ export class ApplicationSolStatementOfTruthPage {
       throw new Error("Page is not defined)");
     }
     await page.locator(
-      `${Selectors.GovukCaptionL}:text-is("${ApplicationSolStatementOfTruthContent.pageTitle}")`
+      `${Selectors.GovukHeadingL}:text-is("${ApplicationSolStatementOfTruthContent.pageTitle}")`
     ).waitFor();
     const headings = [
       ApplicationSolStatementOfTruthContent.h2_1,

@@ -7,10 +7,12 @@ enum InputFieldElementIds {
   marriageDateDay = '#marriageDate-day',
   marriageDateMonth = '#marriageDate-month',
   marriageDateYear = '#marriageDate-year',
+  marriageApplicant1Name = '#marriageApplicant1Name',
+  marriageApplicant2Name = '#marriageApplicant2Name',
 }
 
 enum RadioButtonElementIds {
-  marriageMarriedInUkYes = 'label[for="marriageMarriedInUk_Yes"]',
+  marriageMarriedInUkYes = '#marriageMarriedInUk_Yes',
 }
 
 export class MarriageCertificateDetailsPage {
@@ -26,7 +28,7 @@ export class MarriageCertificateDetailsPage {
   private static async checkPageLoads(
     page: Page,
   ): Promise<void> {
-    await page.locator(`${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
+    await page.locator(`${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
   }
 
   private static async fillInFields(
@@ -38,16 +40,15 @@ export class MarriageCertificateDetailsPage {
       {elementId: InputFieldElementIds.marriageDateDay, fieldValue: marriageDate[0]},
       {elementId: InputFieldElementIds.marriageDateMonth, fieldValue: marriageDate[1]},
       {elementId: InputFieldElementIds.marriageDateYear, fieldValue: marriageDate[2]},
+      {elementId: InputFieldElementIds.marriageApplicant1Name, fieldValue: AboutApplicantsContent.marriageApplicant1Name},
+      {elementId: InputFieldElementIds.marriageApplicant2Name, fieldValue: AboutApplicantsContent.marriageApplicant2Name},
     ];
 
     for (const textField of textFields) {
       await page.fill(textField.elementId, textField.fieldValue);
     }
 
-    // I was getting issue with clicking the radio button.
-    // AI suggested changing to this which works
-    await page.click(RadioButtonElementIds.marriageMarriedInUkYes);
-    await page.click('text="Yes"');
+    await page.locator(RadioButtonElementIds.marriageMarriedInUkYes).check();
 
     await page.click(
       `${Selectors.button}:text-is("${CommonContent.continueButton}")`,

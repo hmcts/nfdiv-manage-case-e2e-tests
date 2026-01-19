@@ -7,10 +7,9 @@ enum InputFieldElementIds {
   applicant1FirstName = '#applicant1FirstName',
   applicant1MiddleName = '#applicant1MiddleName',
   applicant1LastName = '#applicant1LastName',
-  applicant1Email = '#applicant1NonConfidentialEmail',
-  applicant1PhoneNumber = '#applicant1NonConfidentialPhone',
+  applicant1Email = '#applicant1Email',
+  applicant1PhoneNumber = '#applicant1PhoneNumber',
   applicant1Postcode = '#applicant1NonConfidentialAddress_applicant1NonConfidentialAddress_postcodeInput',
-  marriageApplicant1Name = '#marriageApplicant1Name',
 }
 
 enum RadioButtonElementIds {
@@ -38,7 +37,7 @@ export class AboutApplicantPage {
   private static async checkPageLoads(
     page: Page,
   ): Promise<void> {
-    await page.locator(`${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
+    await page.locator(`${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
   }
 
   private static async fillInFields(
@@ -52,7 +51,6 @@ export class AboutApplicantPage {
       {elementId: InputFieldElementIds.applicant1Email, fieldValue: AboutApplicantsContent.applicant1Email},
       {elementId: InputFieldElementIds.applicant1PhoneNumber, fieldValue: AboutApplicantsContent.applicant1PhoneNumber},
       {elementId: InputFieldElementIds.applicant1Postcode, fieldValue: AboutApplicantsContent.applicantPostcode},
-      {elementId: InputFieldElementIds.marriageApplicant1Name, fieldValue: AboutApplicantsContent.marriageApplicant1Name},
     ];
 
     for (const textField of textFields) {
@@ -64,7 +62,7 @@ export class AboutApplicantPage {
     );
 
     await page.locator(SelectOptionsElementIds.addressList).waitFor();
-    await page.selectOption(SelectOptionsElementIds.addressList, {value: '2: Object'});
+    await page.selectOption(SelectOptionsElementIds.addressList, {value: '1: Object'});
     await page.selectOption(SelectOptionsElementIds.divorceWho, {value: ['1: husband', '2: wife'][Math.floor(Math.random() * 2)]});
 
     for (const id in RadioButtonElementIds) {
