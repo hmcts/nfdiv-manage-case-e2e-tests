@@ -4,7 +4,7 @@ import {AboutApplicantsContent} from "../../../../content/manageCases/solicitor/
 import {CommonContent} from "../../../../content/CommonContent.ts";
 
 enum InputFieldElementIds {
-  applicant2Email = '#applicant2Email',
+  applicant2Email = '#applicant2NonConfidentialEmail',
   applicant2Postcode = '#applicant2NonConfidentialAddress_applicant2NonConfidentialAddress_postcodeInput',
 }
 
@@ -30,7 +30,7 @@ export class ApplicantTwoServiceDetailsPage {
   private static async checkPageLoads(
     page: Page,
   ): Promise<void> {
-    await page.locator(`${Selectors.GovukHeadingL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
+    await page.locator(`${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
   }
 
   private static async fillInFields(
@@ -54,7 +54,7 @@ export class ApplicantTwoServiceDetailsPage {
     );
 
     await page.locator(SelectOptionsElementIds.addressList).waitFor();
-    await page.selectOption(SelectOptionsElementIds.addressList, {value: '1: Object'});
+    await page.selectOption(SelectOptionsElementIds.addressList, {value: '2: Object'});
     await page.locator(RadioButtonElementIds.applicant2AddressOverseasNo).check();
 
     await page.click(
