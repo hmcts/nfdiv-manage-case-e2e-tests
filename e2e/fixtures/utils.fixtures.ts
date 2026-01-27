@@ -3,12 +3,12 @@ import {
   LighthouseUtils,
   SessionUtils,
 } from "@hmcts/playwright-common";
-import {config, Config} from "../config.ts";
+import { config, Config } from "../config.ts";
 import path from "path";
 import os from "os";
 import { chromium } from "playwright/test";
-import {Page} from "@playwright/test";
-import {CookieUtils} from "./cookite.utils.ts";
+import { Page } from "@playwright/test";
+import { CookieUtils } from "../common/cookite.utils.ts";
 
 export interface UtilsFixtures {
   config: Config;
@@ -43,7 +43,7 @@ export const utilsFixtures = {
       });
       // Using the cookies from global setup, inject to the new browser
       await context.addCookies(
-        SessionUtils.getCookies(config.users.solicitor.sessionFile)
+        SessionUtils.getCookies(config.users.solicitor.sessionFile),
       );
       // Provide the page to the test
       await use(context.pages()[0]);
@@ -52,4 +52,4 @@ export const utilsFixtures = {
       await use(page);
     }
   },
-}
+};

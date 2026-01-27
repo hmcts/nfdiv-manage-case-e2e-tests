@@ -1,38 +1,40 @@
-import {Page} from "@playwright/test";
-import {Selectors} from "../../../../../common/selectors.ts";
-import {CommonContent} from "../../../../content/CommonContent.ts";
-import {config} from "../../../../../config.ts";
+import { Page, type Locator } from "@playwright/test";
+import { Selectors } from "../../../../../common/selectors.ts";
+import { CommonContent } from "../../../../../common/commonContent.ts";
+import { config } from "../../../../../config.ts";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
 
-export class UploadSupportingDocumentsPage {
+export class UploadSupportingDocumentsPage extends BaseJourneyPage {
+  private readonly addNewButton: Locator;
+  private readonly uploadedDocsHeading: Locator;
+  private readonly fileInput: Locator;
 
-  public static async uploadSupportingDocuments(
-    page: Page,
-  ): Promise<void> {
-
-    await this.checkPageLoads(page);
-    await this.fillInFields(page);
-  }
-
-  private static async checkPageLoads(
-    page: Page,
-  ): Promise<void> {
-    await page.locator(`${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
-  }
-
-  private static async fillInFields(
-    page: Page,
-  ): Promise<void> {
-
-    await page.click(
+  constructor(page: Page) {
+    super(page);
+    this.addNewButton = page.locator(
       `${Selectors.button}:text-is("${CommonContent.addNewButton}")`,
     );
-
-    await page.locator('h3:text("Applicant 1 uploaded documents")').waitFor();
-    const fileInput = page.locator('#applicant1DocumentsUploaded_0_documentLink');
-    await fileInput.setInputFiles(config.files.pdf);
-
-    await page.click(
-      `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
+    this.uploadedDocsHeading = page.locator(
+      'h3:text("Applicant 1 uploaded documents")',
     );
+    this.fileInput = page.locator(
+      "#applicant1DocumentsUploaded_0_documentLink",
+    );
+  }
+
+  public async uploadSupportingDocuments(): Promise<void> {
+    await this.checkPageLoads();
+    await this.fillInFields();
+  }
+
+  private async checkPageLoads(): Promise<void> {
+    await this.assertPageHeading(CommonContent.pageTitle);
+  }
+
+  private async fillInFields(): Promise<void> {
+    await this.addNewButton.click();
+    await this.uploadedDocsHeading.waitFor();
+    await this.fileInput.setInputFiles(config.files.pdf);
+    await this.clickContinue();
   }
 }

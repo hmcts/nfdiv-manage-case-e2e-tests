@@ -1,27 +1,28 @@
-import {Page} from "@playwright/test";
-import {Selectors} from "../../../../../common/selectors.ts";
-import {CommonContent} from "../../../../content/CommonContent.ts";
+import { Page, type Locator } from "@playwright/test";
+import { Selectors } from "../../../../../common/selectors.ts";
+import { CommonContent } from "../../../../../common/commonContent.ts";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
 
-export class CheckYourAnswersAndSubmitPage {
+export class CheckYourAnswersAndSubmitPage extends BaseJourneyPage {
+  private readonly saveApplicationButton: Locator;
 
-  public static async checkYourAnswers(
-    page: Page,
-  ): Promise<void> {
-
-    await this.checkPageLoads(page);
-    await this.fillInFields(page);
+  constructor(readonly page: Page) {
+    super(page);
+    this.saveApplicationButton = page.locator(
+      `${Selectors.button}:text-is("${CommonContent.saveApplication}")`,
+    );
   }
 
-  private static async checkPageLoads(
-    page: Page,
-  ): Promise<void> {
-    await page.locator(`${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
+  public async checkYourAnswers(): Promise<void> {
+    await this.checkPageLoads();
+    await this.fillInFields();
   }
 
-  private static async fillInFields(
-    page: Page,
-  ): Promise<void> {
+  private async checkPageLoads(): Promise<void> {
+    await this.assertPageHeading(CommonContent.pageTitle);
+  }
 
-    await page.click(`${Selectors.button}:text-is("${CommonContent.saveApplication}")`);
+  private async fillInFields(): Promise<void> {
+    await this.saveApplicationButton.click();
   }
 }

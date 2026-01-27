@@ -1,56 +1,48 @@
-import {Page} from "@playwright/test";
-import {Selectors} from "../../../../../common/selectors.ts";
-import {AboutApplicantsContent} from "../../../../content/manageCases/solicitor/solicitorCreateCase/aboutApplicantsContent.ts";
-import {CommonContent} from "../../../../content/CommonContent.ts";
+import { Page, type Locator } from "@playwright/test";
+import { CommonContent } from "../../../../../common/commonContent.ts";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
+import { MarriageCertificateDetailsContent } from "../constants/solicitorDraftDivorceApplicationContent.ts";
 
-enum InputFieldElementIds {
-  marriageDateDay = '#marriageDate-day',
-  marriageDateMonth = '#marriageDate-month',
-  marriageDateYear = '#marriageDate-year',
-}
+export class MarriageCertificateDetailsPage extends BaseJourneyPage {
+  private readonly marriageDateDay: Locator;
+  private readonly marriageDateMonth: Locator;
+  private readonly marriageDateYear: Locator;
+  private readonly marriedInUkYes: Locator;
 
-enum RadioButtonElementIds {
-  marriageMarriedInUkYes = 'label[for="marriageMarriedInUk_Yes"]',
-}
-
-export class MarriageCertificateDetailsPage {
-
-  public static async marriageCertificateDetails(
-    page: Page,
-  ): Promise<void> {
-
-    await this.checkPageLoads(page);
-    await this.fillInFields(page);
-  }
-
-  private static async checkPageLoads(
-    page: Page,
-  ): Promise<void> {
-    await page.locator(`${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
-  }
-
-  private static async fillInFields(
-    page: Page,
-  ): Promise<void> {
-
-    const marriageDate: string[] = AboutApplicantsContent.marriageDate.split('/');
-    const textFields: { elementId: string, fieldValue: string }[] = [
-      {elementId: InputFieldElementIds.marriageDateDay, fieldValue: marriageDate[0]},
-      {elementId: InputFieldElementIds.marriageDateMonth, fieldValue: marriageDate[1]},
-      {elementId: InputFieldElementIds.marriageDateYear, fieldValue: marriageDate[2]},
-    ];
-
-    for (const textField of textFields) {
-      await page.fill(textField.elementId, textField.fieldValue);
-    }
-
-    // I was getting issue with clicking the radio button.
-    // AI suggested changing to this which works
-    await page.click(RadioButtonElementIds.marriageMarriedInUkYes);
-    await page.click('text="Yes"');
-
-    await page.click(
-      `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
+  constructor(page: Page) {
+    super(page);
+    this.marriageDateDay = page.locator(
+      MarriageCertificateDetailsContent.selectors.textBoxes.marriageDateDay,
     );
+    this.marriageDateMonth = page.locator(
+      MarriageCertificateDetailsContent.selectors.textBoxes.marriageDateMonth,
+    );
+    this.marriageDateYear = page.locator(
+      MarriageCertificateDetailsContent.selectors.textBoxes.marriageDateYear,
+    );
+    this.marriedInUkYes = page.locator(
+      MarriageCertificateDetailsContent.selectors.radioButtons
+        .marriageMarriedInUkYes,
+    );
+  }
+
+  public async marriageCertificateDetails(): Promise<void> {
+    await this.checkPageLoads();
+    await this.fillInFields();
+  }
+
+  private async checkPageLoads(): Promise<void> {
+    await this.assertPageHeading(CommonContent.pageTitle);
+  }
+
+  private async fillInFields(): Promise<void> {
+    await this.marriedInUkYes.check();
+    const [day, month, year] =
+      MarriageCertificateDetailsContent.content.marriageDate.split("/");
+    await this.marriageDateDay.fill(day);
+    await this.marriageDateMonth.fill(month);
+    await this.marriageDateYear.fill(year);
+    await this.marriageDateYear.blur();
+    await this.clickContinue();
   }
 }
