@@ -1,4 +1,4 @@
-import { test as setup } from "./fixtures";
+import { test as setup } from "../fixtures/fixtures.ts";
 
 setup(
   "Setup solicitor user",
@@ -8,7 +8,7 @@ setup(
     await page.goto(config.urls.manageCaseBaseUrl);
     await idamPage.login(user);
     await cookieUtils.addAnalyticsCookie(config.users.solicitor);
-  }
+  },
 );
 
 setup(
@@ -19,7 +19,7 @@ setup(
     await page.goto(config.urls.manageCaseBaseUrl);
     await idamPage.login(user);
     await cookieUtils.addAnalyticsCookie(config.users.caseworker);
-  }
+  },
 );
 
 setup(
@@ -30,5 +30,5 @@ setup(
     await page.goto(config.urls.manageCaseBaseUrl);
     await idamPage.login(user);
     await cookieUtils.addAnalyticsCookie(config.users.legalAdvisor);
-  }
+  },
 );

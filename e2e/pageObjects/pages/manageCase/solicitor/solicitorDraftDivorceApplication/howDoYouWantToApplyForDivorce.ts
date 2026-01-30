@@ -1,38 +1,37 @@
-import {Page} from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors.ts";
-import {CommonContent} from "../../../../content/CommonContent.ts";
+import { Page, type Locator } from "@playwright/test";
+import { CommonContent } from "../../../../../common/commonContent.ts";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
+import { HowDoYouWantToApplyForDivorceContent } from "../constants/solicitorDraftDivorceApplicationContent.ts";
 
-enum RadioButtonElementIds {
-  radioButtonDivorce = '#divorceOrDissolution-divorce',
-  radioButtonSoleApplication = '#applicationType-soleApplication',
-}
+export class HowDoYouWantToApplyForDivorcePage extends BaseJourneyPage {
+  private readonly divorceRadio: Locator;
+  private readonly soleApplicationRadio: Locator;
 
-export class HowDoYouWantToApplyForDivorcePage {
-  public static async createApplicationTypePage(
-    page: Page,
-  ): Promise<void> {
-
-    await this.checkPageLoads(page);
-    await this.fillInFields(page);
-  }
-
-  private static async checkPageLoads(
-    page: Page,
-  ): Promise<void> {
-    await page.locator(`${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
-  }
-
-  private static async fillInFields(
-    page: Page,
-  ): Promise<void> {
-
-    await page.locator(RadioButtonElementIds.radioButtonDivorce).check();
-
-    const radioButtonSoleApplication = page.locator(RadioButtonElementIds.radioButtonSoleApplication);
-    await radioButtonSoleApplication.waitFor();
-    await radioButtonSoleApplication.check();
-
-    await page.click(`${Selectors.button}:text-is("${CommonContent.continueButton}")`,
+  constructor(readonly page: Page) {
+    super(page);
+    this.divorceRadio = page.locator(
+      HowDoYouWantToApplyForDivorceContent.selectors.radioButtons
+        .radioButtonDivorce,
     );
+    this.soleApplicationRadio = page.locator(
+      HowDoYouWantToApplyForDivorceContent.selectors.radioButtons
+        .radioButtonSoleApplication,
+    );
+  }
+
+  public async createApplicationTypePage(): Promise<void> {
+    await this.checkPageLoads();
+    await this.fillInFields();
+  }
+
+  private async checkPageLoads(): Promise<void> {
+    await this.assertPageHeading(CommonContent.pageTitle);
+  }
+
+  private async fillInFields(): Promise<void> {
+    await this.divorceRadio.check();
+    await this.soleApplicationRadio.waitFor();
+    await this.soleApplicationRadio.check();
+    await this.clickContinue();
   }
 }

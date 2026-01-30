@@ -1,35 +1,30 @@
-import {Page} from "@playwright/test";
-import {Selectors} from "../../../../../common/selectors.ts";
-import {CommonContent} from "../../../../content/CommonContent.ts";
+import { Page, type Locator } from "@playwright/test";
+import { CommonContent } from "../../../../../common/commonContent.ts";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
+import { OtherLegalProceedingsContent } from "../constants/solicitorDraftDivorceApplicationContent.ts";
 
-enum RadioButtonElementIds {
-  applicant1LegalProceedingsNo = '#applicant1LegalProceedings_No',
-}
+export class OtherLegalProceedingsPage extends BaseJourneyPage {
+  private readonly appLegalProceedingsNo: Locator;
 
-export class OtherLegalProceedingsPage {
-
-  public static async otherLegalProceedings(
-    page: Page,
-  ): Promise<void> {
-
-    await this.checkPageLoads(page);
-    await this.fillInFields(page);
-  }
-
-  private static async checkPageLoads(
-    page: Page,
-  ): Promise<void> {
-    await page.locator(`${Selectors.GovukCaptionL}:text-is("${CommonContent.pageTitle}")`,).waitFor();
-  }
-
-  private static async fillInFields(
-    page: Page,
-  ): Promise<void> {
-
-    await page.locator(RadioButtonElementIds.applicant1LegalProceedingsNo).check();
-
-    await page.click(
-      `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
+  constructor(page: Page) {
+    super(page);
+    this.appLegalProceedingsNo = page.locator(
+      OtherLegalProceedingsContent.selectors.radioButtons
+        .applicant1LegalProceedingsNo,
     );
+  }
+
+  public async otherLegalProceedings(): Promise<void> {
+    await this.checkPageLoads();
+    await this.fillInFields();
+  }
+
+  private async checkPageLoads(): Promise<void> {
+    await this.assertPageHeading(CommonContent.pageTitle);
+  }
+
+  private async fillInFields(): Promise<void> {
+    await this.appLegalProceedingsNo.check();
+    await this.clickContinue();
   }
 }
