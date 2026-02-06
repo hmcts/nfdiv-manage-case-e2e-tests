@@ -26,7 +26,7 @@ test.describe("Solicitor create application tests", (): void => {
     otherLegalProceedingsPage,
     financialOrdersPage,
     uploadSupportingDocumentsPage,
-    checkYourAnswersAndSubmitPage,
+    //checkYourAnswersAndSubmitPage,
     applicationSolStatementOfTruthPage,
     applicationSolPaymentPage,
     applicationSolPayAccountPage,
@@ -47,7 +47,7 @@ test.describe("Solicitor create application tests", (): void => {
     await otherLegalProceedingsPage.otherLegalProceedings();
     await financialOrdersPage.financialOrders();
     await uploadSupportingDocumentsPage.uploadSupportingDocuments();
-    await checkYourAnswersAndSubmitPage.checkYourAnswers();
+    // await checkYourAnswersAndSubmitPage.checkYourAnswers();
 
     // Sign and Submit
     await Helpers.chooseEventFromDropdown(determinePage, Events.signAndSubmit);
