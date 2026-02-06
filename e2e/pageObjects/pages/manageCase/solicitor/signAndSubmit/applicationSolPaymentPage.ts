@@ -1,79 +1,81 @@
-import {Page, expect} from "@playwright/test";
-import {Selectors} from "../../../../../common/selectors.ts";
-import {
-  ApplicationSolPaymentContent
-} from "../../../../content/manageCases/solicitor/signAndSubmit/applicationSolPaymentContent.ts";
-import {CommonContent} from "../../../../../common/commonContent.ts";
-import {AxeUtils} from "@hmcts/playwright-common";
+import { Page, expect, type Locator } from "@playwright/test";
+import { Selectors } from "../../../../../common/selectors.ts";
+import { CommonContent } from "../../../../../common/commonContent.ts";
+import { AccessibilityOptions } from "../../../../types.ts";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
+import { ApplicationSolPaymentContent } from "../constants/signAndSubmitContent.ts";
 
-export enum SolicitorPayment {
-  PBA = "#solPaymentHowToPay-feePayByAccount",
-  HWF = "#solPaymentHowToPay-feesHelpWith"
-}
+type ApplicationSolPaymentOptions = AccessibilityOptions & {
+  solicitorPayment: keyof typeof ApplicationSolPaymentContent.selectors.radioButtons;
+};
 
-interface ApplicationSolPaymentOptions {
-  page: Page;
-  accessibility: boolean;
-  axeUtil: AxeUtils;
-  solicitorPayment: SolicitorPayment;
-}
+export class ApplicationSolPaymentPage extends BaseJourneyPage {
+  private readonly formLabel1: Locator;
+  private readonly formLabel2: Locator;
+  private readonly formLabel3: Locator;
+  private readonly feeStrong: Locator;
+  private readonly orderSummaryDiv: Locator;
+  private readonly feeCodeCell: Locator;
 
-export class ApplicationSolPaymentPage {
-  public static async applicationSolPaymentPage({
-    page,
+  constructor(readonly page: Page) {
+    super(page);
+    this.formLabel1 = page.locator(
+      `${Selectors.GovukFormLabel}:text-is("${ApplicationSolPaymentContent.content.formLabel1}")`,
+    );
+    this.formLabel2 = page.locator(
+      `${Selectors.GovukFormLabel}:text-is("${ApplicationSolPaymentContent.content.formLabel2}")`,
+    );
+    this.formLabel3 = page.locator(
+      `${Selectors.GovukFormLabel}:text-is("${ApplicationSolPaymentContent.content.formLabel3}")`,
+    );
+    this.feeStrong = page.locator(
+      `${Selectors.strong}:text-is("${CommonContent.fee}")`,
+    );
+    this.orderSummaryDiv = page.locator(
+      `${Selectors.div}:text-is("${ApplicationSolPaymentContent.content.div}")`,
+    );
+    this.feeCodeCell = page.locator(
+      `${Selectors.td}:text-is("${ApplicationSolPaymentContent.content.td}")`,
+    );
+  }
+
+  public async applicationSolPaymentPage({
     accessibility,
     axeUtil,
-    solicitorPayment
+    solicitorPayment,
   }: ApplicationSolPaymentOptions): Promise<void> {
-    await this.checkPageLoads({
-      page: page,
-    });
-    await this.fillInFields({
-      page: page,
-      solicitorPayment
-    });
+    await this.checkPageLoads();
+    await this.fillInFields({ solicitorPayment });
     if (accessibility) {
-      await axeUtil.audit()
+      await axeUtil.audit();
     }
   }
 
-  private static async checkPageLoads({
-    page,
-  }: Partial<ApplicationSolPaymentOptions>): Promise<void> {
-    if (!page) {
-      throw new Error("Page is not defined)");
-    }
-    await page.locator(`${Selectors.GovukHeadingL}:text-is("${ApplicationSolPaymentContent.pageTitle}")`).waitFor();
-
-    const headings = [
-      ApplicationSolPaymentContent.formLabel1,
-      ApplicationSolPaymentContent.formLabel2,
-      ApplicationSolPaymentContent.formLabel3,
-    ];
-
-    for (const text of headings) {
-      const locator = page.locator(`${Selectors.GovukFormLabel}:text-is("${text}")`);
-      await expect(locator).toBeVisible();
-    }
-
-    const strong = page.locator(`${Selectors.strong}:text-is("${CommonContent.fee}")`);
-    const div = page.locator(`${Selectors.div}:text-is("${ApplicationSolPaymentContent.div}")`);
-    const td = page.locator(`${Selectors.td}:text-is("${ApplicationSolPaymentContent.td}")`);
-
+  private async checkPageLoads(): Promise<void> {
+    // Uses a different heading locator to the base method
+    await this.page
+      .locator(
+        `${Selectors.GovukHeadingL}:text-is("${ApplicationSolPaymentContent.content.pageTitle}")`,
+      )
+      .waitFor();
+    // await this.assertPageHeading(ApplicationSolPaymentContent.pageTitle);
     await Promise.all([
-      expect(strong).toBeVisible(),
-      expect(div).toBeVisible(),
-      expect(td).toBeVisible(),
+      expect(this.formLabel1).toBeVisible(),
+      expect(this.formLabel2).toBeVisible(),
+      expect(this.formLabel3).toBeVisible(),
+      expect(this.feeStrong).toBeVisible(),
+      expect(this.orderSummaryDiv).toBeVisible(),
+      expect(this.feeCodeCell).toBeVisible(),
     ]);
-
   }
 
-  private static async fillInFields({
-    page,
-    solicitorPayment
-  }:Partial<ApplicationSolPaymentOptions>): Promise<void> {
-    await page?.click(solicitorPayment as string);
-    await page?.click(`${Selectors.button}:text-is("${CommonContent.continue}")`);
-    await page?.waitForTimeout(1500);
+  private async fillInFields({
+    solicitorPayment,
+  }: Pick<ApplicationSolPaymentOptions, "solicitorPayment">): Promise<void> {
+    await this.page.click(
+      ApplicationSolPaymentContent.selectors.radioButtons[solicitorPayment],
+    );
+
+    await this.clickContinue();
   }
 }

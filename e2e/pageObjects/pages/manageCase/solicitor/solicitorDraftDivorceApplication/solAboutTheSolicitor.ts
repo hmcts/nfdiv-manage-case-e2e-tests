@@ -1,61 +1,71 @@
-import {Page} from "@playwright/test";
-import {Selectors} from "../../../../../common/selectors.ts";
-import {
-  SolAboutTheSolicitor
-} from "../../../../content/manageCases/solicitor/solicitorCreateCase/solAboutTheSolicitor.ts";
-import {CommonContent} from "../../../../content/CommonContent.ts";
+import { Page, type Locator } from "@playwright/test";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
+import { SolAboutTheSolicitorContent } from "../constants/solicitorDraftDivorceApplicationContent.ts";
 
-enum InputFieldElementIds {
-  applicant1SolicitorName = '#applicant1SolicitorName',
-  applicant1SolicitorReference = '#applicant1SolicitorReference',
-  applicant1SolicitorPhone = '#applicant1SolicitorPhone',
-  applicant1SolicitorEmail = '#applicant1SolicitorEmail',
-  searchOrgText = '#search-org-text',
-}
+export class SolAboutTheSolicitorPage extends BaseJourneyPage {
+  private readonly solicitorName: Locator;
+  private readonly solicitorReference: Locator;
+  private readonly solicitorPhone: Locator;
+  private readonly solicitorEmail: Locator;
+  private readonly searchOrgText: Locator;
+  private readonly agreeEmailsYes: Locator;
+  private readonly organisationTable: Locator;
+  private readonly selectOrgLink: Locator;
 
-enum RadioButtonElementIds {
-  applicant1SolicitorAgreeToReceiveEmailsCheckboxYes = '#applicant1SolicitorAgreeToReceiveEmailsCheckbox-Yes',
-}
-
-export class SolAboutTheSolicitorPage {
-
-  public static async solAboutTheSolicitor(
-    page: Page,
-  ): Promise<void> {
-
-    await this.checkPageLoads(page);
-    await this.fillInFields(page);
-  }
-
-  private static async checkPageLoads(
-    page: Page,
-  ): Promise<void> {
-    await page.locator(`${Selectors.GovukHeadingL}:text-is("${SolAboutTheSolicitor.pageTitle}")`,).waitFor();
-  }
-
-  private static async fillInFields(
-    page: Page,
-  ): Promise<void> {
-
-    type FillData = { selector: string, input: string };
-    const fillDataArray: FillData[] = [
-      {selector: InputFieldElementIds.applicant1SolicitorName, input: SolAboutTheSolicitor.solicitorName},
-      {selector: InputFieldElementIds.applicant1SolicitorReference, input: SolAboutTheSolicitor.solicitorReference},
-      {selector: InputFieldElementIds.applicant1SolicitorPhone, input: SolAboutTheSolicitor.solicitorPhone},
-      {selector: InputFieldElementIds.applicant1SolicitorEmail, input: process.env.SOLICITOR_USERNAME as string},
-      {selector: InputFieldElementIds.searchOrgText, input: SolAboutTheSolicitor.solicitorOrganisation}
-    ];
-
-    for (const fillData of fillDataArray) {
-      await page.fill(fillData.selector, fillData.input);
-    }
-
-    await page.locator(RadioButtonElementIds.applicant1SolicitorAgreeToReceiveEmailsCheckboxYes).check();
-    await page.locator('#organisation-table').nth(0).waitFor();
-    await page.click(`a[title="Select the organisation ${SolAboutTheSolicitor.solicitorOrganisation}"]`);
-
-    await page.click(
-      `${Selectors.button}:text-is("${CommonContent.continueButton}")`,
+  constructor(page: Page) {
+    super(page);
+    this.solicitorName = page.locator(
+      SolAboutTheSolicitorContent.selectors.textBoxes.applicant1SolicitorName,
     );
+    this.solicitorReference = page.locator(
+      SolAboutTheSolicitorContent.selectors.textBoxes
+        .applicant1SolicitorReference,
+    );
+    this.solicitorPhone = page.locator(
+      SolAboutTheSolicitorContent.selectors.textBoxes.applicant1SolicitorPhone,
+    );
+    this.solicitorEmail = page.locator(
+      SolAboutTheSolicitorContent.selectors.textBoxes.applicant1SolicitorEmail,
+    );
+    this.searchOrgText = page.locator(
+      SolAboutTheSolicitorContent.selectors.textBoxes.searchOrgText,
+    );
+    this.agreeEmailsYes = page.locator(
+      SolAboutTheSolicitorContent.selectors.radioButtons
+        .applicant1SolicitorAgreeToReceiveEmailsCheckboxYes,
+    );
+    this.organisationTable = page.locator("#organisation-table");
+    this.selectOrgLink = page.locator(
+      `a[title="Select the organisation ${SolAboutTheSolicitorContent.content.solicitorOrganisation}"]`,
+    );
+  }
+
+  public async solAboutTheSolicitor(): Promise<void> {
+    await this.checkPageLoads();
+    await this.fillInFields();
+  }
+
+  private async checkPageLoads(): Promise<void> {
+    await this.assertPageHeading(SolAboutTheSolicitorContent.content.pageTitle);
+  }
+
+  private async fillInFields(): Promise<void> {
+    await this.solicitorName.fill(
+      SolAboutTheSolicitorContent.content.solicitorName,
+    );
+    await this.solicitorReference.fill(
+      SolAboutTheSolicitorContent.content.solicitorReference,
+    );
+    await this.solicitorPhone.fill(
+      SolAboutTheSolicitorContent.content.solicitorPhone,
+    );
+    await this.solicitorEmail.fill(process.env.SOLICITOR_USERNAME as string);
+    await this.searchOrgText.fill(
+      SolAboutTheSolicitorContent.content.solicitorOrganisation,
+    );
+    await this.agreeEmailsYes.check();
+    await this.organisationTable.first().waitFor();
+    await this.selectOrgLink.click();
+    await this.clickContinue();
   }
 }

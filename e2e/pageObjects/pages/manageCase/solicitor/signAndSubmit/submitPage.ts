@@ -1,77 +1,77 @@
+import { Page, expect, type Locator } from "@playwright/test";
+import { Selectors } from "../../../../../common/selectors.ts";
+import { CommonContent } from "../../../../../common/commonContent.ts";
+import { AccessibilityOptions } from "../../../../types.ts";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
+import { SubmitContent } from "../constants/signAndSubmitContent.ts";
 
-import {Page, expect} from "@playwright/test";
-import {Selectors} from "../../../../../common/selectors.ts";
-import {CommonContent} from "../../../../../common/commonContent.ts";
-import {
-  ApplicationSolPayAccountContent
-} from "../../../../content/manageCases/solicitor/signAndSubmit/applicationSolPayAccountContent.ts";
-import {SignAndSubmitSubmitContent} from "../../../../content/manageCases/solicitor/signAndSubmit/submitContent.ts";
-import {AxeUtils} from "@hmcts/playwright-common";
+export class SignAndSubmitSubmitPage extends BaseJourneyPage {
+  private readonly h2CheckAnswers: Locator;
+  private readonly orderSummaryDiv: Locator;
+  private readonly feeCodeCell: Locator;
+  private readonly feeItems: Locator;
+  private readonly yesTexts: Locator;
+  private readonly submitButton: Locator;
 
-interface SignAndSubmitSubmitOptions {
-  page: Page;
-  accessibility: boolean;
-  axeUtil: AxeUtils;
-}
+  constructor(readonly page: Page) {
+    super(page);
+    this.h2CheckAnswers = page.locator(
+      `${Selectors.h2}:text-is("${SubmitContent.content.h2}")`,
+    );
+    this.orderSummaryDiv = page.locator(
+      `${Selectors.div}:text-is("${SubmitContent.content.div}")`,
+    );
+    this.feeCodeCell = page.locator(
+      `${Selectors.td}:text-is("${SubmitContent.content.feeCode}")`,
+    );
+    this.feeItems = page
+      .locator(`${Selectors.GovukText16}`)
+      .filter({ hasText: `${CommonContent.fee}` });
+    this.yesTexts = page.locator(
+      `${Selectors.GovukText16}:text-is("${CommonContent.Yes}")`,
+    );
+    this.submitButton = page.locator(
+      `${Selectors.button}:text-is("${CommonContent.submitApplication}")`,
+    );
+  }
 
-export class SignAndSubmitSubmitPage {
-  public static async signAndSubmitSubmitPage({
-    page,
+  public async signAndSubmitSubmitPage({
     accessibility,
-    axeUtil
-  }: SignAndSubmitSubmitOptions): Promise<void> {
-    await this.checkPageLoads({
-      page: page,
-    });
-    await this.fillInFields({
-      page: page,
-    });
+    axeUtil,
+  }: AccessibilityOptions): Promise<void> {
+    await this.checkPageLoads();
+    await this.fillInFields();
     if (accessibility) {
-      await axeUtil.audit()
+      await axeUtil.audit();
     }
   }
 
-  private static async checkPageLoads({
-    page,
-  }: Partial<SignAndSubmitSubmitOptions>): Promise<void> {
-    if (!page) {
-      throw new Error("Page is not defined)");
-    }
-    await page.locator(`${Selectors.GovukCaptionL}:text-is("${ApplicationSolPayAccountContent.pageTitle}")`).waitFor();
+  private async checkPageLoads(): Promise<void> {
+    await this.assertPageHeading(SubmitContent.content.pageTitle);
     const answers = [
-      SignAndSubmitSubmitContent.text161,
-      SignAndSubmitSubmitContent.text162,
-      SignAndSubmitSubmitContent.text163,
-      SignAndSubmitSubmitContent.text164,
-      SignAndSubmitSubmitContent.text165,
-      SignAndSubmitSubmitContent.text166,
-      SignAndSubmitSubmitContent.text167,
+      SubmitContent.content.text161,
+      SubmitContent.content.text162,
+      SubmitContent.content.text163,
+      SubmitContent.content.text164,
+      SubmitContent.content.text165,
+      SubmitContent.content.text166,
+      SubmitContent.content.text167,
     ];
-
     for (const text of answers) {
-      const locator = page.locator(`${Selectors.GovukText16}:text-is("${text}")`);
-      await expect(locator).toBeVisible();
+      await expect(
+        this.page.locator(`${Selectors.GovukText16}:text-is("${text}")`),
+      ).toBeVisible();
     }
-
-    const h2 = page.locator(`${Selectors.h2}:text-is("${SignAndSubmitSubmitContent.h2}")`);
-    const div = page.locator(`${Selectors.div}:text-is("${SignAndSubmitSubmitContent.div}")`);
-    const feeCode = page.locator(`${Selectors.td}:text-is("${SignAndSubmitSubmitContent.feeCode}")`);
-    const fee = page.locator(`${Selectors.GovukText16}`).filter({ hasText: `${CommonContent.fee}` });
     await Promise.all([
-      expect(h2).toBeVisible(),
-      expect(div).toBeVisible(),
-      expect(feeCode).toBeVisible(),
-      expect(fee).toHaveCount(3)
+      expect(this.h2CheckAnswers).toBeVisible(),
+      expect(this.orderSummaryDiv).toBeVisible(),
+      expect(this.feeCodeCell).toBeVisible(),
+      expect(this.feeItems).toHaveCount(3),
     ]);
-
-    const yes = page.locator(`${Selectors.GovukText16}:text-is("${CommonContent.Yes}")`);
-    await expect(yes).toHaveCount(5);
-
+    await expect(this.yesTexts).toHaveCount(5);
   }
 
-  private static async fillInFields({
-    page,
-  }: Partial<SignAndSubmitSubmitOptions>): Promise<void> {
-    await page?.click(`${Selectors.button}:text-is("${CommonContent.submitApplication}")`);
+  private async fillInFields(): Promise<void> {
+    await this.submitButton.click();
   }
 }
