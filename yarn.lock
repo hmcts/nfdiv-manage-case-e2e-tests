@@ -1373,16 +1373,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@paulirish/trace_engine@npm:0.0.59":
-  version: 0.0.59
-  resolution: "@paulirish/trace_engine@npm:0.0.59"
-  dependencies:
-    legacy-javascript: "npm:latest"
-    third-party-web: "npm:latest"
-  checksum: 10c0/6886e730f93d7ae64c13dd2ec981b8d914b76f9979aaa406e8ffab217769f2cc9761acbfbf76b0a91e2b0b101de82a12919ddd68515e194ab11d508b774bc6ee
-  languageName: node
-  linkType: hard
-
 "@paulirish/trace_engine@npm:0.0.61":
   version: 0.0.61
   resolution: "@paulirish/trace_engine@npm:0.0.61"
@@ -2130,7 +2120,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axe-core@npm:^4.10.3, axe-core@npm:^4.11.0, axe-core@npm:^4.11.1, axe-core@npm:~4.11.1":
+"axe-core@npm:^4.11.0, axe-core@npm:^4.11.1, axe-core@npm:~4.11.1":
   version: 4.11.1
   resolution: "axe-core@npm:4.11.1"
   checksum: 10c0/1e6997454b61c7c9a4d740f395952835dcf87f2c04fd81577217d68634d197d602c224f9e8f17b22815db4c117a2519980cfc8911fc0027c54a6d8ebca47c6a7
@@ -2501,7 +2491,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chrome-launcher@npm:^1.2.0, chrome-launcher@npm:^1.2.1":
+"chrome-launcher@npm:^1.2.1":
   version: 1.2.1
   resolution: "chrome-launcher@npm:1.2.1"
   dependencies:
@@ -2782,13 +2772,6 @@ __metadata:
   version: 3.1.0
   resolution: "detect-newline@npm:3.1.0"
   checksum: 10c0/c38cfc8eeb9fda09febb44bcd85e467c970d4e3bf526095394e5a4f18bc26dd0cf6b22c69c1fa9969261521c593836db335c2795218f6d781a512aea2fb8209d
-  languageName: node
-  linkType: hard
-
-"devtools-protocol@npm:0.0.1507524":
-  version: 0.0.1507524
-  resolution: "devtools-protocol@npm:0.0.1507524"
-  checksum: 10c0/101f60f1665b8509cad136b7670039fb955dbd3ddf3a18b11df7220ab72cc83273b2e1af9c5a28ad0c768271215384a9c3cfad61bb6d1de95462ddcb073b842d
   languageName: node
   linkType: hard
 
@@ -4573,13 +4556,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lighthouse-stack-packs@npm:1.12.2":
-  version: 1.12.2
-  resolution: "lighthouse-stack-packs@npm:1.12.2"
-  checksum: 10c0/34fb78127792a2036f560f446b28ce2446712e4a18e8036971c80f30127150ef1a85b2cef1713110da52bbc8c526742b8165e517330755e3a94598c1a2bc3eba
-  languageName: node
-  linkType: hard
-
 "lighthouse-stack-packs@npm:1.12.3":
   version: 1.12.3
   resolution: "lighthouse-stack-packs@npm:1.12.3"
@@ -4587,7 +4563,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lighthouse@npm:13":
+"lighthouse@npm:13, lighthouse@npm:^13.0.0":
   version: 13.0.1
   resolution: "lighthouse@npm:13.0.1"
   dependencies:
@@ -4621,45 +4597,6 @@ __metadata:
     lighthouse: cli/index.js
     smokehouse: cli/test/smokehouse/frontends/smokehouse-bin.js
   checksum: 10c0/d1c7a02008da1ace55564a1da873ac176c0b1a2457bce9451c5827d1297c01c1adbbe369faaac7f869b9c903bc6fc66ad55d4be25f29d9da28562ccde7a7472b
-  languageName: node
-  linkType: hard
-
-"lighthouse@npm:^12.2.1":
-  version: 12.8.2
-  resolution: "lighthouse@npm:12.8.2"
-  dependencies:
-    "@paulirish/trace_engine": "npm:0.0.59"
-    "@sentry/node": "npm:^9.28.1"
-    axe-core: "npm:^4.10.3"
-    chrome-launcher: "npm:^1.2.0"
-    configstore: "npm:^7.0.0"
-    csp_evaluator: "npm:1.1.5"
-    devtools-protocol: "npm:0.0.1507524"
-    enquirer: "npm:^2.3.6"
-    http-link-header: "npm:^1.1.1"
-    intl-messageformat: "npm:^10.5.3"
-    jpeg-js: "npm:^0.4.4"
-    js-library-detector: "npm:^6.7.0"
-    lighthouse-logger: "npm:^2.0.2"
-    lighthouse-stack-packs: "npm:1.12.2"
-    lodash-es: "npm:^4.17.21"
-    lookup-closest-locale: "npm:6.2.0"
-    metaviewport-parser: "npm:0.3.0"
-    open: "npm:^8.4.0"
-    parse-cache-control: "npm:1.0.1"
-    puppeteer-core: "npm:^24.17.1"
-    robots-parser: "npm:^3.0.1"
-    speedline-core: "npm:^1.4.3"
-    third-party-web: "npm:^0.27.0"
-    tldts-icann: "npm:^7.0.12"
-    ws: "npm:^7.0.0"
-    yargs: "npm:^17.3.1"
-    yargs-parser: "npm:^21.0.0"
-  bin:
-    chrome-debug: core/scripts/manual-chrome-launcher.js
-    lighthouse: cli/index.js
-    smokehouse: cli/test/smokehouse/frontends/smokehouse-bin.js
-  checksum: 10c0/f5765451c230ab32b5500c1d82ba4fb65b905403de1f36815cb84cde7796efd9f7b0d43a6fb0f97ae1f6332f4b0f515a4c58bcbd23be1a0e7e31d0e3458c3568
   languageName: node
   linkType: hard
 
@@ -4815,13 +4752,6 @@ __metadata:
   version: 2.0.0
   resolution: "merge-stream@npm:2.0.0"
   checksum: 10c0/867fdbb30a6d58b011449b8885601ec1690c3e41c759ecd5a9d609094f7aed0096c37823ff4a7190ef0b8f22cc86beb7049196ff68c016e3b3c671d0dac91ce5
-  languageName: node
-  linkType: hard
-
-"metaviewport-parser@npm:0.3.0":
-  version: 0.3.0
-  resolution: "metaviewport-parser@npm:0.3.0"
-  checksum: 10c0/c6bd79013449a4f3d6697c8b931f4c6655c140f42b56e761aff221a506ac6d3aac6b590e845f6a4101877b6b89ef57f08523b49d94236cadba7f9d5d97d27271
   languageName: node
   linkType: hard
 
@@ -5048,7 +4978,7 @@ __metadata:
     get-port: "npm:^7.1.0"
     globals: "npm:^17.0.0"
     jest: "npm:^29.7.0"
-    lighthouse: "npm:^12.2.1"
+    lighthouse: "npm:^13.0.0"
     playwright: "npm:^1.55.1"
     playwright-core: "npm:^1.55.1"
     playwright-lighthouse: "npm:^4.0.0"
@@ -5256,13 +5186,6 @@ __metadata:
   dependencies:
     callsites: "npm:^3.0.0"
   checksum: 10c0/c63d6e80000d4babd11978e0d3fee386ca7752a02b035fd2435960ffaa7219dc42146f07069fb65e6e8bf1caef89daf9af7535a39bddf354d78bf50d8294f556
-  languageName: node
-  linkType: hard
-
-"parse-cache-control@npm:1.0.1":
-  version: 1.0.1
-  resolution: "parse-cache-control@npm:1.0.1"
-  checksum: 10c0/330a0d9e3a22a7b0f6e8a973c0b9f51275642ee28544cd0d546420273946d555d20a5c7b49fca24d68d2e698bae0186f0f41f48d62133d3153c32454db05f2df
   languageName: node
   linkType: hard
 
@@ -5565,7 +5488,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"puppeteer-core@npm:^24.17.1, puppeteer-core@npm:^24.23.0":
+"puppeteer-core@npm:^24.23.0":
   version: 24.36.0
   resolution: "puppeteer-core@npm:24.36.0"
   dependencies:
@@ -6095,7 +6018,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tldts-icann@npm:^7.0.12, tldts-icann@npm:^7.0.17":
+"tldts-icann@npm:^7.0.17":
   version: 7.0.19
   resolution: "tldts-icann@npm:7.0.19"
   dependencies:
