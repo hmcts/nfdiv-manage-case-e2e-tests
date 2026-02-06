@@ -53,7 +53,7 @@ export class ChangedTestsRunner {
       return;
     }
     try {
-      const command: string = `yarn playwright test ${testFiles.join(" ")} --project chrome`;
+      const command: string = `yarn playwright test ${testFiles.join(" ")} --config=playwright.service.config.ts --project chrome`;
       console.log(`Running Playwright tests on: ${testFiles.join(", ")}`);
       await this.execCommand(command);
     } catch (error) {
