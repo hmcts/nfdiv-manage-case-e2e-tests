@@ -82,16 +82,6 @@ withNightlyPipeline(type, product, component, 600) {
           yarnBuilder.yarn('test:changes')
         } catch (Error) {
           unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
-        } finally {
-          publishHTML([
-                  allowMissing         : true,
-                  alwaysLinkToLastBuild: true,
-                  keepAll              : true,
-                  reportDir            : "playwright-report",
-                  reportFiles          : 'index.html',
-                  reportName           : 'Changed Chrome E2E Test Report'
-          ])
-          steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/ChangedTests/*'
         }
       }
     }

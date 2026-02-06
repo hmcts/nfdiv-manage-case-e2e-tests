@@ -84,20 +84,9 @@ withNightlyPipeline(type, product, component, 600) {
     if(params.tag) {
       stage("${params.tag} tests - ${params.browser}") {
         try {
-          yarnBuilder.yarn('playwright install --with-deps')
-          yarnBuilder.yarn("playwright test --grep ${params.tag} --project ${params.browser}")
+          yarnBuilder.yarn("playwright test --config=playwright.service.config.ts --grep ${params.tag} --project ${params.browser}")
         } catch (Error) {
           unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
-        } finally {
-          publishHTML([
-            allowMissing: true,
-            alwaysLinkToLastBuild: true,
-            keepAll: true,
-            reportDir: "playwright-report",
-            reportFiles: 'index.html',
-            reportName: "${params.tag} tests - ${params.browser}"
-          ])
-          steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/tests-results/CitizenFunctional/*'
         }
       }
     } else {
