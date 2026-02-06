@@ -42,7 +42,7 @@
     "lint": "yarn tsc -p tsconfig.json && yarn eslint . --fix",
     "setup": "yarn install && ./scripts/get_secrets.sh && yarn pwinstall && yarn playwright install webkit && yarn playwright install firefox",
     "test:changes": "node --loader ts-node/esm ./e2e/common/changedTestsRunner.ts",
-    "test:chrome": "yarn playwright test tests/ --project chrome --grep @nightly @a11y",
+    "test:chrome": "yarn playwright test tests/ --config=playwright.service.config.ts --project chrome --grep @nightly @a11y",
     "test:firefox": "yarn playwright test tests/ --config=playwright.service.config.ts --project firefox --grep @smoke",
     "test:webkit": "yarn playwright test tests/ --project webkit --grep @smoke",
     "test:edge": "yarn playwright test tests/ --config=playwright.service.config.ts --project=edge --grep-invert='(@a11y)|(@performance)|(@visual)'",
