@@ -30,6 +30,7 @@ export class SolicitorCreatePage extends BaseJourneyPage {
         `${Selectors.GovukHeadingXL}:text-is("${CommonContent.createCase}")`,
       )
       .waitFor();
+    await this.page.waitForTimeout(1);
   }
 
   private async fillInFields(): Promise<void> {
