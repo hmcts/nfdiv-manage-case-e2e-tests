@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.0",
-    "@eslint/js": "^9.11.1",
+    "@eslint/js": "^10.0.0",
     "@hmcts/playwright-common": "1.1.2",
     "@jest/globals": "^30.0.0",
     "@jest/types": "^30.0.0",
@@ -17,7 +17,7 @@
     "@typescript-eslint/eslint-plugin": "^8.8.0",
     "axios": "^1.7.4",
     "dotenv": "^17.0.0",
-    "eslint": "^9.11.1",
+    "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-playwright": "^2.0.0",
     "eslint-plugin-prettier": "^5.4.1",
