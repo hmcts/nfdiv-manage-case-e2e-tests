@@ -1,0 +1,228 @@
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { validate as isValidEmail } from 'email-validator';
+import isEqual from 'lodash/isEqual';
+
+import { Case, CaseDate } from '../case';
+
+dayjs.extend(customParseFormat);
+
+export type Validator = (value: string | string[] | CaseDate | Partial<Case> | undefined) => void | string;
+export type NumberValidator = (
+  value: string | string[] | CaseDate | Partial<Case> | undefined,
+  minValue: number,
+  maxValue: number
+) => void | string;
+export type DateValidator = (value: CaseDate | undefined) => void | string;
+export type EmailValidator = (value: string | undefined, emailToCompare: string | undefined) => void | string;
+export type ValueChangedValidator<T> = (value: T | undefined, previousValue: T | undefined) => void | string;
+
+export const isFieldFilledIn: Validator = value => {
+  if (!value || (value as string).trim?.().length === 0) {
+    return 'required';
+  }
+};
+
+export const isValidNumber: NumberValidator = (value, minValue, maxValue) => {
+  if (!value || (value as string).trim?.().length === 0) {
+    return 'required';
+  }
+
+  const trimmed = (value as string).trim();
+  const number = Number(trimmed);
+
+  if (isNaN(number) || !/^\d+$/.test(trimmed)) {
+    return 'invalid';
+  }
+
+  if (number < minValue || number > maxValue) {
+    return 'invalid';
+  }
+
+  return undefined;
+};
+
+export const atLeastOneFieldIsChecked: Validator = fields => {
+  if (!fields || (fields as []).length === 0) {
+    return 'required';
+  }
+};
+
+export const areDateFieldsFilledIn: DateValidator = fields => {
+  if (typeof fields !== 'object' || Object.keys(fields).length !== 3) {
+    return 'required';
+  }
+
+  for (const field in fields) {
+    if (!fields[field]) {
+      return 'required';
+    }
+  }
+};
+
+export const isDateInputInvalid: DateValidator = date => {
+  const invalid = 'invalidDate';
+  if (!date) {
+    return invalid;
+  }
+
+  for (const value in date) {
+    if (isNaN(+date[value])) {
+      return invalid;
+    }
+  }
+
+  const year = parseInt(date.year, 10) || 0;
+  const month = parseInt(date.month, 10) || 0;
+  const day = parseInt(date.day, 10) || 0;
+  if (!dayjs(`${year}-${month}-${day}`, 'YYYY-M-D', true).isValid()) {
+    if (year < 1000) {
+      return 'invalidYear';
+    } else {
+      return invalid;
+    }
+  }
+
+  if (year < 1900) {
+    return 'invalidDateTooFarInPast';
+  }
+};
+
+export const isFutureDate: DateValidator = date => {
+  if (!date) {
+    return;
+  }
+
+  const enteredDate = new Date(+date.year, +date.month - 1, +date.day);
+  if (new Date() < enteredDate) {
+    return 'invalidDateInFuture';
+  }
+};
+
+export const isLessThanAYearAgoInc: DateValidator = date => {
+  if (!date) {
+    return;
+  }
+
+  const enteredDate = new Date(+date.year, +date.month - 1, +date.day);
+  const today = new Date();
+  const oneYearAgo = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+  if (!dayjs(enteredDate).isBefore(oneYearAgo)) {
+    return 'lessThanAYearAgoInc';
+  }
+};
+
+export const isInvalidHelpWithFeesRef: Validator = value => {
+  const fieldNotFilledIn = isFieldFilledIn(value);
+  if (fieldNotFilledIn) {
+    return fieldNotFilledIn;
+  }
+
+  if (typeof value === 'string') {
+    if (!value.match(/^HWF-[A-Z0-9]{3}-[A-Z0-9]{3}$/i)) {
+      return 'invalid';
+    }
+
+    if (value.toUpperCase() === 'HWF-A1B-23C') {
+      return 'invalidUsedExample';
+    }
+  }
+};
+
+export const isInvalidNationalInsuranceNumber: Validator = value => {
+  const fieldNotFilledIn = isFieldFilledIn(value);
+  if (fieldNotFilledIn) {
+    return fieldNotFilledIn;
+  }
+
+  const upperValue = (value as string).toUpperCase();
+
+  const niRegex = /^[A-Z]{2} \d{2} \d{2} \d{2} [A-Z]$/;
+
+  if (!niRegex.test(upperValue)) {
+    return 'invalidFormat';
+  }
+
+  if (upperValue === 'JB 34 66 84 D') {
+    return 'invalidUsedExample';
+  }
+};
+
+export const isInvalidPostcode: Validator = value => {
+  const fieldNotFilledIn = isFieldFilledIn(value);
+  if (fieldNotFilledIn) {
+    return fieldNotFilledIn;
+  }
+
+  if (!(value as string).match(/^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$/i)) {
+    return 'invalid';
+  }
+};
+
+export const isPhoneNoValid: Validator = value => {
+  if (typeof value === 'string') {
+    return !value.match(/^$|^[0-9 +().-]{9,}$/) ? 'invalid' : undefined;
+  }
+};
+
+export const isPhoneNoFilledAndValid: Validator = value => {
+  const fieldNotFilledIn = isFieldFilledIn(value);
+  if (fieldNotFilledIn) {
+    return fieldNotFilledIn;
+  }
+  // If the field is filled in, check if it is a valid phone number
+  if (typeof value === 'string') {
+    return !value.match(/^$|^[0-9 +().-]{9,}$/) ? 'invalid' : undefined;
+  }
+};
+
+export const isEmailValid: Validator = value => {
+  if (!isValidEmail(value as string)) {
+    return 'invalid';
+  }
+};
+
+export const isEmailFilledAndValid: Validator = value => {
+  const fieldNotFilledIn = isFieldFilledIn(value);
+  if (fieldNotFilledIn) {
+    return fieldNotFilledIn;
+  }
+
+  if (!isValidEmail(value as string)) {
+    return 'invalid';
+  }
+};
+
+export const isApplicant2EmailValid: EmailValidator = (value, applicant1Email) => {
+  if (value === applicant1Email) {
+    return 'sameEmail';
+  }
+  return isEmailValid(value);
+};
+
+export const isFieldLetters: Validator = value => {
+  if (!(value as string).match(/^[\p{Script=Latin}'’\-\s]*$/gu)) {
+    return 'invalid';
+  }
+};
+
+export const isValidCaseReference: Validator = value => {
+  if (!(value as string).match(/^\d{16}$/) && !(value as string).match(/^\d{4}-\d{4}-\d{4}-\d{4}$/)) {
+    return 'invalid';
+  }
+};
+
+export const isValidAccessCode: Validator = value => {
+  if ((value as string).replace(/\s/g, '').length !== 8) {
+    return 'invalid';
+  }
+};
+
+export const hasValueChanged = <T>(
+  value: T | undefined,
+  previousValue: T | undefined
+): ReturnType<ValueChangedValidator<T>> => {
+  if (isEqual(value, previousValue)) {
+    return 'valueUnchanged';
+  }
+};

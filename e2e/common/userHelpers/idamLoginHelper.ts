@@ -1,6 +1,6 @@
 import {expect, Page} from "@playwright/test";
-import {UserLoginInfo} from "../types.ts";
-import {config} from "../../config.ts";
+import {UserLoginInfo} from "../types";
+import {config} from "../../config";
 
 export class IdamLoginHelper {
   private static fields: UserLoginInfo = {

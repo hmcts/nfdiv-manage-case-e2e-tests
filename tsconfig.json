@@ -14,6 +14,11 @@
     "noEmit": true,
     "allowJs": true,
     "noImplicitAny": false,
+    "useUnknownInCatchVariables": false
   },
-  "include":["**/*.ts"],
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  },
+  "include":["**/*.ts"]
 }

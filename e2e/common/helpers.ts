@@ -3,7 +3,7 @@ import {
   Locator,
   Page,
 } from "@playwright/test";
-import {Events} from "./types.ts";
+import {Events} from "./types";
 
 export class Helpers {
   public static async chooseEventFromDropdown(

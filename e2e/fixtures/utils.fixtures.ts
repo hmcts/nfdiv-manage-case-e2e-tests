@@ -3,12 +3,12 @@ import {
   LighthouseUtils,
   SessionUtils,
 } from "@hmcts/playwright-common";
-import { config, Config } from "../config.ts";
+import { config, Config } from "../config";
 import path from "path";
 import os from "os";
 import { chromium } from "playwright/test";
 import { Page } from "@playwright/test";
-import { CookieUtils } from "../common/cookite.utils.ts";
+import { CookieUtils } from "../common/cookite.utils";
 
 export interface UtilsFixtures {
   config: Config;

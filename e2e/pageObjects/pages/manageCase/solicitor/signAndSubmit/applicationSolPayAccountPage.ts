@@ -1,8 +1,8 @@
 import { Page, expect, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors.ts";
-import { AccessibilityOptions } from "../../../../types.ts";
-import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
-import { ApplicationSolPayAccountContent } from "../constants/signAndSubmitContent.ts";
+import { Selectors } from "../../../../../common/selectors";
+import { AccessibilityOptions } from "../../../../types";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage";
+import { ApplicationSolPayAccountContent } from "../constants/signAndSubmitContent";
 
 export class ApplicationSolPayAccountPage extends BaseJourneyPage {
   private readonly label1: Locator;

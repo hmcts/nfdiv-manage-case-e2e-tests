@@ -1,6 +1,6 @@
 import { Page, type Locator } from "@playwright/test";
-import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
-import { SolAboutTheSolicitorContent } from "../constants/solicitorDraftDivorceApplicationContent.ts";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage";
+import { SolAboutTheSolicitorContent } from "../constants/solicitorDraftDivorceApplicationContent";
 
 export class SolAboutTheSolicitorPage extends BaseJourneyPage {
   private readonly solicitorName: Locator;

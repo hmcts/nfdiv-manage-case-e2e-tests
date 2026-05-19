@@ -1,7 +1,7 @@
 import { Page, expect, type Locator } from "@playwright/test";
-import { AccessibilityOptions } from "../../../../types.ts";
-import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
-import { ApplicationSolStatementOfTruthContent } from "../constants/signAndSubmitContent.ts";
+import { AccessibilityOptions } from "../../../../types";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage";
+import { ApplicationSolStatementOfTruthContent } from "../constants/signAndSubmitContent";
 
 export class ApplicationSolStatementOfTruthPage extends BaseJourneyPage {
   private readonly serviceMethod: Locator;
