@@ -2082,10 +2082,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:4.17.23":
-  version: 4.17.23
-  resolution: "@types/lodash@npm:4.17.23"
-  checksum: 10c0/9d9cbfb684e064a2b78aab9e220d398c9c2a7d36bc51a07b184ff382fa043a99b3d00c16c7f109b4eb8614118f4869678dbae7d5c6700ed16fb9340e26cc0bf6
+"@types/lodash@npm:4.17.24":
+  version: 4.17.24
+  resolution: "@types/lodash@npm:4.17.24"
+  checksum: 10c0/b72f60d4daacdad1fa643edb3faba204c02a01eb1ac00a83ff73496a6d236fc55e459c06106e8ced42277dba932d087d8fc090f8de4ef590d3f91e6d6f7ce85a
   languageName: node
   linkType: hard
 
@@ -5634,14 +5634,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:4.18.0":
-  version: 4.18.0
-  resolution: "lodash@npm:4.18.0"
-  checksum: 10c0/0c5a7c5a4ea1db59ade40ff03cc8bfc7ea79806f5639ff4c7ee581811c8d88248bf1da608199b9d3614d8db133088bd434f3307c3951a96a821044f72a5ba810
-  languageName: node
-  linkType: hard
-
-"lodash@npm:^4.17.14":
+"lodash@npm:4.18.1, lodash@npm:^4.17.14":
   version: 4.18.1
   resolution: "lodash@npm:4.18.1"
   checksum: 10c0/757228fc68805c59789e82185135cf85f05d0b2d3d54631d680ca79ec21944ec8314d4533639a14b8bcfbd97a517e78960933041a5af17ecb693ec6eecb99a27
@@ -5893,7 +5886,7 @@ __metadata:
     "@types/config": "npm:3.3.5"
     "@types/express": "npm:4.17.25"
     "@types/jest": "npm:^30.0.0"
-    "@types/lodash": "npm:4.17.23"
+    "@types/lodash": "npm:4.17.24"
     "@types/node": "npm:^24.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.8.0"
     axios: "npm:^1.7.7"
@@ -5910,7 +5903,7 @@ __metadata:
     jest: "npm:^30.0.0"
     jwt-decode: "npm:4.0.0"
     lighthouse: "npm:^13.0.0"
-    lodash: "npm:4.18.0"
+    lodash: "npm:4.18.1"
     node-cache: "npm:5.1.2"
     otplib: "npm:12.0.1"
     playwright: "npm:^1.55.1"
