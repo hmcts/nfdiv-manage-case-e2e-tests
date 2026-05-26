@@ -5,9 +5,8 @@ import { LoggerInstance } from 'winston';
 import {getServiceAuthToken} from '../auth/service/get-service-auth-token';
 import { UserDetails } from '../auth/user/user';
 
-import { CaseData, State } from './definition';
+import {CaseData, State} from './definition';
 import {CaseWithId} from "./case";
-import {fromApiFormat} from "./formatter/from-api-format";
 
 dotenv.config();
 
@@ -26,7 +25,7 @@ export class CaseApiClient {
     };
     try {
       const response = await this.server.post<ES<CcdV1Response>>(`/searchCases?ctid=${caseType}`, JSON.stringify(query));
-      return  response.data.cases.filter(c => c.case_data.divorceOrDissolution === serviceType && c.state === 'Submitted')[0];
+      return  response.data.cases.filter(c => c.case_data.divorceOrDissolution === serviceType)[0];
     } catch (err) {
       if (err.response?.status === 404) {
         return false;
@@ -36,7 +35,7 @@ export class CaseApiClient {
     }
   }
 
-  public async sendEvent(caseId: string, data: Partial<CaseWithId>, eventName: string, retries = 0): Promise<CaseWithId> {
+  public async sendEvent(caseId: string, data: Partial<CaseWithId>, eventName: string, retries = 0): Promise<Partial<CaseWithId>> {
     try {
       const tokenResponse = await this.server.get<CcdTokenResponse>(`/cases/${caseId}/event-triggers/${eventName}`);
       const token = tokenResponse.data.token;
@@ -47,7 +46,7 @@ export class CaseApiClient {
         event_token: token,
       });
 
-      return { id: response.data.id, state: response.data.state, ...fromApiFormat(response.data.data) };
+      return { id: response.data.id, state: response.data.state, ...response.data.data };
     } catch (err) {
       if (retries < this.maxRetries && [409, 422, 502, 504].includes(err?.response.status)) {
         ++retries;

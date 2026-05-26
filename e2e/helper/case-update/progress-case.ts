@@ -7,7 +7,6 @@ import {CITIZEN_UPDATE_CASE_STATE_AAT, DivorceOrDissolution, State} from "../cas
 
 import {Logger} from "@hmcts/nodejs-logging";
 import {CaseWithId} from "../case/case";
-import {toApiFormat} from "../case/formatter/to-api-format";
 
 const logger = Logger.getLogger('progress-case');
 
@@ -40,10 +39,10 @@ export const setUsersCaseToState = async (userCaseObj: Partial<CaseWithId>, stat
 
   if (userCase) {
     const cwApi = await getApiClientForUser(config.users.caseworker)
-    userCaseObj.applicant2MiddleNames = state;
+    userCaseObj.applicant2MiddleName = state;
 
     try {
-      await cwApi.sendEvent(userCase.id, toApiFormat(userCaseObj), CITIZEN_UPDATE_CASE_STATE_AAT);
+      await cwApi.sendEvent(userCase.id, userCaseObj, CITIZEN_UPDATE_CASE_STATE_AAT);
     } catch (error) {
       error.logMessage = 'Could not set fixture data as ' + config.users.solicitor.username;
       console.error(error.logMessage);
