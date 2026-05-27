@@ -81,6 +81,9 @@ withNightlyPipeline(type, product, component, 600) {
   env.AUTH_PROVIDER_SERVICE = "divorce_frontend"
   env.AUTH_PROVIDER_URL = "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
   env.CASE_API_BASE_URL = "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
+  env.IDAM_CLIENT_ID = "divorce"
+  env.IDAM_TOKEN_URL = "https://idam-api.aat.platform.hmcts.net/o/token"
+
   enableSlackNotifications(channel)
 
   afterAlways('DependencyCheckNightly') {

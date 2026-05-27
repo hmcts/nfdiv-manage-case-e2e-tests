@@ -4,7 +4,7 @@ import NodeCache from 'node-cache';
 import {CaseData} from "../../case/caseData.ts";
 import {State} from "../../case/definition";
 
-const logger = Logger.getLogger('oidc');
+const logger = Logger.getLogger('user');
 
 export const idamTokenCache = new NodeCache({ stdTTL: 3600, checkperiod: 1800 });
 export interface OidcResponse {
