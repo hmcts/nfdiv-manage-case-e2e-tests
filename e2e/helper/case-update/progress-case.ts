@@ -3,10 +3,9 @@ import {AxiosResponse} from "axios";
 import {jwtDecode} from "jwt-decode";
 import {config, UserCredentials} from "../../config";
 import {CaseApiClient, getCaseApiClient} from "../case/case-api-client";
-import {CITIZEN_UPDATE_CASE_STATE_AAT, DivorceOrDissolution, State} from "../case/definition";
+import {CaseWithId, CITIZEN_UPDATE_CASE_STATE_AAT, State} from "../case/definition";
 
 import {Logger} from "@hmcts/nodejs-logging";
-import {CaseWithId} from "../case/case";
 
 const logger = Logger.getLogger('progress-case');
 
@@ -35,7 +34,7 @@ export const getTestUser = async (user: { username: string; password: string }):
 export const setUsersCaseToState = async (userCaseObj: Partial<CaseWithId>, state: State = State.Draft): Promise<void> => {
   const api = await getApiClientForUser(config.users.solicitor)
 
-  const userCase = await api.findUserCase('NFD', DivorceOrDissolution.DIVORCE);
+  const userCase = await api.findUserCase('NFD', "divorce");
 
   if (userCase) {
     const cwApi = await getApiClientForUser(config.users.caseworker)

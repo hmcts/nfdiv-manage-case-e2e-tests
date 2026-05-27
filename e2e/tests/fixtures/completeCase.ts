@@ -1,8 +1,5 @@
-import {CaseWithId} from '../../helper/case/case';
 import {
-  ApplicationType,
-  ContactDetailsType,
-  DivorceOrDissolution,
+  CaseWithId,
   YesOrNo,
 } from '../../helper/case/definition';
 
@@ -25,7 +22,7 @@ export const completeCase: Partial<CaseWithId> = {
     PostCode: "postcode",
     Country: "UK"
   },
-  applicant1ContactDetailsType: ContactDetailsType.PUBLIC,
+  applicant1ContactDetailsType: "public",
   applicant1AgreedToReceiveEmails: YesOrNo.YES,
   applicant1FirstName: 'Test your name',
   marriageApplicant1Name: 'First name Last name',
@@ -48,11 +45,11 @@ export const completeCase: Partial<CaseWithId> = {
   applicant2MiddleName: '',
   applicant2NameDifferentToMarriageCertificate: YesOrNo.NO,
   applicant2NameDifferentToMarriageCertificateMethod: [],
-  applicationType: ApplicationType.SOLE_APPLICATION,
+  applicationType: "soleApplication",
   applicant1FinancialOrder: YesOrNo.NO,
-  applicant1FinancialOrdersFor: [],
+  applicant1FinancialOrdersFor: ["applicant"],
   applicant1CannotUpload: YesOrNo.YES,
-  divorceOrDissolution: DivorceOrDissolution.DIVORCE,
+  divorceOrDissolution: "divorce",
   applicant1LegalProceedings: YesOrNo.NO,
   applicant1ConfirmFullName: YesOrNo.YES,
   applicant2ConfirmFullName: YesOrNo.YES,

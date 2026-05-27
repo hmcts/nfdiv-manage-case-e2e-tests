@@ -1,7 +1,7 @@
 import { Logger } from '@hmcts/nodejs-logging';
 import axios, { AxiosResponse } from 'axios';
 import NodeCache from 'node-cache';
-import {Case} from "../../case/case";
+import {CaseData} from "../../case/caseData.ts";
 import {State} from "../../case/definition";
 
 const logger = Logger.getLogger('oidc');
@@ -59,6 +59,6 @@ export interface UserDetails {
   roles: string[];
 }
 
-export interface BrowserCase extends Case {
+export interface BrowserCase extends CaseData {
   state: State;
 }

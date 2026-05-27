@@ -5,8 +5,8 @@ import { LoggerInstance } from 'winston';
 import {getServiceAuthToken} from '../auth/service/get-service-auth-token';
 import { UserDetails } from '../auth/user/user';
 
-import {CaseData, State} from './definition';
-import {CaseWithId} from "./case";
+import {CaseWithId, State} from './definition';
+import {CaseData} from "./caseData.ts";
 
 dotenv.config();
 
@@ -25,7 +25,9 @@ export class CaseApiClient {
     };
     try {
       const response = await this.server.post<ES<CcdV1Response>>(`/searchCases?ctid=${caseType}`, JSON.stringify(query));
-      return  response.data.cases.filter(c => c.case_data.divorceOrDissolution === serviceType)[0];
+      const foundCase = response.data.cases.filter(c => c.case_data.divorceOrDissolution === serviceType)[0];
+      this.logger.info(`Found case with case id: ${foundCase.id}`);
+      return  foundCase;
     } catch (err) {
       if (err.response?.status === 404) {
         return false;

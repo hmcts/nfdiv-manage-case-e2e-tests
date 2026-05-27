@@ -1,21 +1,15 @@
 import {
   AddressGlobalUK,
-  ApplicationType,
-  ChangedNameHow, ContactDetailsType, DateAsString,
-  DivorceOrDissolution,
-  FinancialOrderFor,
-  Gender,
-
-  JurisdictionConnections, LanguagePreference,
-  State,
+  CaseDate, ChangedNameHow,
+  DateAsString,
   YesOrNo,
 } from './definition';
 
-export interface Case {
-  applicationType?: ApplicationType;
-  divorceOrDissolution: DivorceOrDissolution;
+export interface CaseData {
+  applicationType?: "soleApplication" | "jointApplication";
+  divorceOrDissolution: "divorce" | "dissolution";
   issueDate?: DateAsString;
-  gender?: Gender;
+  gender?: string;
   sameSex?: YesOrNo;
   applicant1ScreenHasUnionBroken?: YesOrNo;
   relationshipDate?: CaseDate;
@@ -24,8 +18,8 @@ export interface Case {
   inTheUk?: YesOrNo;
   jurisdictionApplicant1Residence?: YesOrNo;
   jurisdictionApplicant2Residence?: YesOrNo;
-  applicant1EnglishOrWelsh?: LanguagePreference;
-  applicant2EnglishOrWelsh?: LanguagePreference;
+  applicant1EnglishOrWelsh?: string;
+  applicant2EnglishOrWelsh?: string;
   applicant1FirstName?: string;
   applicant1MiddleName?: string;
   applicant1LastName?: string;
@@ -34,10 +28,10 @@ export interface Case {
   applicant2Address?: AddressGlobalUK;
   applicant1PhoneNumber?: string;
   applicant1AgreedToReceiveEmails?: YesOrNo;
-  connections: JurisdictionConnections[];
+  connections: "A" | "B" | 'C';
   marriageApplicant1Name?: string;
   marriageApplicant2Name?: string;
-  applicant1ContactDetailsType: ContactDetailsType;
+  applicant1ContactDetailsType: "private" | "public";
   applicant2FirstName?: string;
   applicant2MiddleName?: string;
   applicant2LastName?: string;
@@ -61,20 +55,8 @@ export interface Case {
   applicant1KnowsApplicant2Address?: YesOrNo;
   applicant1LegalProceedings?: YesOrNo;
   applicant1FinancialOrder?: YesOrNo;
-  applicant1FinancialOrdersFor?: FinancialOrderFor[];
+  applicant1FinancialOrdersFor?: ["applicant" | "children"];
   applicant1CannotUpload?: YesOrNo;
   applicant1CannotUploadDocuments?: DocumentType | DocumentType[];
   accessCode?: string;
 }
-
-export interface CaseWithId extends Case {
-  id: string;
-  state: State;
-}
-
-export interface CaseDate {
-  year: string;
-  month: string;
-  day: string;
-}
-
