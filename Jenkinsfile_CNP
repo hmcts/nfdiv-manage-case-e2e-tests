@@ -76,7 +76,7 @@ withNightlyPipeline(type, product, component, 600) {
   env.FUNCTIONAL_TESTS_WORKERS = params.FUNCTIONAL_TESTS_WORKERS
   env.AUTH_PROVIDER_SERVICE = "divorce_frontend"
   env.SERVICE_AUTH_PROVIDER_URL = "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
-  env.CASE_API_BASE_URL=http://ccd-data-store-api-aat.service.core-compute-aat.internal
+  env.CASE_API_BASE_URL = "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
 
   enableSlackNotifications(channel)
   onPR() {
@@ -103,7 +103,7 @@ withNightlyPipeline(type, product, component, 600) {
   onMaster() {
     env.AUTH_PROVIDER_SERVICE = "divorce_frontend"
     env.SERVICE_AUTH_PROVIDER_URL = "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
-    env.CASE_API_BASE_URL=http://ccd-data-store-api-aat.service.core-compute-aat.internal
+    env.CASE_API_BASE_URL = "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
     afterAlways('DependencyCheckNightly') {
       if (!params.skipManageCasesTests) {
         stage('Manage Cases E2E tests - Chrome') {
