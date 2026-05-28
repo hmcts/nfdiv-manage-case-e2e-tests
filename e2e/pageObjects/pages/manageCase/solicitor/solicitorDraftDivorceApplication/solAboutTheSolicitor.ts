@@ -46,7 +46,7 @@ export class SolAboutTheSolicitorPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageHeading(SolAboutTheSolicitorContent.content.pageTitle);
+    await this.assertPageCaption(SolAboutTheSolicitorContent.content.pageTitle);
   }
 
   private async fillInFields(): Promise<void> {

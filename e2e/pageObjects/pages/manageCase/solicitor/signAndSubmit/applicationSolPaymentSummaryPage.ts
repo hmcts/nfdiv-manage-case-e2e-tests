@@ -30,7 +30,7 @@ export class ApplicationSolPaymentSummaryPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageHeading(ApplicationSolPaymentSummaryContent.content.pageTitle);
+    await this.assertPageCaption(ApplicationSolPaymentSummaryContent.content.pageTitle);
     await Promise.all([
       expect(this.paymentMethodP).toBeVisible(),
       expect(this.referenceStrong).toBeVisible(),
