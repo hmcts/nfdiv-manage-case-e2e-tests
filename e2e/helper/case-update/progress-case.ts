@@ -34,7 +34,9 @@ export const getTestUser = async (user: { username: string; password: string }):
 export const setUsersCaseToState = async (userCaseObj: Partial<CaseWithId>, state: State = State.Draft): Promise<void> => {
   const api = await getApiClientForUser(config.users.solicitor)
 
-  const userCase = await api.findUserCase('NFD', "divorce");
+  const userCase = await api.createCase();
+
+  logger.info(`Created case with id: ${userCase.id}`);
 
   if (userCase) {
     const cwApi = await getApiClientForUser(config.users.caseworker)

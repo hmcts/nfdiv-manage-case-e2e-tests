@@ -44,3 +44,5 @@ export interface Address {
 export type AddressGlobalUK = Address
 
 export const CITIZEN_UPDATE_CASE_STATE_AAT = 'citizen-update-case-state-aat';
+export const CITIZEN_CREATE_CASE = 'citizen-create-application';
+export const SOLICITOR_CREATE_CASE = 'solicitor-create-application';

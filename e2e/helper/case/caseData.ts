@@ -59,4 +59,8 @@ export interface CaseData {
   applicant1CannotUpload?: YesOrNo;
   applicant1CannotUploadDocuments?: DocumentType | DocumentType[];
   accessCode?: string;
+  marriageDate?: string;
+  jurisdictionConnections: ["A" | "B" | "C"],
+  marriageFormationType: "oppositeSexCouple" | "sameSexCouple",
+  applicant1SolicitorOrganisationPolicy: object
 }

@@ -5,8 +5,9 @@ import { LoggerInstance } from 'winston';
 import {getServiceAuthToken} from '../auth/service/get-service-auth-token';
 import { UserDetails } from '../auth/user/user';
 
-import {CaseWithId, State} from './definition';
+import {CaseWithId, SOLICITOR_CREATE_CASE, State} from './definition';
 import {CaseData} from "./caseData.ts";
+import {solicitorCreateCase} from "../../tests/fixtures/solicitorCreateCase.ts";
 
 dotenv.config();
 
@@ -17,25 +18,6 @@ export class CaseApiClient {
     private readonly server: AxiosInstance,
     private readonly logger: LoggerInstance
   ) {}
-
-  public async findUserCase(caseType: string, serviceType: string): Promise<CcdV1Response | false> {
-    const query = {
-      query: { match_all: {} },
-      sort: [{ created_date: { order: 'desc' } }],
-    };
-    try {
-      const response = await this.server.post<ES<CcdV1Response>>(`/searchCases?ctid=${caseType}`, JSON.stringify(query));
-      const foundCase = response.data.cases.filter(c => c.case_data.divorceOrDissolution === serviceType)[0];
-      this.logger.info(`Found case with case id: ${foundCase.id}`);
-      return  foundCase;
-    } catch (err) {
-      if (err.response?.status === 404) {
-        return false;
-      }
-      this.logError(err);
-      throw new Error('Case could not be retrieved.');
-    }
-  }
 
   public async sendEvent(caseId: string, data: Partial<CaseWithId>, eventName: string, retries = 0): Promise<Partial<CaseWithId>> {
     try {
@@ -60,6 +42,30 @@ export class CaseApiClient {
     }
   }
 
+
+  public async createCase(): Promise<CaseWithId> {
+    const tokenResponse: AxiosResponse<CcdTokenResponse> = await this.server.get(
+      `/case-types/NFD/event-triggers/${SOLICITOR_CREATE_CASE}`
+    );
+    const token = tokenResponse.data.token;
+    const event = { id: SOLICITOR_CREATE_CASE };
+    const data = {
+      ...solicitorCreateCase,
+    };
+
+    try {
+      const response = await this.server.post<CcdV2Response>(`/case-types/NFD/cases`, {
+        data,
+        event,
+        event_token: token,
+      });
+
+      return { id: response.data.id, state: response.data.state, ...response.data.data };
+    } catch (err) {
+      this.logError(err);
+      throw new Error('Case could not be created.');
+    }
+  }
 
   private logError(error: AxiosError) {
     if (error.response) {
@@ -88,18 +94,6 @@ export const getCaseApiClient = (userDetails: UserDetails, logger: LoggerInstanc
     logger
   );
 };
-
-interface ES<T> {
-  cases: T[];
-  total: number;
-}
-
-export interface CcdV1Response {
-  id: string;
-  state: State;
-  created_date: string;
-  case_data: CaseData;
-}
 
 interface CcdV2Response {
   id: string;
