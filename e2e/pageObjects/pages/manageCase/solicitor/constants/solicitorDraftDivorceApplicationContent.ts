@@ -1,4 +1,6 @@
 // Shared test data to eliminate duplication
+import {config} from "../../../../../config.ts";
+
 const SharedValues = {
   // Applicant 1 details
   applicant1FirstName: "ApplicantOne First",
@@ -24,7 +26,7 @@ const SharedValues = {
   solicitorName: "Test Solicitor",
   solicitorPhone: "00000000000",
   solicitorReference: "Ref123",
-  solicitorOrganisation: "NFD Solicitor Organisation",
+  solicitorOrganisation: config.solicitor.organisation.toString(),
 } as const;
 
 export const AboutApplicantContent = {

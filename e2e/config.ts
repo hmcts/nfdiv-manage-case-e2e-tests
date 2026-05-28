@@ -33,6 +33,10 @@ export interface Config {
   };
   urls: Urls;
   files: Files;
+  solicitor: {
+    organisation: string;
+    pba: string;
+  };
 }
 
 const __filename = fileURLToPath(import.meta.url);
@@ -80,7 +84,11 @@ export const config: Config = {
     odt: path.resolve(__dirname, './assets/mockFile.odt'),
     pdf: path.resolve(__dirname, './assets/mockFile.pdf'),
     txt: path.resolve(__dirname, './assets/mockFile.txt'),
-  }
+  },
+  solicitor: {
+    organisation: getEnvVar("SOLICITOR_ORGANISATION"),
+    pba: getEnvVar("SOLICITOR_PBA")
+  },
 };
 
 function getEnvVar(name: string): string {
