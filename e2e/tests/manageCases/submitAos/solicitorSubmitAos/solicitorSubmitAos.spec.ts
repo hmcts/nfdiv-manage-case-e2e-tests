@@ -1,9 +1,9 @@
 import {test} from "../../../../fixtures/fixtures";
 import {config} from "../../../../config";
-import {completeCase} from '../../../fixtures/completeCase';
 
 import {createSolicitorTestCase, setUsersCaseToState} from "../../../../helper/case-update/progress-case";
 import {State} from "../../../../helper/case/definition";
+import {solicitorCreateCase} from "../../../fixtures/solicitorCreateCase.ts";
 
 test.describe("Solicitor submit Aos tests", (): void => {
   test.use({
@@ -16,7 +16,7 @@ test.describe("Solicitor submit Aos tests", (): void => {
   saying yes to all options, @nightly @regression @smoke`, async ({
   }): Promise<void> => {
 
-    const userCase = (await createSolicitorTestCase(completeCase));
+    const userCase = (await createSolicitorTestCase(solicitorCreateCase));
     await setUsersCaseToState(userCase.id, State.Holding);
   });
 });
