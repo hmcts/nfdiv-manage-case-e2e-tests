@@ -2,7 +2,7 @@ import {test} from "../../../../fixtures/fixtures";
 import {config} from "../../../../config";
 import {completeCase} from '../../../fixtures/completeCase';
 
-import {setUsersCaseToState} from "../../../../helper/case-update/progress-case";
+import {createSolicitorTestCase, setUsersCaseToState} from "../../../../helper/case-update/progress-case";
 import {State} from "../../../../helper/case/definition";
 
 test.describe("Solicitor submit Aos tests", (): void => {
@@ -16,6 +16,7 @@ test.describe("Solicitor submit Aos tests", (): void => {
   saying yes to all options, @nightly @regression @smoke`, async ({
   }): Promise<void> => {
 
-    await setUsersCaseToState(completeCase, State.Holding);
+    const userCase = (await createSolicitorTestCase(completeCase));
+    await setUsersCaseToState(userCase.id, State.Holding);
   });
 });

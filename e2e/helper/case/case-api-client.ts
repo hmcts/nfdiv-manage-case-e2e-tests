@@ -7,7 +7,6 @@ import { UserDetails } from '../auth/user/user';
 
 import {CaseWithId, SOLICITOR_CREATE_CASE, State} from './definition';
 import {CaseData} from "./caseData.ts";
-import {solicitorCreateCase} from "../../tests/fixtures/solicitorCreateCase.ts";
 
 dotenv.config();
 
@@ -43,14 +42,14 @@ export class CaseApiClient {
   }
 
 
-  public async createCase(): Promise<CaseWithId> {
+  public async createCase(caseData: Partial<CaseWithId>): Promise<CaseWithId> {
     const tokenResponse: AxiosResponse<CcdTokenResponse> = await this.server.get(
       `/case-types/NFD/event-triggers/${SOLICITOR_CREATE_CASE}`
     );
     const token = tokenResponse.data.token;
     const event = { id: SOLICITOR_CREATE_CASE };
     const data = {
-      ...solicitorCreateCase,
+      ...caseData ,
     };
 
     try {

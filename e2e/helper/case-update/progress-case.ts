@@ -31,24 +31,25 @@ export const getTestUser = async (user: { username: string; password: string }):
   };
 };
 
-export const setUsersCaseToState = async (userCaseObj: Partial<CaseWithId>, state: State = State.Draft): Promise<void> => {
+export const createSolicitorTestCase = async (fixture: Partial<CaseWithId>): Promise<CaseWithId> => {
   const api = await getApiClientForUser(config.users.solicitor)
-
-  const userCase = await api.createCase();
-
+  const userCase = await api.createCase(fixture);
   logger.info(`Created case with id: ${userCase.id}`);
 
-  if (userCase) {
-    const cwApi = await getApiClientForUser(config.users.caseworker)
-    userCaseObj.applicant2MiddleName = state;
+  return userCase;
+};
 
-    try {
-      await cwApi.sendEvent(userCase.id, userCaseObj, CITIZEN_UPDATE_CASE_STATE_AAT);
-    } catch (error) {
-      error.logMessage = 'Could not set fixture data as ' + config.users.solicitor.username;
-      console.error(error.logMessage);
-      process.exit(-1);
-    }
+export const setUsersCaseToState = async (caseId: string, state: State = State.Submitted): Promise<void> => {
+  const cwApi = await getApiClientForUser(config.users.caseworker)
+
+  try {
+    logger.info(`Setting user state to: ${state}`);
+
+    await cwApi.sendEvent(caseId, {applicant2MiddleName: state}, CITIZEN_UPDATE_CASE_STATE_AAT);
+  } catch (error) {
+    error.logMessage = 'Could not set state as ' + config.users.solicitor.username;
+    console.error(error.logMessage);
+    process.exit(-1);
   }
 };
 

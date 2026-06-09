@@ -53,4 +53,5 @@ export const completeCase: Partial<CaseWithId> = {
   applicant1LegalProceedings: YesOrNo.NO,
   applicant1ConfirmFullName: YesOrNo.YES,
   applicant2ConfirmFullName: YesOrNo.YES,
+  marriageDate: '2000-09-02',
 };
