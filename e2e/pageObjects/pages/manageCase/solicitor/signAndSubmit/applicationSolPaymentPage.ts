@@ -1,13 +1,15 @@
 import { Page, expect, type Locator } from "@playwright/test";
 import { Selectors } from "../../../../../common/selectors";
-import { CommonContent } from "../../../../../common/commonContent";
 import { AccessibilityOptions } from "../../../../types";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 import { ApplicationSolPaymentContent } from "../constants/signAndSubmitContent";
+import {getFee} from "../../../../../helper/fees/service/get-fee.ts";
 
 type ApplicationSolPaymentOptions = AccessibilityOptions & {
   solicitorPayment: keyof typeof ApplicationSolPaymentContent.selectors.radioButtons;
 };
+
+const divorceFee = await getFee('DivorceCivPart')
 
 export class ApplicationSolPaymentPage extends BaseJourneyPage {
   private readonly formLabel1: Locator;
@@ -29,8 +31,12 @@ export class ApplicationSolPaymentPage extends BaseJourneyPage {
       `${Selectors.GovukFormLabel}:text-is("${ApplicationSolPaymentContent.content.formLabel3}")`,
     );
     this.feeStrong = page.locator(
-      `${Selectors.strong}:text-is("${CommonContent.fee}")`,
+      `${Selectors.strong}:text-is("${divorceFee}")`,
     );
+
+    console.log('Fee value:', divorceFee);
+    console.log('Fee char codes:', [...divorceFee].map(c => c.charCodeAt(0)));
+
     this.orderSummaryDiv = page.locator(
       `${Selectors.div}:text-is("${ApplicationSolPaymentContent.content.div}")`,
     );
