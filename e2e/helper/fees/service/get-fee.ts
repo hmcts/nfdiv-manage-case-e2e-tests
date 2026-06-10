@@ -43,5 +43,3 @@ export const getFee = async (keyword: FeeKeyword): Promise<string> => {
   await updateFee(keyword);
   return '£' + fees[keyword].amount;
 };
-
-console.log( await getFee('DivorceCivPart'));
