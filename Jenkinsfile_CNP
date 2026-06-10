@@ -79,6 +79,8 @@ withNightlyPipeline(type, product, component, 600) {
   env.CASE_API_BASE_URL = "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
   env.IDAM_CLIENT_ID = "divorce"
   env.IDAM_TOKEN_URL = "https://idam-api.aat.platform.hmcts.net/o/token"
+  env.SERVICE_FEES_URL = "http://fees-register-api-aat.service.core-compute-aat.internal"
+
 
   enableSlackNotifications(channel)
   onPR() {
@@ -108,6 +110,8 @@ withNightlyPipeline(type, product, component, 600) {
     env.CASE_API_BASE_URL = "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
     env.IDAM_CLIENT_ID = "divorce"
     env.IDAM_TOKEN_URL = "https://idam-api.aat.platform.hmcts.net/o/token"
+    env.SERVICE_FEES_URL = "http://fees-register-api-aat.service.core-compute-aat.internal"
+
     afterAlways('DependencyCheckNightly') {
       if (!params.skipManageCasesTests) {
         stage('Manage Cases E2E tests - Chrome') {
