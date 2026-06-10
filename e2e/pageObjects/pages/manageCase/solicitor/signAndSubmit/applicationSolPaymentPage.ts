@@ -34,9 +34,6 @@ export class ApplicationSolPaymentPage extends BaseJourneyPage {
       `${Selectors.strong}:text-is("${divorceFee}")`,
     );
 
-    console.log('Fee value:', divorceFee);
-    console.log('Fee char codes:', [...divorceFee].map(c => c.charCodeAt(0)));
-
     this.orderSummaryDiv = page.locator(
       `${Selectors.div}:text-is("${ApplicationSolPaymentContent.content.div}")`,
     );

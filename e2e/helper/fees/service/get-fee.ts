@@ -26,7 +26,7 @@ export const updateFee = async (keyword: FeeKeyword): Promise<void> => {
     '/fees-register/fees/lookup' +
     `?channel=default` +
     `&jurisdiction1=family` +
-    `&jurisdiction2=family%20court` +
+    `&jurisdiction2=family court` +
     `&service=${fees[keyword].service}` +
     `&keyword=${keyword}` +
     `&event=${fees[keyword].event}`;
@@ -43,3 +43,5 @@ export const getFee = async (keyword: FeeKeyword): Promise<string> => {
   await updateFee(keyword);
   return '£' + fees[keyword].amount;
 };
+
+console.log( await getFee('DivorceCivPart'));
