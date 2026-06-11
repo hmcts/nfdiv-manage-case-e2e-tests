@@ -6,7 +6,7 @@ import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 import { SubmitContent } from "../constants/signAndSubmitContent";
 import {getFee} from "../../../../../helper/fees/service/get-fee.ts";
 
-const divorceFee = await getFee()
+const divorceFee = await getFee("DivorceCivPart")
 
 export class SignAndSubmitSubmitPage extends BaseJourneyPage {
   private readonly h2CheckAnswers: Locator;

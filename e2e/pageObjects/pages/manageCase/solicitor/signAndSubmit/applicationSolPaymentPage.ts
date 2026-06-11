@@ -9,7 +9,7 @@ type ApplicationSolPaymentOptions = AccessibilityOptions & {
   solicitorPayment: keyof typeof ApplicationSolPaymentContent.selectors.radioButtons;
 };
 
-const divorceFee = await getFee()
+const divorceFee = await getFee('DivorceCivPart')
 
 export class ApplicationSolPaymentPage extends BaseJourneyPage {
   private readonly formLabel1: Locator;
