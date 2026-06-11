@@ -43,6 +43,33 @@ export interface Address {
 }
 export type AddressGlobalUK = Address
 
+
+/* Valid combinations of FeeType, FeeEventType and FeeServiceType
+
+  { FeeType: DivorceCivPart, service: 'divorce', event: 'issue' },
+  { FeeType: DivorceAmendPetition, service: 'other', event: 'issue' },
+  { FeeType: AppnPrivateOther, service: 'other', event: 'issue' },
+  { FeeType: GAContestedOrder, service: 'other', event: 'general application' },
+  { FeeType: BailiffServeDoc, service: 'other', event: 'enforcement' },
+  { FeeType: FinancialOrderOnNotice, service: 'other', event: 'miscellaneous' },
+  { FeeType: GeneralAppWithoutNotice:, service: 'other', event: 'general application' },
+  { FeeType: GAOnNotice, service: 'other', event: 'general application' },
+  { FeeType: DivAnswerReceived, service: 'other', event: 'issue' },
+  { FeeType: SearchIndexDivCentral, service: 'other', event: 'search' },
+
+ */
+export const enum FeeTypes {
+  DivorceCivPart = 'DivorceCivPart',
+}
+
+export const enum FeeEventTypes {
+  ISSUE = 'issue' ,
+}
+
+export const enum FeeServiceTypes {
+  DIVORCE = 'divorce',
+}
+
 export const CITIZEN_UPDATE_CASE_STATE_AAT = 'citizen-update-case-state-aat';
 export const CITIZEN_CREATE_CASE = 'citizen-create-application';
 export const SOLICITOR_CREATE_CASE = 'solicitor-create-application';
