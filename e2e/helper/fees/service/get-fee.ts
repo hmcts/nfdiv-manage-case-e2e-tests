@@ -41,8 +41,8 @@ export const updateFee = async (keyword: FeeKeyword): Promise<void> => {
 
 export const getFee = async (keyword: FeeKeyword): Promise<string> => {
   if (!fees[keyword].amount) {
-    updateFee(keyword);
+    await updateFee(keyword);
   }
-  
+
   return '£' + fees[keyword].amount;
 };
