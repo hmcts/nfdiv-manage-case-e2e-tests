@@ -59,7 +59,7 @@ export class SolAboutTheSolicitorPage extends BaseJourneyPage {
     await this.solicitorPhone.fill(
       SolAboutTheSolicitorContent.content.solicitorPhone,
     );
-    await this.solicitorEmail.fill(process.env.SOLICITOR_USERNAME as string);
+    await this.solicitorEmail.fill(process.env.E2E_SOLICITOR_USERNAME as string);
     await this.searchOrgText.fill(
       SolAboutTheSolicitorContent.content.solicitorOrganisation,
     );

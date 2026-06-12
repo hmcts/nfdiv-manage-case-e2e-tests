@@ -42,8 +42,8 @@ You also need to create a list of those secrets in your Jenkinsfile e.g:
 ```groovy
 def secrets = [
   'nfdiv-${env}': [
-    secret('solicitor-user', 'SOLICITOR_USERNAME'),
-    secret('solicitor-password', 'SOLICITOR_PASSWORD'),
+    secret('e2e-solicitor-user', 'E2E_SOLICITOR_USERNAME'),
+    secret('e2e-solicitor-password', 'E2E_SOLICITOR_PASSWORD'),
     ...
   ]
 ]
