@@ -20,7 +20,7 @@ export const getTokenFromApi = async (): Promise<void> => {
   try {
     const response = await axios.post(url, body);
     token = response.data;
-  } catch (err: any) {
+  } catch (err) {
     logger.error(err.response?.status, err.response?.data);
     throw err;
   }
@@ -28,7 +28,7 @@ export const getTokenFromApi = async (): Promise<void> => {
 
 export const initAuthToken = async (): Promise<void> => {
   await getTokenFromApi();
-  
+
   setInterval(getTokenFromApi, 1000 * 60 * 60);
 };
 

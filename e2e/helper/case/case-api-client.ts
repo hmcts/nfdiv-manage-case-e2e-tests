@@ -78,13 +78,13 @@ export class CaseApiClient {
   }
 }
 
-export const getCaseApiClient = (userDetails: UserDetails, logger: LoggerInstance): CaseApiClient => {
+export const getCaseApiClient = async (userDetails: UserDetails, logger: LoggerInstance): Promise<CaseApiClient> => {
   return new CaseApiClient(
     axios.create({
       baseURL: process.env.CASE_API_BASE_URL,
       headers: {
         Authorization: 'Bearer ' + userDetails.accessToken,
-        ServiceAuthorization: getServiceAuthToken(),
+        ServiceAuthorization: await getServiceAuthToken(),
         experimental: 'true',
         Accept: '*/*',
         'Content-Type': 'application/json',
