@@ -14,9 +14,15 @@ export abstract class BaseJourneyPage {
     await this.page.goto(config.urls.manageCaseBaseUrl + "/case-filter");
   }
 
-  async assertPageHeading(text: string): Promise<void> {
+  async assertPageCaption(text: string): Promise<void> {
     await this.page
       .locator(`${Selectors.GovukCaptionL}:text-is("${text}")`)
+      .waitFor();
+  }
+
+  async assertPageHeading(text: string): Promise<void> {
+    await this.page
+      .locator(`${Selectors.GovukHeadingL}:text-is("${text}")`)
       .waitFor();
   }
 

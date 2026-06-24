@@ -53,12 +53,7 @@ export class ApplicationSolPaymentPage extends BaseJourneyPage {
 
   private async checkPageLoads(): Promise<void> {
     // Uses a different heading locator to the base method
-    await this.page
-      .locator(
-        `${Selectors.GovukHeadingL}:text-is("${ApplicationSolPaymentContent.content.pageTitle}")`,
-      )
-      .waitFor();
-    // await this.assertPageHeading(ApplicationSolPaymentContent.pageTitle);
+    await this.assertPageHeading(ApplicationSolPaymentContent.content.pageTitle);
     await Promise.all([
       expect(this.formLabel1).toBeVisible(),
       expect(this.formLabel2).toBeVisible(),

@@ -19,7 +19,7 @@ export class CheckYourAnswersAndSubmitPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageHeading(CommonContent.pageTitle);
+    await this.assertPageCaption(CommonContent.pageTitle);
   }
 
   private async fillInFields(): Promise<void> {

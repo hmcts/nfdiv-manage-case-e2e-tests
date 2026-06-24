@@ -1,7 +1,9 @@
 // Shared constants to eliminate duplication
+import {config} from "../../../../../config.ts";
+
 const SharedValues = {
   pageTitle: "Sign and submit",
-  pbaNumber: "PBA0082311",
+  pbaNumber: config.solicitor.pba.toString(),
   paymentReference: "Test",
   solicitorName: "Solicitor_app_test",
   firmName: "NFD Solicitor Firm",

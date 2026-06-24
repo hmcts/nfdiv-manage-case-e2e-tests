@@ -33,6 +33,10 @@ export interface Config {
   };
   urls: Urls;
   files: Files;
+  solicitor: {
+    organisation: string;
+    pba: string;
+  };
 }
 
 const __filename = fileURLToPath(import.meta.url);
@@ -41,12 +45,12 @@ const __dirname = path.dirname(__filename);
 export const config: Config = {
   users: {
     solicitor: {
-      username: getEnvVar("SOLICITOR_USERNAME"),
-      password: getEnvVar("SOLICITOR_PASSWORD"),
+      username: getEnvVar("E2E_SOLICITOR_USERNAME"),
+      password: getEnvVar("E2E_SOLICITOR_PASSWORD"),
       sessionFile: path.join(
         __dirname,
         ".sessions",
-        `${getEnvVar("SOLICITOR_USERNAME")}.json`),
+        `${getEnvVar("E2E_SOLICITOR_USERNAME")}.json`),
       cookieName: "xui-webapp",
     },
     caseworker: {
@@ -80,7 +84,11 @@ export const config: Config = {
     odt: path.resolve(__dirname, './assets/mockFile.odt'),
     pdf: path.resolve(__dirname, './assets/mockFile.pdf'),
     txt: path.resolve(__dirname, './assets/mockFile.txt'),
-  }
+  },
+  solicitor: {
+    organisation: getEnvVar("E2E_SOLICITOR_ORGANISATION"),
+    pba: getEnvVar("E2E_SOLICITOR_PBA")
+  },
 };
 
 function getEnvVar(name: string): string {

@@ -45,7 +45,7 @@ export class ApplicationSolStatementOfTruthPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageHeading(
+    await this.assertPageCaption(
       ApplicationSolStatementOfTruthContent.content.pageTitle,
     );
     await Promise.all([

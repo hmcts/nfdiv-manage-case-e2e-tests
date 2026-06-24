@@ -38,7 +38,7 @@ export class ApplicationSolPayAccountPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageHeading(ApplicationSolPayAccountContent.content.pageTitle);
+    await this.assertPageCaption(ApplicationSolPayAccountContent.content.pageTitle);
     await Promise.all([
       expect(this.label1).toBeVisible(),
       expect(this.label2).toBeVisible(),
