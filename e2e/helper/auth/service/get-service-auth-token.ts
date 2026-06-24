@@ -8,7 +8,7 @@ dotenv.config();
 const logger = Logger.getLogger('service-auth-token');
 let token;
 
-export const getTokenFromApi = (): void => {
+export const getTokenFromApi = async (): Promise<void> => {
   logger.info('Refreshing service auth token');
 
   const url: string = process.env.AUTH_PROVIDER_URL + '/lease';
@@ -17,19 +17,25 @@ export const getTokenFromApi = (): void => {
   const oneTimePassword = authenticator.generate(secret as string);
   const body = { microservice, oneTimePassword };
 
-  axios
-    .post(url, body)
-    .then(response => (token = response.data))
-    .catch(err => logger.error(err.response?.status, err.response?.data));
+  try {
+    const response = await axios.post(url, body);
+    token = response.data;
+  } catch (err: any) {
+    logger.error(err.response?.status, err.response?.data);
+    throw err;
+  }
 };
 
-export const initAuthToken = (): void => {
-  getTokenFromApi();
+export const initAuthToken = async (): Promise<void> => {
+  await getTokenFromApi();
+  
   setInterval(getTokenFromApi, 1000 * 60 * 60);
 };
 
-export const getServiceAuthToken = (): string => {
+export const getServiceAuthToken = async (): Promise<string> => {
+  if (!token) {
+    await initAuthToken();
+  }
+
   return token;
 };
-
-initAuthToken()
