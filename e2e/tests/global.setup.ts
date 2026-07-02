@@ -1,4 +1,4 @@
-import { test as setup } from "../fixtures/fixtures.ts";
+import { test as setup } from "../fixtures/fixtures";
 
 setup(
   "Setup solicitor user",

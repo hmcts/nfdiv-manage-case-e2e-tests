@@ -1,9 +1,9 @@
 import { Page, expect, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors.ts";
-import { CommonContent } from "../../../../../common/commonContent.ts";
-import { AccessibilityOptions } from "../../../../types.ts";
-import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
-import { ApplicationSolPaymentContent } from "../constants/signAndSubmitContent.ts";
+import { Selectors } from "../../../../../common/selectors";
+import { CommonContent } from "../../../../../common/commonContent";
+import { AccessibilityOptions } from "../../../../types";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage";
+import { ApplicationSolPaymentContent } from "../constants/signAndSubmitContent";
 
 type ApplicationSolPaymentOptions = AccessibilityOptions & {
   solicitorPayment: keyof typeof ApplicationSolPaymentContent.selectors.radioButtons;

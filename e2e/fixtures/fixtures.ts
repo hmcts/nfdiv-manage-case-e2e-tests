@@ -1,6 +1,6 @@
 import { test as baseTest } from "@playwright/test";
-import { utilsFixtures, UtilsFixtures } from "./utils.fixtures.ts";
-import { pageFixtures, PageFixtures } from "./page.fixtures.ts";
+import { utilsFixtures, UtilsFixtures } from "./utils.fixtures";
+import { pageFixtures, PageFixtures } from "./page.fixtures";
 import getPort from "get-port";
 
 // Combine your fixtures into one type

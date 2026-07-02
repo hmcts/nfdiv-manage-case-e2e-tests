@@ -1,7 +1,7 @@
 import { Page, type Locator } from "@playwright/test";
-import { CommonContent } from "../../../../../common/commonContent.ts";
-import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
-import { MarriageCertificateDetailsContent } from "../constants/solicitorDraftDivorceApplicationContent.ts";
+import { CommonContent } from "../../../../../common/commonContent";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage";
+import { MarriageCertificateDetailsContent } from "../constants/solicitorDraftDivorceApplicationContent";
 
 export class MarriageCertificateDetailsPage extends BaseJourneyPage {
   private readonly marriageDateDay: Locator;

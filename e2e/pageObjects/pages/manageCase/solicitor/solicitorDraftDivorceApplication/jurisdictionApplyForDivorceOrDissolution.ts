@@ -1,6 +1,6 @@
 import { Page } from "@playwright/test";
-import { CommonContent } from "../../../../../common/commonContent.ts";
-import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
+import { CommonContent } from "../../../../../common/commonContent";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 
 export class JurisdictionApplyForDivorceOrDissolutionPage extends BaseJourneyPage {
   constructor(page: Page) {

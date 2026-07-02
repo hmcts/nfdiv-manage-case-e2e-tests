@@ -1,9 +1,9 @@
 import { Page, expect, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors.ts";
-import { CommonContent } from "../../../../../common/commonContent.ts";
-import { AccessibilityOptions } from "../../../../types.ts";
-import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
-import { SubmitContent } from "../constants/signAndSubmitContent.ts";
+import { Selectors } from "../../../../../common/selectors";
+import { CommonContent } from "../../../../../common/commonContent";
+import { AccessibilityOptions } from "../../../../types";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage";
+import { SubmitContent } from "../constants/signAndSubmitContent";
 
 export class SignAndSubmitSubmitPage extends BaseJourneyPage {
   private readonly h2CheckAnswers: Locator;
