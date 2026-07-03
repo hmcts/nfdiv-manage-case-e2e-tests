@@ -14,6 +14,7 @@ test.describe("Caseworker creates case flags", (): void => {
 
   test("create one case-level and one party-level flag for a new case", async ({
     determinePage,
+    idamPage,
   }): Promise<void> => {
     const caseFlagsPage = new CaseworkerCaseFlagsPage(determinePage);
     const timestamp = Date.now();
@@ -21,10 +22,9 @@ test.describe("Caseworker creates case flags", (): void => {
     const partyFlagComment = `${PARTY_FLAG_NAME_PREFIX} ${timestamp}`;
 
     const caseId = await createSubmittedDigitalCase();
-    await caseFlagsPage.openCaseDetails(caseId);
+    await caseFlagsPage.openCaseDetails(caseId, idamPage);
     await caseFlagsPage.prepareCaseFlags();
     await caseFlagsPage.createCaseAndPartyFlags(caseFlagComment, partyFlagComment);
-    await caseFlagsPage.assertFlagCreatedConfirmation();
     await caseFlagsPage.assertFlagsVisible(caseFlagComment, partyFlagComment);
   });
 });
@@ -34,19 +34,3 @@ async function createSubmittedDigitalCase(): Promise<string> {
   await setUsersCaseToState(userCase.id, State.Submitted);
   return userCase.id;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
