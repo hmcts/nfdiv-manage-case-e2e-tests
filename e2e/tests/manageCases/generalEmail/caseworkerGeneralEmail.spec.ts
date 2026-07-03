@@ -25,7 +25,6 @@ test.describe("Caseworker general email tests", (): void => {
       userCase.id,
       "Summary",
     );
-    // await expect(page).toHaveURL(new RegExp(`case-details/${userCase.id}#Summary`));
   });
 
   test(`Create a general email and later remove it from the case`, async ({

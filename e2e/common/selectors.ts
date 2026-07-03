@@ -44,7 +44,7 @@ export enum Selectors {
   // Buttons
   GovukButton = ".govuk-button",
   button = ".button",
-  confirmationButton = ".action-button",
+  ConfirmationButton = ".action-button",
   GovukButtonSecondary = ".govuk-button--secondary",
   GovukButtonStart = ".govuk-button--start",
 

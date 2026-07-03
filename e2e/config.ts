@@ -72,15 +72,6 @@ export const config: Config = {
         `${getEnvVar("LEGALADVISOR_USERNAME")}.json`),
       cookieName: "xui-webapp",
     },
-    systemUser: {
-      username: getEnvVar("SYSTEM_USER_USERNAME"),
-      password: getEnvVar("SYSTEM_USER_PASSWORD"),
-      sessionFile: path.join(
-        __dirname,
-        ".sessions",
-        `${getEnvVar("SYSTEM_USER_USERNAME")}.json`),
-      cookieName: "xui-webapp",
-    },
   },
   urls: {
     exuiDefaultUrl: "https://manage-case.aat.platform.hmcts.net",

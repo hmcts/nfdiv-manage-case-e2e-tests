@@ -14,7 +14,7 @@ export class RemoveGeneralEmailsPage extends BaseJourneyPage {
       `${Selectors.button}:text-is("${CommonContent.removeButton}")`,
     );
     this.removeEmailConfirmationButton = page.locator(
-      `${Selectors.confirmationButton}:text-is("${CommonContent.removeButton}")`
+      `${Selectors.ConfirmationButton}:text-is("${CommonContent.removeButton}")`
     );
     this.submitButton = page.locator(
       `${Selectors.button}:text-is("${CommonContent.submitButton}")`
