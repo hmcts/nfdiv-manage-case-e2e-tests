@@ -30,7 +30,6 @@ export interface Config {
     solicitor: UserCredentials;
     caseworker: UserCredentials;
     legalAdvisor: UserCredentials;
-    systemUser: UserCredentials;
   };
   urls: Urls;
   files: Files;
