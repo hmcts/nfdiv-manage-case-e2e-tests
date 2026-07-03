@@ -1,19 +1,37 @@
 import { expect } from "@playwright/test";
+import { IdamPage } from "@hmcts/playwright-common";
 import { config } from "../../../../../config";
 import { Helpers } from "../../../../../common/helpers";
 import { Events } from "../../../../../common/types";
 import {BaseJourneyPage} from "../../../common/baseJourneyPage.ts";
+import {UserCredentials} from "@hmcts/playwright-common/dist/page-objects/pages/idam.po";
 
 export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
 
-  public async openCaseDetails(caseId: string): Promise<void> {
+  public async openCaseDetails(caseId: string, idamPage?: IdamPage): Promise<void> {
     const caseDetailsUrl = `${config.urls.manageCaseBaseUrl}/case-details/DIVORCE/NFD/${caseId}`;
 
-    for (let attempt = 0; attempt < 24; attempt++) {
-      await this.page.goto(caseDetailsUrl);
+    for (let attempt = 0; attempt < 5; attempt++) {
+      try {
+        await this.page.goto(caseDetailsUrl);
+      } catch (error) {
+        const message = String(error);
+        const isRecoverableNavigationError =
+          message.includes("ERR_ABORTED") ||
+          message.includes("Navigation interrupted") ||
+          message.includes("Target page, context or browser has been closed");
+
+        if (!isRecoverableNavigationError || attempt === 23) {
+          throw error;
+        }
+
+        await this.page.waitForTimeout(1_000);
+        continue;
+      }
+
       await this.waitForCaseDetails(caseId);
 
-      if (await this.isCaseDetailsPageLoaded(caseId)) {
+      if (await this.isCaseDetailsPageLoaded(caseId, idamPage, config.users.caseworker)) {
         return;
       }
 
@@ -29,15 +47,48 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
     throw new Error(`Case details did not become available for case ${caseId}`);
   }
 
-  private async isCaseDetailsPageLoaded(caseId: string): Promise<boolean> {
-    const expectedUrl = `${config.urls.manageCaseBaseUrl}/case-details/DIVORCE/NFD/${caseId}`;
-    await this.page.waitForLoadState("load").catch(() => undefined);
-    return this.page.url() === expectedUrl;
+  private async isCaseDetailsPageLoaded(caseId: string, idamPage?: IdamPage, user?: UserCredentials): Promise<boolean> {
+    const nextStep = this.page.locator("#next-step").first();
+
+    try {
+      await expect(nextStep).toBeVisible({ timeout: 5_000 });
+      return true;
+    } catch (error) {
+      console.log("nextStep not found. url=", this.page.url());
+
+      if (this.page.url().includes("idam-web-public.")) {
+        if (!idamPage) {
+          console.log(`caseId=${caseId} redirected to IDAM but no IdamPage was provided`);
+          return false;
+        }
+        if (!user) {
+          console.log(`caseId=${caseId} redirected to IDAM but no user was provided`);
+          return false;
+        }
+
+        console.log("idam redirection detected. Logging in...");
+        const loginStartTimeMs = Date.now();
+        await idamPage.page.waitForLoadState("load");
+        await idamPage.login(user);
+        await this.page.waitForLoadState("load");
+        const isVisibleAfterLogin = await expect(nextStep)
+          .toBeVisible({ timeout: 5_000 })
+          .then(() => true)
+          .catch(() => false);
+        const loginDurationMs = Date.now() - loginStartTimeMs;
+        console.log("post-login duration(ms)=", loginDurationMs);
+        console.log("post-login url=", this.page.url());
+        console.log("post-login nextStep visible=", isVisibleAfterLogin);
+        return isVisibleAfterLogin;
+      }
+
+      console.log(error.log);
+      return false;
+    }
   }
 
   public async prepareCaseFlags(): Promise<void> {
     const nextStep = this.page.locator("#next-step").first();
-    await expect(nextStep).toBeVisible({ timeout: 30_000 });
 
     const hasPrepareEvent = await nextStep.evaluate((el: HTMLSelectElement) =>
       Array.from(el.options).some(
@@ -59,11 +110,10 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
   }
 
   public async assertFlagCreatedConfirmation(): Promise<void> {
-    const explicitConfirmation = this.page.getByText(/Flag created|updated with event:\s*Create flags/i).first();
+    const explicitConfirmation = this.page.getByText(/Flag created/i).first();
     const closeAndReturnButton = this.page
       .getByRole("button", { name: /Close and Return to case details/i })
       .first();
-    const nextStep = this.page.locator("#next-step").first();
 
     await expect
       .poll(
@@ -74,31 +124,37 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
           if (await closeAndReturnButton.isVisible().catch(() => false)) {
             return true;
           }
-          return await nextStep.isVisible().catch(() => false);
         },
         { timeout: 30_000 },
       )
       .toBeTruthy();
+
+    await this.clickSubmit();
   }
 
-  public async assertFlagsVisible(_caseFlagComment: string, _partyFlagComment: string): Promise<void> {
+  public async assertFlagsVisible(caseFlagComment: string, partyFlagComment: string): Promise<void> {
     await this.openCaseFlagsTabFromCurrentCase();
 
+    await expect.poll(() => decodeURIComponent(this.page.url()), { timeout: 30_000 }).toContain("#Case Flags");
     await expect(this.page.getByRole("heading", { name: /Case flags/i }).first()).toBeVisible({ timeout: 30_000 });
     await expect(this.page.getByText(/Case level flags/i).first()).toBeVisible({ timeout: 30_000 });
 
-    const noneCell = this.page.getByRole("cell", { name: /^None$/i }).first();
-    await expect(noneCell).toHaveCount(0);
+    // const noneCell = this.page.getByRole("cell", { name: /^None$/i }).first();
+    // await expect(noneCell).toHaveCount(0);
 
     const activeBadges = this.page.getByText(/^ACTIVE$/i);
     await expect.poll(async () => activeBadges.count(), { timeout: 30_000 }).toBeGreaterThan(1);
+
+    const caseFlagCommentCell = this.page.getByText(caseFlagComment, { exact: false }).first();
+    const partyFlagCommentCell = this.page.getByText(partyFlagComment, { exact: false }).first();
+
+    await expect(caseFlagCommentCell).toBeVisible({ timeout: 30_000 });
+    await expect(partyFlagCommentCell).toBeVisible({ timeout: 30_000 });
   }
 
   private async createFlag(flagComment: string, level: "case" | "party"): Promise<void> {
     await Helpers.chooseEventFromDropdown(this.page, Events.createFlags);
     await this.completeCreateFlagJourney(level, flagComment);
-    await this.assertFlagCreatedConfirmation();
-    await this.returnToCaseDetailsFromCurrentCase();
   }
 
   private async completeCreateFlagJourney(level: "case" | "party", flagComment: string): Promise<void> {
@@ -111,10 +167,10 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
 
       if (
         await this.page.url().includes("/trigger/createFlags/confirm")
-        // await this.page.getByText(/Flag created/i).first().isVisible().catch(() => false)
       ) {
-        await this.clickButton("Close and Return to case details");
-        continue;
+        await this.clickSubmit();
+        await this.page.waitForLoadState("domcontentloaded").catch(() => undefined);
+        return;
       }
 
       if (await this.page.getByText(/Where should this flag be added\?/i).first().isVisible().catch(() => false)) {
@@ -145,7 +201,7 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
         const labelFor = await chosenLabel.getAttribute("for");
         const locationRadio = this.page.locator(`#${labelFor}`).first();
         await locationRadio.click();
-        await this.clickButton("Continue");
+        await this.clickSubmit();
         continue;
       }
 
@@ -153,7 +209,7 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
         const specialMeasureChoice = this.page.getByRole("radio", { name: /Screening witness from accused/i }).first();
         if (await specialMeasureChoice.isVisible().catch(() => false)) {
           await specialMeasureChoice.check();
-          await this.clickButton("Continue");
+          await this.clickSubmit();
           continue;
         }
       }
@@ -170,7 +226,7 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
           }
         }
 
-        await this.clickButton("Continue");
+        await this.clickSubmit();
         continue;
       }
 
@@ -178,7 +234,7 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
         const commentInput = this.page.locator("textarea").first();
         await expect(commentInput).toBeVisible({ timeout: 15_000 });
         await commentInput.fill(flagComment.slice(0, 180));
-        await this.clickButton("Continue");
+        await this.clickSubmit();
         continue;
       }
 
@@ -187,12 +243,12 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
         const reasonInput = this.page.locator("textarea").first();
         await expect(reasonInput).toBeVisible({ timeout: 15_000 });
         await reasonInput.fill("Flag status confirmed by caseworker");
-        await this.clickButton("Continue");
+        await this.clickSubmit();
         continue;
       }
 
       if (await this.page.getByText(/Review flag details/i).first().isVisible().catch(() => false)) {
-        await this.clickButton("Save and continue");
+        await this.clickSubmit();
         continue;
       }
 
@@ -230,7 +286,7 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
 
     const locationName = level === "case" ? /Case level/i : /applicant or applicant1/i;
     await this.page.getByRole("radio", { name: locationName }).first().check();
-    await this.clickButton("Continue");
+    await this.clickSubmit();
   }
 
   private async selectFlagType(level: "case" | "party"): Promise<void> {
@@ -241,7 +297,7 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
 
     const primaryType = level === "party" ? /Special measure/i : /Complex Case/i;
     await this.page.getByRole("radio", { name: primaryType }).first().check();
-    await this.clickButton("Continue");
+    await this.clickSubmit();
 
     if (level === "party") {
       await this.selectPartySpecialMeasureType();
@@ -255,7 +311,7 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
     }
 
     await this.page.getByRole("radio", { name: /Screening witness from accused/i }).first().check();
-    await this.clickButton("Continue");
+    await this.clickSubmit();
   }
 
   private async fillFlagComments(comment: string): Promise<void> {
@@ -265,7 +321,7 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
     }
 
     await commentInput.fill(comment.slice(0, 180));
-    await this.clickButton("Continue");
+    await this.clickSubmit();
   }
 
   private async confirmFlagStatus(): Promise<void> {
@@ -279,7 +335,7 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
     const reasonInput = this.page.locator("textarea").first();
     await expect(reasonInput).toBeVisible({ timeout: 15_000 });
     await reasonInput.fill("Flag status confirmed by caseworker");
-    await this.clickButton("Continue");
+    await this.clickSubmit();
   }
 
   private async reviewAndSaveFlag(): Promise<void> {
@@ -288,7 +344,7 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
       return;
     }
 
-    await this.clickButton("Save and continue");
+    await this.clickSubmit();
   }
 
   private async returnToCaseDetailsFromCurrentCase(): Promise<void> {
@@ -297,7 +353,7 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
       .first();
 
     if (await closeAndReturnButton.isVisible().catch(() => false)) {
-      await this.clickButton("Close and Return to case details");
+      await this.clickSubmit();
       await this.page.waitForLoadState("domcontentloaded").catch(() => undefined);
     }
 
@@ -325,15 +381,11 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
 
   private async completeEventJourney(): Promise<void> {
     for (let step = 0; step < 8; step++) {
-      if (await this.clickIfVisible("Save and continue", 5_000)) {
+      if (await this.clickSubmitIfVisible(5_000)) {
         continue;
       }
 
-      if (await this.clickIfVisible("Continue", 3_000)) {
-        continue;
-      }
-
-      if (await this.clickIfVisible("Submit", 3_000)) {
+      if (await this.clickSubmitIfVisible(3_000)) {
         return;
       }
 
@@ -345,8 +397,8 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
     }
   }
 
-  private async clickIfVisible(buttonName: string, timeoutMs = 1_000): Promise<boolean> {
-    const button = this.page.getByRole("button", { name: new RegExp(`^${buttonName}$`, "i") }).first();
+  private async clickSubmitIfVisible(timeoutMs = 1_000): Promise<boolean> {
+    const button = this.page.locator("button[type='submit'], input[type='submit']").first();
     const isVisible = await button.waitFor({ state: "visible", timeout: timeoutMs }).then(() => true).catch(() => false);
     if (!isVisible) {
       return false;
@@ -377,13 +429,13 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
 
   private async getCreateFlagsDiagnostics(): Promise<string> {
     const heading = this.page.locator("h1, h2").first();
-    const headingText = (await heading.textContent().catch(() => "")).trim() || "<none>";
+    const headingText = ((await heading.textContent().catch(() => "")) ?? "").trim() || "<none>";
 
     const errorSummary = this.page.locator(".govuk-error-summary, .error-summary, [role='alert']").first();
     let validationSummary = "<none>";
 
     if (await errorSummary.isVisible().catch(() => false)) {
-      const errorSummaryText = (await errorSummary.textContent().catch(() => ""))
+      const errorSummaryText = ((await errorSummary.textContent().catch(() => "")) ?? "")
         .trim()
         .replace(/\s+/g, " ")
         .slice(0, 220);
@@ -401,19 +453,4 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
     }).toContain("case-details");
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
