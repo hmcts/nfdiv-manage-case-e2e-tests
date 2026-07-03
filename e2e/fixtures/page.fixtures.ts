@@ -12,16 +12,24 @@ import { JurisdictionApplyForDivorceOrDissolutionPage } from "../pageObjects/pag
 import { OtherLegalProceedingsPage } from "../pageObjects/pages/manageCase/solicitor/solicitorDraftDivorceApplication/otherLegalProceedings";
 import { FinancialOrdersPage } from "../pageObjects/pages/manageCase/solicitor/solicitorDraftDivorceApplication/financialOrders";
 import { UploadSupportingDocumentsPage } from "../pageObjects/pages/manageCase/solicitor/solicitorDraftDivorceApplication/uploadSupportingDocuments";
-import { CheckYourAnswersAndSubmitPage } from "../pageObjects/pages/manageCase/solicitor/solicitorDraftDivorceApplication/checkYourAnswersAndSubmit";
+import { CheckYourAnswersAndSubmitPage } from "../pageObjects/pages/common/checkYourAnswersAndSubmitPage";
 import { ApplicationSolStatementOfTruthPage } from "../pageObjects/pages/manageCase/solicitor/signAndSubmit/applicationSolStatementOfTruthPage";
 import { ApplicationSolPaymentPage } from "../pageObjects/pages/manageCase/solicitor/signAndSubmit/applicationSolPaymentPage";
 import { ApplicationSolPayAccountPage } from "../pageObjects/pages/manageCase/solicitor/signAndSubmit/applicationSolPayAccountPage";
 import { ApplicationSolPaymentSummaryPage } from "../pageObjects/pages/manageCase/solicitor/signAndSubmit/applicationSolPaymentSummaryPage";
 import { SignAndSubmitSubmitPage } from "../pageObjects/pages/manageCase/solicitor/signAndSubmit/submitPage";
+import { PrepareEmailAttachmentsPage } from "../pageObjects/pages/manageCase/caseworker/generalEmail/prepareGeneralEmailAttachments";
+import { CreateGeneralEmailPage } from "../pageObjects/pages/manageCase/caseworker/generalEmail/createGeneralEmailPage";
+import { CorrespondenceTab } from "../pageObjects/pages/manageCase/caseworker/generalEmail/correspondenceTab";
+import { RemoveGeneralEmailsPage } from "../pageObjects/pages/manageCase/caseworker/generalEmail/removeGeneralEmailsPage";
 
 export interface PageFixtures {
   determinePage: Page;
   idamPage: IdamPage;
+  prepareEmailAttachmentsPage: PrepareEmailAttachmentsPage;
+  createGeneralEmailPage: CreateGeneralEmailPage;
+  removeGeneralEmailsPage: RemoveGeneralEmailsPage;
+  correspondenceTab: CorrespondenceTab;
   solicitorCreatePage: SolicitorCreatePage;
   howDoYouWantToApplyForDivorcePage: HowDoYouWantToApplyForDivorcePage;
   solAboutTheSolicitorPage: SolAboutTheSolicitorPage;
@@ -50,8 +58,20 @@ export const pageFixtures = {
       await use(page);
     }
   },
+  correspondenceTab: async ({ determinePage }, use) => {
+    await use(new CorrespondenceTab(determinePage));
+  },
   idamPage: async ({ determinePage }, use) => {
     await use(new IdamPage(determinePage));
+  },
+  prepareEmailAttachmentsPage: async ({ determinePage }, use) => {
+    await use(new PrepareEmailAttachmentsPage(determinePage));
+  },
+  createGeneralEmailPage: async ({ determinePage }, use) => {
+    await use(new CreateGeneralEmailPage(determinePage));
+  },
+  removeGeneralEmailsPage: async ({ determinePage }, use) => {
+    await use(new RemoveGeneralEmailsPage(determinePage));
   },
   solicitorCreatePage: async ({ determinePage }, use) => {
     await use(new SolicitorCreatePage(determinePage));

@@ -30,6 +30,7 @@ export interface Config {
     solicitor: UserCredentials;
     caseworker: UserCredentials;
     legalAdvisor: UserCredentials;
+    systemUser: UserCredentials;
   };
   urls: Urls;
   files: Files;
@@ -69,6 +70,15 @@ export const config: Config = {
         __dirname,
         ".sessions",
         `${getEnvVar("LEGALADVISOR_USERNAME")}.json`),
+      cookieName: "xui-webapp",
+    },
+    systemUser: {
+      username: getEnvVar("SYSTEM_USER_USERNAME"),
+      password: getEnvVar("SYSTEM_USER_PASSWORD"),
+      sessionFile: path.join(
+        __dirname,
+        ".sessions",
+        `${getEnvVar("SYSTEM_USER_USERNAME")}.json`),
       cookieName: "xui-webapp",
     },
   },

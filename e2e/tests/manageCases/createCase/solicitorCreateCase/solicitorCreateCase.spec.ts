@@ -2,6 +2,7 @@ import { test } from "../../../../fixtures/fixtures";
 import { config } from "../../../../config";
 import { Helpers } from "../../../../common/helpers";
 import { Events } from "../../../../common/types";
+import { CommonContent } from "../../../../common/commonContent";
 
 test.describe("Solicitor create application tests", (): void => {
   test.use({
@@ -47,7 +48,7 @@ test.describe("Solicitor create application tests", (): void => {
     await otherLegalProceedingsPage.otherLegalProceedings();
     await financialOrdersPage.financialOrders();
     await uploadSupportingDocumentsPage.uploadSupportingDocuments();
-    await checkYourAnswersAndSubmitPage.checkYourAnswers();
+    await checkYourAnswersAndSubmitPage.checkYourAnswers(CommonContent.saveApplication);
 
     // Sign and Submit
     await Helpers.chooseEventFromDropdown(determinePage, Events.signAndSubmit);

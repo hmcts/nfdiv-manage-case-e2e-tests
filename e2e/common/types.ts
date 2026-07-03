@@ -14,5 +14,8 @@ export type UserRole = (typeof UserRoles)[keyof typeof UserRoles];
 export { UserRoles };
 
 export enum Events {
-  signAndSubmit = "Sign and submit"
+  signAndSubmit = "Sign and submit",
+  prepareEmailAttachments = "Prepare email attachments",
+  createGeneralEmail = "Create general email",
+  removeGeneralEmails = "Remove general emails"
 }
