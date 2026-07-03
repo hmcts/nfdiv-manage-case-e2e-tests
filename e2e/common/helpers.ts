@@ -6,7 +6,7 @@ import {
   Page,
 } from "@playwright/test";
 import { Events, UserRole } from "./types";
-import { config, UserCredentials } from "../config.ts";
+import { config } from "../config.ts";
 
 export class Helpers {
   public static async chooseEventFromDropdown(
