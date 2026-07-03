@@ -10,9 +10,9 @@ export class RemoveGeneralEmailsPage extends BaseJourneyPage {
 
   constructor(page: Page) {
     super(page);
-    this.removeEmailButton = page.locator(
-      `${Selectors.button}:text-is("${CommonContent.removeButton}")`,
-    );
+    this.removeEmailButton = page.getByRole('button', {
+      name: 'Remove General emails',
+    });
     this.removeEmailConfirmationButton = page.locator(
       `${Selectors.ConfirmationButton}:text-is("${CommonContent.removeButton}")`
     );
