@@ -100,6 +100,7 @@ export enum Selectors {
   td = "td",
   strong = "strong",
   div = "div",
+  span = "span",
   markdown = "markdown",
   a = "a",
   b = "b",
