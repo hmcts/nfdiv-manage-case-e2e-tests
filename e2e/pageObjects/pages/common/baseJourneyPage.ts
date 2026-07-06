@@ -2,6 +2,8 @@ import {Page, type Locator, expect} from "@playwright/test";
 import { Selectors } from "../../../common/selectors";
 import { CommonContent } from "../../../common/commonContent";
 import { config } from "../../../config";
+import {IdamPage} from "@hmcts/playwright-common";
+import {UserCredentials} from "@hmcts/playwright-common/dist/page-objects/pages/idam.po";
 
 export abstract class BaseJourneyPage {
   protected readonly page: Page;
@@ -44,14 +46,14 @@ export abstract class BaseJourneyPage {
   }
 
   public async clickSubmit(RETRY_COUNT = 5): Promise<void> {
-    const submitButton = this.page.locator("button[type='submit'], input[type='submit']").first();
+    const submitButton = this.page.locator(Selectors.SubmitButton).first();
 
     for (let attempt = 0; attempt <= RETRY_COUNT; attempt += 1) {
       try {
         await expect(submitButton).toBeVisible({ timeout: 2_000 });
         await expect.poll(() => submitButton.isEnabled().catch(() => false), { timeout: 2_000 }).toBeTruthy();
         await submitButton.click({ timeout: 10_000 });
-        await this.page.waitForLoadState("domcontentloaded").catch(() => undefined);
+        await this.page.waitForLoadState("load").catch(() => undefined);
         return;
       } catch (error) {
         const message = String(error);
@@ -66,6 +68,82 @@ export abstract class BaseJourneyPage {
           throw error;
         }
       }
+    }
+  }
+
+  public async openCaseDetails(caseId: string, idamPage?: IdamPage): Promise<void> {
+    const caseDetailsUrl = `${config.urls.manageCaseBaseUrl}/case-details/DIVORCE/NFD/${caseId}`;
+
+    for (let attempt = 0; attempt < 5; attempt++) {
+      try {
+        await this.page.goto(caseDetailsUrl);
+      } catch (error) {
+        const message = String(error);
+        const isRecoverableNavigationError =
+          message.includes("ERR_ABORTED") ||
+          message.includes("Navigation interrupted") ||
+          message.includes("Target page, context or browser has been closed");
+
+        if (!isRecoverableNavigationError || attempt === 4) {
+          throw error;
+        }
+
+        await this.page.waitForTimeout(1_000);
+        continue;
+      }
+
+      await expect.poll(() => this.page.url(), {
+        message: `Expected to open case details for ${caseId}`,
+        timeout: 60_000,
+      }).toContain("case-details");
+
+      if (await this.isCaseDetailsPageLoaded(caseId, idamPage, config.users.caseworker)) {
+        return;
+      }
+
+      const noResultsHeading = this.page.getByRole("heading", { name: /No results found/i }).first();
+      if (await noResultsHeading.isVisible().catch(() => false)) {
+        await this.page.waitForTimeout(5_000);
+        continue;
+      }
+
+      await this.page.waitForTimeout(2_000);
+    }
+
+    throw new Error(`Case details did not become available for case ${caseId}`);
+  }
+
+  private async isCaseDetailsPageLoaded(caseId: string, idamPage?: IdamPage, user?: UserCredentials): Promise<boolean> {
+    const nextStep = this.page.locator("#next-step").first();
+
+    try {
+      await expect(nextStep).toBeVisible({ timeout: 5_000 });
+      return true;
+    } catch (error) {
+      console.log("nextStep not found. url=", this.page.url());
+
+      if (this.page.url().includes("idam-web-public.")) {
+        if (!idamPage) {
+          console.log(`caseId=${caseId} redirected to IDAM but no IdamPage was provided`);
+          return false;
+        }
+        if (!user) {
+          console.log(`caseId=${caseId} redirected to IDAM but no user was provided`);
+          return false;
+        }
+
+        console.log("idam redirection detected. Logging in...");
+        await idamPage.page.waitForLoadState("load");
+        await idamPage.login(user);
+        await this.page.waitForLoadState("load");
+        return await expect(nextStep)
+          .toBeVisible({ timeout: 5_000 })
+          .then(() => true)
+          .catch(() => false);
+      }
+
+      console.log(error.log);
+      return false;
     }
   }
 }

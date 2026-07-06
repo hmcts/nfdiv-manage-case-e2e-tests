@@ -1,91 +1,10 @@
 import { expect } from "@playwright/test";
-import { IdamPage } from "@hmcts/playwright-common";
 import { config } from "../../../../../config";
 import { Helpers } from "../../../../../common/helpers";
 import { Events } from "../../../../../common/types";
 import {BaseJourneyPage} from "../../../common/baseJourneyPage.ts";
-import {UserCredentials} from "@hmcts/playwright-common/dist/page-objects/pages/idam.po";
 
 export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
-
-  public async openCaseDetails(caseId: string, idamPage?: IdamPage): Promise<void> {
-    const caseDetailsUrl = `${config.urls.manageCaseBaseUrl}/case-details/DIVORCE/NFD/${caseId}`;
-
-    for (let attempt = 0; attempt < 5; attempt++) {
-      try {
-        await this.page.goto(caseDetailsUrl);
-      } catch (error) {
-        const message = String(error);
-        const isRecoverableNavigationError =
-          message.includes("ERR_ABORTED") ||
-          message.includes("Navigation interrupted") ||
-          message.includes("Target page, context or browser has been closed");
-
-        if (!isRecoverableNavigationError || attempt === 23) {
-          throw error;
-        }
-
-        await this.page.waitForTimeout(1_000);
-        continue;
-      }
-
-      await this.waitForCaseDetails(caseId);
-
-      if (await this.isCaseDetailsPageLoaded(caseId, idamPage, config.users.caseworker)) {
-        return;
-      }
-
-      const noResultsHeading = this.page.getByRole("heading", { name: /No results found/i }).first();
-      if (await noResultsHeading.isVisible().catch(() => false)) {
-        await this.page.waitForTimeout(5_000);
-        continue;
-      }
-
-      await this.page.waitForTimeout(2_000);
-    }
-
-    throw new Error(`Case details did not become available for case ${caseId}`);
-  }
-
-  private async isCaseDetailsPageLoaded(caseId: string, idamPage?: IdamPage, user?: UserCredentials): Promise<boolean> {
-    const nextStep = this.page.locator("#next-step").first();
-
-    try {
-      await expect(nextStep).toBeVisible({ timeout: 5_000 });
-      return true;
-    } catch (error) {
-      console.log("nextStep not found. url=", this.page.url());
-
-      if (this.page.url().includes("idam-web-public.")) {
-        if (!idamPage) {
-          console.log(`caseId=${caseId} redirected to IDAM but no IdamPage was provided`);
-          return false;
-        }
-        if (!user) {
-          console.log(`caseId=${caseId} redirected to IDAM but no user was provided`);
-          return false;
-        }
-
-        console.log("idam redirection detected. Logging in...");
-        const loginStartTimeMs = Date.now();
-        await idamPage.page.waitForLoadState("load");
-        await idamPage.login(user);
-        await this.page.waitForLoadState("load");
-        const isVisibleAfterLogin = await expect(nextStep)
-          .toBeVisible({ timeout: 5_000 })
-          .then(() => true)
-          .catch(() => false);
-        const loginDurationMs = Date.now() - loginStartTimeMs;
-        console.log("post-login duration(ms)=", loginDurationMs);
-        console.log("post-login url=", this.page.url());
-        console.log("post-login nextStep visible=", isVisibleAfterLogin);
-        return isVisibleAfterLogin;
-      }
-
-      console.log(error.log);
-      return false;
-    }
-  }
 
   public async prepareCaseFlags(): Promise<void> {
     const nextStep = this.page.locator("#next-step").first();
@@ -109,38 +28,12 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
     await this.createFlag(partyFlagComment, "party");
   }
 
-  public async assertFlagCreatedConfirmation(): Promise<void> {
-    const explicitConfirmation = this.page.getByText(/Flag created/i).first();
-    const closeAndReturnButton = this.page
-      .getByRole("button", { name: /Close and Return to case details/i })
-      .first();
-
-    await expect
-      .poll(
-        async () => {
-          if (await explicitConfirmation.isVisible().catch(() => false)) {
-            return true;
-          }
-          if (await closeAndReturnButton.isVisible().catch(() => false)) {
-            return true;
-          }
-        },
-        { timeout: 30_000 },
-      )
-      .toBeTruthy();
-
-    await this.clickSubmit();
-  }
-
   public async assertFlagsVisible(caseFlagComment: string, partyFlagComment: string): Promise<void> {
     await this.openCaseFlagsTabFromCurrentCase();
 
     await expect.poll(() => decodeURIComponent(this.page.url()), { timeout: 30_000 }).toContain("#Case Flags");
     await expect(this.page.getByRole("heading", { name: /Case flags/i }).first()).toBeVisible({ timeout: 30_000 });
     await expect(this.page.getByText(/Case level flags/i).first()).toBeVisible({ timeout: 30_000 });
-
-    // const noneCell = this.page.getByRole("cell", { name: /^None$/i }).first();
-    // await expect(noneCell).toHaveCount(0);
 
     const activeBadges = this.page.getByText(/^ACTIVE$/i);
     await expect.poll(async () => activeBadges.count(), { timeout: 30_000 }).toBeGreaterThan(1);
@@ -169,7 +62,7 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
         await this.page.url().includes("/trigger/createFlags/confirm")
       ) {
         await this.clickSubmit();
-        await this.page.waitForLoadState("domcontentloaded").catch(() => undefined);
+        await this.page.waitForLoadState("load").catch(() => undefined);
         return;
       }
 
@@ -376,7 +269,7 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
     }
 
     await this.page.goto(`${config.urls.manageCaseBaseUrl}/case-details/DIVORCE/NFD/${caseIdMatch[1]}#Case Flags`);
-    await this.page.waitForLoadState("domcontentloaded").catch(() => undefined);
+    await this.page.waitForLoadState("load").catch(() => undefined);
   }
 
   private async completeEventJourney(): Promise<void> {
@@ -414,7 +307,7 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
       return false;
     }
 
-    await this.page.waitForLoadState("domcontentloaded").catch(() => undefined);
+    await this.page.waitForLoadState("load").catch(() => undefined);
     return true;
   }
 
@@ -443,14 +336,6 @@ export class CaseworkerCaseFlagsPage extends BaseJourneyPage {
     }
 
     return `url=${this.page.url()} | heading=${headingText} | validation=${validationSummary}`;
-  }
-
-
-  private async waitForCaseDetails(caseId: string): Promise<void> {
-    await expect.poll(() => this.page.url(), {
-      message: `Expected to open case details for ${caseId}`,
-      timeout: 60_000,
-    }).toContain("case-details");
   }
 }
 

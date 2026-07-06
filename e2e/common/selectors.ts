@@ -40,6 +40,7 @@ export enum Selectors {
   ColumnLabel = ".search-result-column-label",
   Span = "span",
   Panel = ".panel",
+  SubmitButton = "button[type='submit']",
 
   // Buttons
   GovukButton = ".govuk-button",
