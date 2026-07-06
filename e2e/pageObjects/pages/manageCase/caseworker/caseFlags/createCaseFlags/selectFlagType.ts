@@ -1,13 +1,16 @@
 import { BaseJourneyPage } from "../../../../common/baseJourneyPage.ts";
+import { caseFlagsCommonContent as content } from "../../constants/caseworkerCaseFlagsContent.ts";
 
 export class SelectFlagType extends BaseJourneyPage {
   public async selectComplexCase(): Promise<void> {
-    await this.page.getByRole("radio", { name: /Complex Case/i }).first().click();
+    const complexCaseRegex = new RegExp(`${content.COMPLEX_CASE}`, "i");
+    await this.page.getByRole("radio", { name: complexCaseRegex }).first().click();
     await this.clickSubmit();
   }
 
   public async selectSpecialMeasure(): Promise<void> {
-    await this.page.getByRole("radio", { name: /Special measure/i }).first().click();
+    const specialMeasureRegex = new RegExp(`${content.SPECIAL_MEASURE}`, "i");
+    await this.page.getByRole("radio", { name: specialMeasureRegex }).first().click();
     await this.clickSubmit();
   }
 }

@@ -1,39 +1,34 @@
 import { expect } from "@playwright/test";
 import { BaseJourneyPage } from "../../../../common/baseJourneyPage.ts";
 import { Selectors } from "../../../../../../common/selectors.ts";
-
-const ADD_FLAG_TO = "Add flag to";
-const UPDATE_FLAG_FOR = "Update flag for";
-const FLAG_TYPE = "Flag type";
-const COMMENTS = "Comments";
-const STATUS = "Status";
+import { reviewFlagDetailsContent as content } from "../../constants/caseworkerCaseFlagsContent.ts";
 
 export class ReviewFlagDetailsPage extends BaseJourneyPage {
   public async reviewAndSubmitCaseLevel(comment: string): Promise<void> {
-    await this.reviewFlag(ADD_FLAG_TO,"Case level", "Complex Case", comment, "Active");
+    await this.reviewFlag(content.ADD_FLAG_TO, content.CASE_LEVEL, content.COMPLEX_CASE, comment, content.ACTIVE);
     await this.clickSubmit();
   }
 
   public async reviewAndSubmitManageCaseLevel(comment: string): Promise<void> {
-    await this.reviewFlag(UPDATE_FLAG_FOR, "Case level", "Complex Case", comment, "Inactive");
+    await this.reviewFlag(content.UPDATE_FLAG_FOR, content.CASE_LEVEL, content.COMPLEX_CASE, comment, content.INACTIVE);
     await this.clickSubmit();
   }
 
   public async reviewAndSubmitPartyLevel(comment: string): Promise<void> {
-    await this.reviewFlag(ADD_FLAG_TO, "Test your name Test your last name", "Screening witness from accused", comment, "Active");
+    await this.reviewFlag(content.ADD_FLAG_TO, content.PARTY_LEVEL, content.SCREENING_WITNESS, comment, content.ACTIVE);
     await this.clickSubmit();
   }
 
   public async reviewAndSubmitManagePartyLevel(comment: string): Promise<void> {
-    await this.reviewFlag(UPDATE_FLAG_FOR, "Test your name Test your last name", "Screening witness from accused", comment, "Inactive");
+    await this.reviewFlag(content.UPDATE_FLAG_FOR, content.PARTY_LEVEL, content.SCREENING_WITNESS, comment, content.INACTIVE);
     await this.clickSubmit();
   }
 
   private async reviewFlag(levelKey: string, level: string, type: string, comment: string, status: string): Promise<void> {
     await this.fieldMatcher(levelKey, level);
-    await this.fieldMatcher(FLAG_TYPE, type);
-    await this.fieldMatcher(COMMENTS, comment);
-    await this.fieldMatcher(STATUS, status);
+    await this.fieldMatcher(content.FLAG_TYPE, type);
+    await this.fieldMatcher(content.COMMENTS, comment);
+    await this.fieldMatcher(content.STATUS, status);
   }
 
   private async fieldMatcher(key: string, value: string): Promise<void> {
