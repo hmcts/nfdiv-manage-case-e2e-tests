@@ -18,6 +18,17 @@ import { ApplicationSolPaymentPage } from "../pageObjects/pages/manageCase/solic
 import { ApplicationSolPayAccountPage } from "../pageObjects/pages/manageCase/solicitor/signAndSubmit/applicationSolPayAccountPage";
 import { ApplicationSolPaymentSummaryPage } from "../pageObjects/pages/manageCase/solicitor/signAndSubmit/applicationSolPaymentSummaryPage";
 import { SignAndSubmitSubmitPage } from "../pageObjects/pages/manageCase/solicitor/signAndSubmit/submitPage";
+import { EventPage } from "../pageObjects/pages/manageCase/caseworker/caseFlags/Common/eventPage.ts";
+import { SelectFlagLevel } from "../pageObjects/pages/manageCase/caseworker/caseFlags/createCaseFlags/selectFlagLevel.ts";
+import { SelectFlagType } from "../pageObjects/pages/manageCase/caseworker/caseFlags/createCaseFlags/selectFlagType.ts";
+import { SelectSpecialMeasurePage } from "../pageObjects/pages/manageCase/caseworker/caseFlags/createCaseFlags/selectSpecialMeasurePage.ts";
+import { AddCommentsPage } from "../pageObjects/pages/manageCase/caseworker/caseFlags/createCaseFlags/addCommentsPage.ts";
+import { ConfirmStatusPage } from "../pageObjects/pages/manageCase/caseworker/caseFlags/createCaseFlags/confirmStatusPage.ts";
+import { ReviewFlagDetailsPage } from "../pageObjects/pages/manageCase/caseworker/caseFlags/Common/reviewFlagDetailsPage.ts";
+import { ConfirmationPage } from "../pageObjects/pages/manageCase/caseworker/caseFlags/Common/confirmationPage.ts";
+import { CaseFlagsTabPage } from "../pageObjects/pages/manageCase/caseworker/caseFlags/Common/caseFlagsTabPage.ts";
+import { SelectFlagPage } from "../pageObjects/pages/manageCase/caseworker/caseFlags/manageCaseFlags/selectFlagPage.ts";
+import { updateFlagPage } from "../pageObjects/pages/manageCase/caseworker/caseFlags/manageCaseFlags/updateFlagPage.ts";
 
 export interface PageFixtures {
   determinePage: Page;
@@ -40,6 +51,17 @@ export interface PageFixtures {
   applicationSolPayAccountPage: ApplicationSolPayAccountPage;
   applicationSolPaymentSummaryPage: ApplicationSolPaymentSummaryPage;
   signAndSubmitSubmitPage: SignAndSubmitSubmitPage;
+  caseFlagsEventPage: EventPage;
+  caseFlagsLevelPage: SelectFlagLevel;
+  caseFlagsTypePage: SelectFlagType;
+  caseFlagsSpecialMeasurePage: SelectSpecialMeasurePage;
+  caseFlagsCommentsPage: AddCommentsPage;
+  caseFlagsStatusPage: ConfirmStatusPage;
+  caseFlagsReviewPage: ReviewFlagDetailsPage;
+  caseFlagsConfirmationPage: ConfirmationPage;
+  caseFlagsTabPage: CaseFlagsTabPage;
+  manageFlagsSelectFlagPage: SelectFlagPage;
+  manageFlagsUpdateFlagPage: updateFlagPage;
 }
 
 export const pageFixtures = {
@@ -109,5 +131,38 @@ export const pageFixtures = {
   },
   signAndSubmitSubmitPage: async ({ determinePage }, use) => {
     await use(new SignAndSubmitSubmitPage(determinePage));
+  },
+  caseFlagsEventPage: async ({ determinePage }, use) => {
+    await use(new EventPage(determinePage));
+  },
+  caseFlagsLevelPage: async ({ determinePage }, use) => {
+    await use(new SelectFlagLevel(determinePage));
+  },
+  caseFlagsTypePage: async ({ determinePage }, use) => {
+    await use(new SelectFlagType(determinePage));
+  },
+  caseFlagsCommentsPage: async ({ determinePage }, use) => {
+    await use(new AddCommentsPage(determinePage));
+  },
+  caseFlagsSpecialMeasurePage: async ({ determinePage }, use) => {
+    await use(new SelectSpecialMeasurePage(determinePage));
+  },
+  caseFlagsStatusPage: async ({ determinePage }, use) => {
+    await use(new ConfirmStatusPage(determinePage));
+  },
+  caseFlagsReviewPage: async ({ determinePage }, use) => {
+    await use(new ReviewFlagDetailsPage(determinePage));
+  },
+  caseFlagsConfirmationPage: async ({ determinePage }, use) => {
+    await use(new ConfirmationPage(determinePage));
+  },
+  caseFlagsTabPage: async ({ determinePage }, use) => {
+    await use(new CaseFlagsTabPage(determinePage));
+  },
+  manageFlagsSelectFlagPage: async ({ determinePage }, use) => {
+    await use(new SelectFlagPage(determinePage));
+  },
+  manageFlagsUpdateFlagPage: async ({ determinePage }, use) => {
+    await use(new updateFlagPage(determinePage));
   },
 };
