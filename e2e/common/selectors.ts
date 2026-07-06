@@ -70,6 +70,7 @@ export enum Selectors {
   GovukSummaryText = ".govuk-details__summary-text",
   GovukDetailsText = ".govuk-details__text",
   GovukErrorSummaryTitle = ".govuk-error-summary__title",
+  GovukSummaryListRow = ".govuk-summary-list__row",
   GovukSummaryListValue = ".govuk-summary-list__value",
   GovukSummaryListKey = ".govuk-summary-list__key",
   GovukErrorySummaryHeading = ".error-summary-heading",
