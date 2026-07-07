@@ -1,8 +1,8 @@
 import { Page, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors.ts";
-import { CommonContent } from "../../../../../common/commonContent.ts";
-import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
-import { AboutApplicantContent } from "../constants/solicitorDraftDivorceApplicationContent.ts";
+import { Selectors } from "../../../../../common/selectors";
+import { CommonContent } from "../../../../../common/commonContent";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage";
+import { AboutApplicantContent } from "../constants/solicitorDraftDivorceApplicationContent";
 
 export class AboutApplicantPage extends BaseJourneyPage {
   private readonly addressList: Locator;

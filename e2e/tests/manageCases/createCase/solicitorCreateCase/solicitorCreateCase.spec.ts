@@ -1,7 +1,7 @@
-import { test } from "../../../../fixtures/fixtures.ts";
-import { config } from "../../../../config.ts";
-import { Helpers } from "../../../../common/helpers.ts";
-import { Events } from "../../../../common/types.ts";
+import { test } from "../../../../fixtures/fixtures";
+import { config } from "../../../../config";
+import { Helpers } from "../../../../common/helpers";
+import { Events } from "../../../../common/types";
 
 test.describe("Solicitor create application tests", (): void => {
   test.use({
@@ -71,5 +71,6 @@ test.describe("Solicitor create application tests", (): void => {
       accessibility: true,
       axeUtil: axeUtils,
     });
+    console.log("Test passed");
   });
 });

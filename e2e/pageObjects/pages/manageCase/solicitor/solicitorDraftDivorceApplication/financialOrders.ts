@@ -1,6 +1,6 @@
 import { Page, type Locator } from "@playwright/test";
-import { CommonContent } from "../../../../../common/commonContent.ts";
-import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
+import { CommonContent } from "../../../../../common/commonContent";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 
 export class FinancialOrdersPage extends BaseJourneyPage {
   private readonly appFinancialOrderNoRadio: Locator;

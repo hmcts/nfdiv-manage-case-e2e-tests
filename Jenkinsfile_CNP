@@ -76,6 +76,14 @@ withNightlyPipeline(type, product, component, 600) {
   loadVaultSecrets(secrets)
   env.MANAGE_CASES_BASE_URL = params.MANAGE_CASES_BASE_URL
   env.FUNCTIONAL_TESTS_WORKERS = params.FUNCTIONAL_TESTS_WORKERS
+  env.AUTH_PROVIDER_SERVICE = "divorce_frontend"
+  env.AUTH_PROVIDER_URL = "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+  env.CASE_API_BASE_URL = "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
+  env.IDAM_CLIENT_ID = "divorce"
+  env.IDAM_TOKEN_URL = "https://idam-api.aat.platform.hmcts.net/o/token"
+  env.SERVICE_FEES_URL = "http://fees-register-api-aat.service.core-compute-aat.internal"
+
+
   enableSlackNotifications(channel)
   onPR() {
     afterAlways('DependencyCheckNightly') {
@@ -99,6 +107,13 @@ withNightlyPipeline(type, product, component, 600) {
     }
   }
   onMaster() {
+    env.AUTH_PROVIDER_SERVICE = "divorce_frontend"
+    env.AUTH_PROVIDER_URL = "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+    env.CASE_API_BASE_URL = "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
+    env.IDAM_CLIENT_ID = "divorce"
+    env.IDAM_TOKEN_URL = "https://idam-api.aat.platform.hmcts.net/o/token"
+    env.SERVICE_FEES_URL = "http://fees-register-api-aat.service.core-compute-aat.internal"
+
     afterAlways('DependencyCheckNightly') {
       if (!params.skipManageCasesTests) {
         stage('Manage Cases E2E tests - Chrome') {

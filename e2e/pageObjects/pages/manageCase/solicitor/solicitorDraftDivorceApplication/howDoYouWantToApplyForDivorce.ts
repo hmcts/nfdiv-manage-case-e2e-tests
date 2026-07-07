@@ -1,7 +1,7 @@
 import { Page, type Locator } from "@playwright/test";
-import { CommonContent } from "../../../../../common/commonContent.ts";
-import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
-import { HowDoYouWantToApplyForDivorceContent } from "../constants/solicitorDraftDivorceApplicationContent.ts";
+import { CommonContent } from "../../../../../common/commonContent";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage";
+import { HowDoYouWantToApplyForDivorceContent } from "../constants/solicitorDraftDivorceApplicationContent";
 
 export class HowDoYouWantToApplyForDivorcePage extends BaseJourneyPage {
   private readonly divorceRadio: Locator;

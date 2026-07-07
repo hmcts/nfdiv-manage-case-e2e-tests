@@ -1,7 +1,7 @@
 import { Page, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors.ts";
-import { CommonContent } from "../../../../../common/commonContent.ts";
-import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
+import { Selectors } from "../../../../../common/selectors";
+import { CommonContent } from "../../../../../common/commonContent";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 
 export class CheckYourAnswersAndSubmitPage extends BaseJourneyPage {
   private readonly saveApplicationButton: Locator;

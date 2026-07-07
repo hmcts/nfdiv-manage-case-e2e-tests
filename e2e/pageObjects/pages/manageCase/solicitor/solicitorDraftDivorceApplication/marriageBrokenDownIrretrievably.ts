@@ -1,7 +1,7 @@
 import { Page, type Locator } from "@playwright/test";
-import { CommonContent } from "../../../../../common/commonContent.ts";
-import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
-import { MarriageBrokenDownIrretrievablyContent } from "../constants/solicitorDraftDivorceApplicationContent.ts";
+import { CommonContent } from "../../../../../common/commonContent";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage";
+import { MarriageBrokenDownIrretrievablyContent } from "../constants/solicitorDraftDivorceApplicationContent";
 
 export class MarriageBrokenDownIrretrievablyPage extends BaseJourneyPage {
   private readonly brokenYes: Locator;

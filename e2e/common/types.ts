@@ -3,16 +3,6 @@ export interface UserLoginInfo {
   password: string;
 }
 
-export interface UserCredentials {
-  readonly email: string;
-  readonly password: string;
-}
-
-export interface UserCredentialsLong extends UserCredentials {
-  readonly forename: string;
-  readonly surname: string;
-}
-
 const UserRoles = {
   solicitor: "solicitor",
   caseworker: "caseworker",

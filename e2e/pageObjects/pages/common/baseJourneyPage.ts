@@ -1,7 +1,7 @@
 import { Page, type Locator } from "@playwright/test";
-import { Selectors } from "../../../common/selectors.ts";
-import { CommonContent } from "../../../common/commonContent.ts";
-import { config } from "../../../config.ts";
+import { Selectors } from "../../../common/selectors";
+import { CommonContent } from "../../../common/commonContent";
+import { config } from "../../../config";
 
 export abstract class BaseJourneyPage {
   protected readonly page: Page;

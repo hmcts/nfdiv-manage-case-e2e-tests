@@ -1,6 +1,6 @@
 import fs from "fs";
 import { Cookie } from "playwright-core";
-import {config, UserCredentials} from "../config.ts";
+import {config, UserCredentials} from "../config";
 
 export class CookieUtils {
   public async addAnalyticsCookie(user: UserCredentials): Promise<void> {

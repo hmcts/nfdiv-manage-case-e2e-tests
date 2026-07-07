@@ -1,7 +1,7 @@
 import { Page, type Locator } from "@playwright/test";
-import { CommonContent } from "../../../../../common/commonContent.ts";
-import { BaseJourneyPage } from "../../../common/baseJourneyPage.ts";
-import { OtherLegalProceedingsContent } from "../constants/solicitorDraftDivorceApplicationContent.ts";
+import { CommonContent } from "../../../../../common/commonContent";
+import { BaseJourneyPage } from "../../../common/baseJourneyPage";
+import { OtherLegalProceedingsContent } from "../constants/solicitorDraftDivorceApplicationContent";
 
 export class OtherLegalProceedingsPage extends BaseJourneyPage {
   private readonly appLegalProceedingsNo: Locator;
