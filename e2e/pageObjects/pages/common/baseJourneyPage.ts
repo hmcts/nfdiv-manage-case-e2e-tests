@@ -101,7 +101,7 @@ export abstract class BaseJourneyPage {
     throw new Error(`Case details did not become available for case ${caseId}`);
   }
 
-  private async isCaseDetailsPageLoaded(caseId: string, idamPage: IdamPage, user: UserCredentials): Promise<boolean> {
+  private async isCaseDetailsPageLoaded(caseId: string, idamPage?: IdamPage, user?: UserCredentials): Promise<boolean> {
     const nextStep = this.page.locator("#next-step").first();
 
     try {
@@ -112,6 +112,15 @@ export abstract class BaseJourneyPage {
       console.log(`Url = ${this.page.url()}`);
 
       if (this.page.url().includes("idam-web-public.")) {
+        if (!idamPage) {
+          console.log(`Redirected to IDAM but no IdamPage was provided`);
+          return false;
+        }
+        if (!user) {
+          console.log(`Redirected to IDAM but no user was provided`);
+          return false;
+        }
+
         console.log("IDAM redirection detected. Attempting log in...");
         await idamPage.page.waitForLoadState("load");
         await idamPage.login(user);
