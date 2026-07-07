@@ -22,6 +22,9 @@ import { PrepareEmailAttachmentsPage } from "../pageObjects/pages/manageCase/cas
 import { CreateGeneralEmailPage } from "../pageObjects/pages/manageCase/caseworker/generalEmail/createGeneralEmailPage";
 import { CorrespondenceTab } from "../pageObjects/pages/manageCase/caseworker/generalEmail/correspondenceTab";
 import { RemoveGeneralEmailsPage } from "../pageObjects/pages/manageCase/caseworker/generalEmail/removeGeneralEmailsPage";
+import { AddNotePage } from "../pageObjects/pages/manageCase/caseworker/notes/addNotePage";
+import { RemoveNotePage } from "../pageObjects/pages/manageCase/caseworker/notes/removeNotePage";
+import { NotesTab } from "../pageObjects/pages/manageCase/caseworker/notes/notesTab";
 
 export interface PageFixtures {
   determinePage: Page;
@@ -30,6 +33,9 @@ export interface PageFixtures {
   createGeneralEmailPage: CreateGeneralEmailPage;
   removeGeneralEmailsPage: RemoveGeneralEmailsPage;
   correspondenceTab: CorrespondenceTab;
+  addNotePage: AddNotePage;
+  removeNotePage: RemoveNotePage;
+  notesTab: NotesTab;
   solicitorCreatePage: SolicitorCreatePage;
   howDoYouWantToApplyForDivorcePage: HowDoYouWantToApplyForDivorcePage;
   solAboutTheSolicitorPage: SolAboutTheSolicitorPage;
@@ -72,6 +78,15 @@ export const pageFixtures = {
   },
   removeGeneralEmailsPage: async ({ determinePage }, use) => {
     await use(new RemoveGeneralEmailsPage(determinePage));
+  },
+  addNotePage: async ({ determinePage }, use) => {
+    await use(new AddNotePage(determinePage));
+  },
+  removeNotePage: async ({ determinePage }, use) => {
+    await use(new RemoveNotePage(determinePage));
+  },
+  notesTab: async ({ determinePage }, use) => {
+    await use(new NotesTab(determinePage));
   },
   solicitorCreatePage: async ({ determinePage }, use) => {
     await use(new SolicitorCreatePage(determinePage));
