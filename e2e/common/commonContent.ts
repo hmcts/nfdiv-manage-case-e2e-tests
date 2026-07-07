@@ -14,7 +14,6 @@ export enum CommonContent {
   continue = "Continue",
   Yes = "Yes",
   submitApplication = "Submit Application",
-  fee = "£612",
   applicantOrApplicantSolicitorOption = "Applicant / Applicant's Solicitor",
-  correspondenceTab = "Correspondence",
+  correspondenceTab = "Correspondence"
 }
