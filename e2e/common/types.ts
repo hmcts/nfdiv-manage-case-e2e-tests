@@ -17,5 +17,7 @@ export enum Events {
   signAndSubmit = "Sign and submit",
   prepareEmailAttachments = "Prepare email attachments",
   createGeneralEmail = "Create general email",
-  removeGeneralEmails = "Remove general emails"
+  removeGeneralEmails = "Remove general emails",
+  addNote = "Add note",
+  removeNote = "Remove note"
 }
