@@ -154,4 +154,7 @@ export enum Selectors {
   edgeCaseContinue = "#main-form-submit",
 
   font = "font",
+
+  // Ids
+  nextStep = "#next-step",
 }
