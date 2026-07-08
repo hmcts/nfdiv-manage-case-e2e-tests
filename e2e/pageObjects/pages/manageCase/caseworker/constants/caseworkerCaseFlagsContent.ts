@@ -8,8 +8,8 @@ export const caseFlagsCommonContent = {
   CASE_LEVEL: "Case level",
   PARTY_LEVEL: "Test your name Test your last name",
   UPDATE_REASON: "Update reason:",
-  ACTIVE: "Active",
-  INACTIVE: "Inactive",
+  ACTIVE: "ACTIVE",
+  INACTIVE: "INACTIVE",
   APP_OR_APP_1: "applicant or applicant1",
 }
 

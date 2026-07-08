@@ -4,8 +4,7 @@ import { updateFlagPageContent as content} from "../../constants/caseworkerCaseF
 
 export class updateFlagPage extends BaseJourneyPage {
   public async setFlagInactive(reason: string): Promise<void> {
-    const inactiveRegex = new RegExp(`^${content.INACTIVE}$`, "i");
-    await this.page.getByRole("radio", { name: inactiveRegex }).first().check();
+    await this.page.getByRole("radio", { name: content.INACTIVE }).first().check();
     const commentInput = this.page.locator(content.selectors.textarea.flagStatusReasonChange);
     await expect(commentInput).toBeVisible({ timeout: 15_000 });
     await commentInput.fill(reason.slice(0, 180));

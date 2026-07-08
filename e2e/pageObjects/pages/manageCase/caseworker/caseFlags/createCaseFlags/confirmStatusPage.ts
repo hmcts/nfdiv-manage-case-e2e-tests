@@ -3,8 +3,7 @@ import { caseFlagsCommonContent as content } from "../../constants/caseworkerCas
 
 export class ConfirmStatusPage extends BaseJourneyPage {
   public async confirmActiveStatus(): Promise<void> {
-    const activeRegex = new RegExp(`${content.ACTIVE}`, "i");
-    await this.page.getByRole("radio", { name: activeRegex }).first().check();
+    await this.page.getByRole("radio", { name: content.ACTIVE }).first().check();
     await this.clickSubmit();
   }
 }
