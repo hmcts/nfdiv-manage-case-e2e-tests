@@ -1,7 +1,6 @@
 export enum CommonContent {
   pageTitle = "Apply: divorce or dissolution",
   createCase = "Create Case",
-  continueButton = "Continue",
   findAddressButton = "Find address",
   saveApplication = "Save Application",
   jurisdictionOption = "Family Divorce",
@@ -9,6 +8,7 @@ export enum CommonContent {
   button = "Start",
   addNewButton = "Add new",
   continue = "Continue",
+  saveAndContinue = "Save and continue",
   Yes = "Yes",
   submitApplication = "Submit Application",
 }
