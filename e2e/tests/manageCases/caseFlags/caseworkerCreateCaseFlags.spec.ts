@@ -5,10 +5,10 @@ import { State } from "../../../helper/case/definition";
 import { solicitorCreateCase } from "../../fixtures/solicitorCreateCase";
 import {EventPage} from "../../../pageObjects/pages/manageCase/caseworker/caseFlags/Common/eventPage.ts";
 
-const CASE_FLAG_COMMENT = "Case Flag";
-const CASE_FLAG_STATUS_CHANGE_REASON = "Case Flag Manage";
-const PARTY_FLAG_COMMENT = "Party Flag";
-const PARTY_FLAG_STATUS_CHANGE_REASON = "Party Flag Manage";
+const CASE_FLAG_COMMENT = "Case Flag Test Comment";
+const CASE_FLAG_STATUS_CHANGE_REASON = "Manage Case Flag Test Status Change Reason";
+const PARTY_FLAG_COMMENT = "Party Flag Test Comment";
+const PARTY_FLAG_STATUS_CHANGE_REASON = "Manage Party Flag Test Status Change Reason";
 
 test.describe("Caseworker creates case flags", (): void => {
   test.use({
@@ -65,7 +65,7 @@ test.describe("Caseworker creates case flags", (): void => {
     manageFlagsUpdateFlagPage,
   }): Promise<void> => {
 
-    const caseFlagComment = `${PARTY_FLAG_COMMENT} ${Date.now()}`;
+    const caseFlagComment = `${PARTY_FLAG_COMMENT} ${Date.now().toString()}`;
     const caseFlagStatusChangeReason = `${PARTY_FLAG_STATUS_CHANGE_REASON} ${Date.now().toString()}`;
 
     await createCaseAndStartCreateFlagsEvent(caseFlagsEventPage, idamPage);
