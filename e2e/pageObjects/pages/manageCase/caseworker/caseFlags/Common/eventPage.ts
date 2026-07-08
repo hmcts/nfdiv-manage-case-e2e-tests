@@ -13,7 +13,7 @@ export class EventPage extends BaseJourneyPage {
 
   public async runPrepareForCaseFlagsEvent(): Promise<void> {
     await Helpers.chooseEventFromDropdown(this.page, Events.prepareForCaseFlags);
-    await this.clickSubmit();
+    await this.clickSaveAndContinue()
   }
 }
 

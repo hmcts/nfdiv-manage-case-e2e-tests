@@ -3,8 +3,9 @@ import { caseFlagsCommonContent as content } from "../../constants/caseworkerCas
 
 export class ConfirmStatusPage extends BaseJourneyPage {
   public async confirmActiveStatus(): Promise<void> {
+    await this.page.waitForLoadState("load");
     await this.page.getByRole("radio", { name: content.ACTIVE }).first().check();
-    await this.clickSubmit();
+    await this.clickContinue()
   }
 }
 

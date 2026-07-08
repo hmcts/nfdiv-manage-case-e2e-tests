@@ -4,10 +4,9 @@ import { addCommentsContent as content } from "../../constants/caseworkerCaseFla
 
 export class AddCommentsPage extends BaseJourneyPage {
   public async addFlagComment(comment: string): Promise<void> {
-    const commentInput = this.page.locator(content.selectors.textarea.flagComments);
-    await expect(commentInput).toBeVisible({ timeout: 15_000 });
-    await commentInput.fill(comment.slice(0, 180));
-    await this.clickSubmit();
+    await this.page.waitForLoadState("load");
+    await this.page.locator(content.selectors.textarea.flagComments).fill(comment);
+    await this.clickContinue()
   }
 }
 
