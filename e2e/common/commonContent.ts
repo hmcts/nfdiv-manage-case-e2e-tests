@@ -1,14 +1,19 @@
 export enum CommonContent {
   pageTitle = "Apply: divorce or dissolution",
   createCase = "Create Case",
+  addNewButton = "Add new",
   continueButton = "Continue",
+  removeButton = "Remove",
+  submitButton = "Submit",
   findAddressButton = "Find address",
   saveApplication = "Save Application",
+  saveAndContinue = "Save and continue",
   jurisdictionOption = "Family Divorce",
   caseTypeOption = "New Law Case",
   button = "Start",
-  addNewButton = "Add new",
   continue = "Continue",
   Yes = "Yes",
   submitApplication = "Submit Application",
+  applicantOrApplicantSolicitorOption = "Applicant / Applicant's Solicitor",
+  correspondenceTab = "Correspondence"
 }

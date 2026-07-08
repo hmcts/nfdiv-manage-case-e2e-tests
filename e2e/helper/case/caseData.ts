@@ -19,6 +19,8 @@ export interface CaseData {
   jurisdictionApplicant1Residence?: YesOrNo;
   jurisdictionApplicant2Residence?: YesOrNo;
   applicant1EnglishOrWelsh?: string;
+  applicant1SolicitorEmail?: string;
+  applicant1SolicitorName?: string;
   applicant2EnglishOrWelsh?: string;
   applicant1FirstName?: string;
   applicant1MiddleName?: string;
