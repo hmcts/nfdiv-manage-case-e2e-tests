@@ -10,7 +10,7 @@ export const caseFlagsCommonContent = {
   UPDATE_REASON: "Update reason:",
   ACTIVE: "ACTIVE",
   INACTIVE: "INACTIVE",
-  APP_OR_APP_1: "applicant or applicant1",
+  APP_OR_APP_1: "applicant or applicant1"
 }
 
 export const updateFlagPageContent = {
@@ -24,7 +24,8 @@ export const updateFlagPageContent = {
 
 export const confirmationPageContent = {
   FLAG_ADDED: "This Flag has been added to case",
-  FLAG_UPDATED: "Flag updated"
+  FLAG_UPDATED: "Flag updated",
+  CLOSE_AND_RETURN: "Close and Return to case details"
 }
 
 export const reviewFlagDetailsContent = {
