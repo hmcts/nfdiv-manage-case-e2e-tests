@@ -97,7 +97,7 @@ async function createSubmittedDigitalCase(): Promise<string> {
 async function createCaseAndStartCreateFlagsEvent(caseFlagsEventPage: EventPage, idamPage): Promise<void> {
   const caseId = await createSubmittedDigitalCase();
 
-  await caseFlagsEventPage.openCaseDetails(caseId, idamPage);
+  await caseFlagsEventPage.openCaseDetails(caseId, config.users.caseworker, idamPage);
   await caseFlagsEventPage.runPrepareForCaseFlagsEvent();
   await caseFlagsEventPage.startCreateFlagsEvent();
 }

@@ -1,9 +1,10 @@
-import {Page, type Locator, expect} from "@playwright/test";
-import { Selectors } from "../../../common/selectors";
-import { CommonContent } from "../../../common/commonContent";
-import { config } from "../../../config";
+import {expect, type Locator, Page} from "@playwright/test";
+import {Selectors} from "../../../common/selectors";
+import {CommonContent} from "../../../common/commonContent";
+import {config} from "../../../config";
 import {IdamPage} from "@hmcts/playwright-common";
 import {UserCredentials} from "@hmcts/playwright-common/dist/page-objects/pages/idam.po";
+import {Helpers} from "../../../common/helpers.ts";
 
 export abstract class BaseJourneyPage {
   protected readonly page: Page;
@@ -37,108 +38,73 @@ export abstract class BaseJourneyPage {
   }
 
   async clickButton(text: string): Promise<void> {
-    await this.buttonByText(text).click();
+    await Helpers.clickButton(this.page, text);
   }
 
   async clickContinue(): Promise<void> {
-    // Both continue and continueButton map to "Continue" in CommonContent
     await this.clickButton(CommonContent.continue);
   }
 
-  public async clickSubmit(RETRY_COUNT = 5): Promise<void> {
-    const submitButton = this.page.locator(Selectors.SubmitButton).first();
-
-    for (let attempt = 0; attempt <= RETRY_COUNT; attempt += 1) {
-      try {
-        await expect(submitButton).toBeVisible({ timeout: 2_000 });
-        await expect.poll(() => submitButton.isEnabled().catch(() => false), { timeout: 2_000 }).toBeTruthy();
-        await submitButton.click({ timeout: 5_000 });
-        await this.page.waitForLoadState("load").catch(() => undefined);
-        return;
-      } catch (error) {
-        const message = String(error);
-        const recoverable =
-          message.includes("toBeVisible") ||
-          message.includes("element(s) not found") ||
-          message.includes("not enabled") ||
-          message.includes("Timeout");
-
-        if (!recoverable || attempt === RETRY_COUNT) {
-          console.log(`[clickSubmit failed | attempt=${attempt + 1}`);
-          throw error;
-        }
-      }
-    }
+  async clickSaveAndContinue(): Promise<void> {
+    await this.clickButton(CommonContent.saveAndContinue);
   }
 
-  public async openCaseDetails(caseId: string, idamPage?: IdamPage): Promise<void> {
+  public async openCaseDetails(caseId: string, user: UserCredentials, idamPage: IdamPage): Promise<void> {
     const caseDetailsUrl = `${config.urls.manageCaseBaseUrl}/case-details/DIVORCE/NFD/${caseId}#History`;
 
-    for (let attempt = 0; attempt <= 4; attempt += 1) {
+    for (let attempt = 0; attempt < 5; attempt += 1) {
       try {
-        await this.page.goto(caseDetailsUrl);
+        if (this.page.url() !== caseDetailsUrl) {
+          await this.page.goto(caseDetailsUrl, { timeout: 30_000 });
+          await this.page.waitForTimeout(2_000);
+          await this.checkLoginRequired(user, idamPage);
+        }
+        await this.checkCaseNotFound(caseId);
+        await this.caseDetailsLoaded(caseId)
+        return;
       } catch (error) {
-        if (attempt === 4) {
+        if (error.cause === 'notFound' || attempt === 4) {
           throw error;
         }
-
-        await this.page.waitForTimeout(2_000);
-        continue;
+        console.log(error.message);
       }
-
-      if (await this.isCaseDetailsPageLoaded(caseId, idamPage, config.users.caseworker)) {
-        return;
-      }
-
-      const noResultsHeading = this.page.getByRole("heading", { name: /No results found/i }).first();
-      if (await noResultsHeading.isVisible()) {
-        throw new Error(`Case id ${caseId} not found.`);
-      }
-
-      await this.page.waitForTimeout(2_000);
     }
-
-    throw new Error(`Case details did not become available for case ${caseId}`);
   }
 
-  private async isCaseDetailsPageLoaded(caseId: string, idamPage?: IdamPage, user?: UserCredentials): Promise<boolean> {
-    const nextStep = this.page.locator("#next-step").first();
-
+  private async caseDetailsLoaded(caseId: string): Promise<void> {
+    const nextStep = this.page.locator(Selectors.nextStep);
     try {
-      await expect(nextStep).toBeVisible({ timeout: 5_000 });
-      return true;
+      await expect(nextStep).toBeVisible({ timeout: 2_000 });
+      console.log(`Case loaded: ${caseId}`);
+      return;
     } catch (error) {
-      console.log(`nextStep element not found for case ${caseId}`);
-      console.log(`Url = ${this.page.url()}`);
+      console.log(`nextStep element not found for case: ${caseId} at: ${this.page.url()}`);
+      throw error;
+    }
+  }
 
-      if (this.page.url().includes("idam-web-public.")) {
-        if (!idamPage) {
-          console.log(`Redirected to IDAM but no IdamPage was provided`);
-          return false;
-        }
-        if (!user) {
-          console.log(`Redirected to IDAM but no user was provided`);
-          return false;
-        }
-
-        console.log("IDAM redirection detected. Attempting log in...");
-        await idamPage.page.waitForLoadState("load");
+  private async checkLoginRequired(user: UserCredentials, idamPage: IdamPage): Promise<void> {
+    if (this.page.url().includes("idam-web-public.")) {
+      console.log("IDAM redirection detected. Attempting log in...");
+      try {
         await idamPage.login(user);
-        await this.page.waitForLoadState("load");
-        return await expect(nextStep)
-          .toBeVisible({ timeout: 5_000 })
-          .then(() => {
-            console.log("IDAM login successful.");
-            return true;
-          })
-          .catch(() => {
-            console.log("IDAM login failed.");
-            return false;
-          });
+        await this.page.waitForTimeout(2_000);
+        expect(this.page.url()).not.toContain("idam-web-public.");
+        await this.page.waitForLoadState("load", { timeout: 30_000 });
+        console.log('IDAM login successful.');
+      } catch (error) {
+        console.log("IDAM login failed");
+        throw error;
       }
+    }
+  }
 
-      console.log(error.log);
-      return false;
+  private async checkCaseNotFound(caseId: string): Promise<void> {
+    const noResultsHeading = this.page.getByRole("heading", { name: /No results found/i }).first();
+    if (await noResultsHeading.isVisible()) {
+      const errorMessage = `Case id ${caseId} not found.`;
+      console.log(errorMessage);
+      throw new Error(errorMessage, { cause: "notFound" });
     }
   }
 }
