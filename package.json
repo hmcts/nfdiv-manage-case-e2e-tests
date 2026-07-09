@@ -58,7 +58,7 @@
     "test:visual": "yarn playwright test tests/ --grep @visual --project=chrome",
     "test:update-snapshots": "yarn playwright test tests/ --grep @visual --project=chrome --update-snapshots"
   },
-  "packageManager": "yarn@4.17.0",
+  "packageManager": "yarn@4.17.1",
   "dependencies": {
     "@hmcts/nodejs-logging": "^4.0.4",
     "@types/config": "3.3.5",
