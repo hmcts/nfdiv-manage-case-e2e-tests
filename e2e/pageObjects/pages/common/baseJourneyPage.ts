@@ -58,8 +58,8 @@ export abstract class BaseJourneyPage {
           await this.page.goto(caseDetailsUrl, { timeout: 30_000 });
           await this.page.waitForTimeout(2_000);
           await this.checkLoginRequired(user, idamPage);
+          await this.checkCaseNotFound(caseId);
         }
-        await this.checkCaseNotFound(caseId);
         await this.caseDetailsLoaded(caseId)
         return;
       } catch (error) {
