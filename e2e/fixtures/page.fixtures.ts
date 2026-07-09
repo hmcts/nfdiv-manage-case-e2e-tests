@@ -12,7 +12,7 @@ import { JurisdictionApplyForDivorceOrDissolutionPage } from "../pageObjects/pag
 import { OtherLegalProceedingsPage } from "../pageObjects/pages/manageCase/solicitor/solicitorDraftDivorceApplication/otherLegalProceedings";
 import { FinancialOrdersPage } from "../pageObjects/pages/manageCase/solicitor/solicitorDraftDivorceApplication/financialOrders";
 import { UploadSupportingDocumentsPage } from "../pageObjects/pages/manageCase/solicitor/solicitorDraftDivorceApplication/uploadSupportingDocuments";
-import { CheckYourAnswersAndSubmitPage } from "../pageObjects/pages/manageCase/solicitor/solicitorDraftDivorceApplication/checkYourAnswersAndSubmit";
+import { CheckYourAnswersAndSubmitPage } from "../pageObjects/pages/common/checkYourAnswersAndSubmitPage";
 import { ApplicationSolStatementOfTruthPage } from "../pageObjects/pages/manageCase/solicitor/signAndSubmit/applicationSolStatementOfTruthPage";
 import { ApplicationSolPaymentPage } from "../pageObjects/pages/manageCase/solicitor/signAndSubmit/applicationSolPaymentPage";
 import { ApplicationSolPayAccountPage } from "../pageObjects/pages/manageCase/solicitor/signAndSubmit/applicationSolPayAccountPage";
@@ -29,10 +29,24 @@ import { ConfirmationPage } from "../pageObjects/pages/manageCase/caseworker/cas
 import { CaseFlagsTabPage } from "../pageObjects/pages/manageCase/caseworker/caseFlags/Common/caseFlagsTabPage.ts";
 import { SelectFlagPage } from "../pageObjects/pages/manageCase/caseworker/caseFlags/manageCaseFlags/selectFlagPage.ts";
 import { updateFlagPage } from "../pageObjects/pages/manageCase/caseworker/caseFlags/manageCaseFlags/updateFlagPage.ts";
+import { PrepareEmailAttachmentsPage } from "../pageObjects/pages/manageCase/caseworker/generalEmail/prepareGeneralEmailAttachments";
+import { CreateGeneralEmailPage } from "../pageObjects/pages/manageCase/caseworker/generalEmail/createGeneralEmailPage";
+import { CorrespondenceTab } from "../pageObjects/pages/manageCase/caseworker/generalEmail/correspondenceTab";
+import { RemoveGeneralEmailsPage } from "../pageObjects/pages/manageCase/caseworker/generalEmail/removeGeneralEmailsPage";
+import { AddNotePage } from "../pageObjects/pages/manageCase/caseworker/notes/addNotePage";
+import { RemoveNotePage } from "../pageObjects/pages/manageCase/caseworker/notes/removeNotePage";
+import { NotesTab } from "../pageObjects/pages/manageCase/caseworker/notes/notesTab";
 
 export interface PageFixtures {
   determinePage: Page;
   idamPage: IdamPage;
+  prepareEmailAttachmentsPage: PrepareEmailAttachmentsPage;
+  createGeneralEmailPage: CreateGeneralEmailPage;
+  removeGeneralEmailsPage: RemoveGeneralEmailsPage;
+  correspondenceTab: CorrespondenceTab;
+  addNotePage: AddNotePage;
+  removeNotePage: RemoveNotePage;
+  notesTab: NotesTab;
   solicitorCreatePage: SolicitorCreatePage;
   howDoYouWantToApplyForDivorcePage: HowDoYouWantToApplyForDivorcePage;
   solAboutTheSolicitorPage: SolAboutTheSolicitorPage;
@@ -72,8 +86,29 @@ export const pageFixtures = {
       await use(page);
     }
   },
+  correspondenceTab: async ({ determinePage }, use) => {
+    await use(new CorrespondenceTab(determinePage));
+  },
   idamPage: async ({ determinePage }, use) => {
     await use(new IdamPage(determinePage));
+  },
+  prepareEmailAttachmentsPage: async ({ determinePage }, use) => {
+    await use(new PrepareEmailAttachmentsPage(determinePage));
+  },
+  createGeneralEmailPage: async ({ determinePage }, use) => {
+    await use(new CreateGeneralEmailPage(determinePage));
+  },
+  removeGeneralEmailsPage: async ({ determinePage }, use) => {
+    await use(new RemoveGeneralEmailsPage(determinePage));
+  },
+  addNotePage: async ({ determinePage }, use) => {
+    await use(new AddNotePage(determinePage));
+  },
+  removeNotePage: async ({ determinePage }, use) => {
+    await use(new RemoveNotePage(determinePage));
+  },
+  notesTab: async ({ determinePage }, use) => {
+    await use(new NotesTab(determinePage));
   },
   solicitorCreatePage: async ({ determinePage }, use) => {
     await use(new SolicitorCreatePage(determinePage));

@@ -22,6 +22,8 @@ export const solicitorCreateCase: Partial<CaseWithId> = {
     PostCode: "postcode",
     Country: "UK"
   },
+  applicant1SolicitorEmail: 'test_solicitor@mailinator.com',
+  applicant1SolicitorName: 'TEST SOLICITOR',
   applicant1ContactDetailsType: "public",
   applicant1AgreedToReceiveEmails: YesOrNo.YES,
   applicant1FirstName: 'Test your name',

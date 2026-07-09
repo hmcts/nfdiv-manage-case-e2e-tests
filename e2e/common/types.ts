@@ -18,4 +18,9 @@ export enum Events {
   prepareForCaseFlags = "Prepare for Case flags",
   createFlags = "Create flags",
   manageFlags = "Manage flags",
+  prepareEmailAttachments = "Prepare email attachments",
+  createGeneralEmail = "Create general email",
+  removeGeneralEmails = "Remove general emails",
+  addNote = "Add note",
+  removeNote = "Remove note"
 }
