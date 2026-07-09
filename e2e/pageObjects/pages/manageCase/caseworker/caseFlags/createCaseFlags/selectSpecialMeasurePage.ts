@@ -3,7 +3,7 @@ import { caseFlagsCommonContent as content } from "../../constants/caseworkerCas
 
 export class SelectSpecialMeasurePage extends BaseJourneyPage {
   public async selectScreeningWitness(): Promise<void> {
-    await this.page.getByRole("radio", { name: content.SCREENING_WITNESS }).first().click();
+    await this.page.getByRole("radio", { name: content.screeningWitness }).first().click();
     await this.clickContinue()
   }
 }

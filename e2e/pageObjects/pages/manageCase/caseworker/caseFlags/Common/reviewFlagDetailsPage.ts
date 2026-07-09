@@ -5,27 +5,27 @@ import { reviewFlagDetailsContent as content } from "../../constants/caseworkerC
 
 export class ReviewFlagDetailsPage extends BaseJourneyPage {
   public async reviewAndSubmitCaseLevel(comment: string): Promise<void> {
-    await this.reviewFlag(content.ADD_FLAG_TO, content.CASE_LEVEL, content.COMPLEX_CASE, comment, content.ACTIVE);
+    await this.reviewFlag(content.addFlagTo, content.caseLevel, content.complexCase, comment, content.active);
   }
 
   public async reviewAndSubmitManageCaseLevel(comment: string): Promise<void> {
-    await this.reviewFlag(content.UPDATE_FLAG_FOR, content.CASE_LEVEL, content.COMPLEX_CASE, comment, content.INACTIVE);
+    await this.reviewFlag(content.updateFlagFor, content.caseLevel, content.complexCase, comment, content.inactive);
   }
 
   public async reviewAndSubmitPartyLevel(comment: string): Promise<void> {
-    await this.reviewFlag(content.ADD_FLAG_TO, content.PARTY_LEVEL, content.SCREENING_WITNESS, comment, content.ACTIVE);
+    await this.reviewFlag(content.addFlagTo, content.partyLevel, content.screeningWitness, comment, content.active);
   }
 
   public async reviewAndSubmitManagePartyLevel(comment: string): Promise<void> {
-    await this.reviewFlag(content.UPDATE_FLAG_FOR, content.PARTY_LEVEL, content.SCREENING_WITNESS, comment, content.INACTIVE);
+    await this.reviewFlag(content.updateFlagFor, content.partyLevel, content.screeningWitness, comment, content.inactive);
   }
 
   private async reviewFlag(levelKey: string, level: string, type: string, comment: string, status: string): Promise<void> {
     await this.page.waitForLoadState("load");
     await this.fieldMatcher(levelKey, level);
-    await this.fieldMatcher(content.FLAG_TYPE, type);
-    await this.fieldMatcher(content.COMMENTS, comment);
-    await this.fieldMatcher(content.STATUS, status);
+    await this.fieldMatcher(content.flagType, type);
+    await this.fieldMatcher(content.comments, comment);
+    await this.fieldMatcher(content.status, status);
     await this.clickSaveAndContinue()
   }
 

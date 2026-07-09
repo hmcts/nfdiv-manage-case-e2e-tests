@@ -4,7 +4,7 @@ import { updateFlagPageContent as content } from "../../constants/caseworkerCase
 export class updateFlagPage extends BaseJourneyPage {
   public async setFlagInactive(reason: string): Promise<void> {
     await this.page.waitForLoadState("load");
-    await this.page.getByRole("radio", { name: content.INACTIVE }).first().check();
+    await this.page.getByRole("radio", { name: content.inactive }).first().check();
     await this.page.locator(content.selectors.textarea.flagStatusReasonChange).fill(reason);
     await this.clickContinue()
   }
