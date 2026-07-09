@@ -1,5 +1,5 @@
 import { BaseJourneyPage } from "../../../../common/baseJourneyPage.ts";
-import { updateFlagPageContent as content} from "../../constants/caseworkerCaseFlagsContent.ts";
+import { updateFlagPageContent as content } from "../../constants/caseworkerCaseFlagsContent.ts";
 
 export class updateFlagPage extends BaseJourneyPage {
   public async setFlagInactive(reason: string): Promise<void> {

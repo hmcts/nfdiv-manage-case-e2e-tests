@@ -1,4 +1,3 @@
-import { expect } from "@playwright/test";
 import { BaseJourneyPage } from "../../../../common/baseJourneyPage.ts";
 import { addCommentsContent as content } from "../../constants/caseworkerCaseFlagsContent.ts";
 
