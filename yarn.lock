@@ -2240,10 +2240,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/config@npm:3.3.5":
-  version: 3.3.5
-  resolution: "@types/config@npm:3.3.5"
-  checksum: 10c0/32f57d8bd8a6bd79d29a7f26f945b537f745dbadc33cd8eaad98f6e466e0175fb90ae37952352fa6509a0f5de212b9bd0af320bc3bb5f8579af6affe5e3410f6
+"@types/config@npm:4.4.0":
+  version: 4.4.0
+  resolution: "@types/config@npm:4.4.0"
+  dependencies:
+    config: "npm:*"
+  checksum: 10c0/62e803d88e18071f61746d5671eaec2f0f934e9de68f5455e11704deff160775d985e29d112f837ef2c4fb67fc3d90a54a519e8091be4d569fac1c1695efd382
   languageName: node
   linkType: hard
 
@@ -3557,12 +3559,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"config@npm:4.2.0":
-  version: 4.2.0
-  resolution: "config@npm:4.2.0"
+"config@npm:*, config@npm:4.4.2":
+  version: 4.4.2
+  resolution: "config@npm:4.4.2"
   dependencies:
     json5: "npm:^2.2.3"
-  checksum: 10c0/a0f81ee93a3b7fe26870b6b53eefb17302224477f5b3a12d990f9dcaaa50ec5881a23daaed13c0a77319dadda02cb679b6988087939c58cdbb36527745d6d4af
+  checksum: 10c0/2ef94db31c8f573d2beefa6682ec16f142f9f56710c43e4fc8a8d5bb48cc056b1f8174ae8fa4554af23c041e366dc8c940e7e6d9664904c6ef0ed2e60fe51216
   languageName: node
   linkType: hard
 
@@ -6142,14 +6144,14 @@ __metadata:
     "@hmcts/nodejs-logging": "npm:^4.0.4"
     "@hmcts/playwright-common": "npm:^1.1.2"
     "@playwright/test": "npm:^1.55.1"
-    "@types/config": "npm:3.3.5"
+    "@types/config": "npm:4.4.0"
     "@types/express": "npm:4.17.25"
     "@types/jest": "npm:^30.0.0"
     "@types/lodash": "npm:4.17.24"
     "@types/node": "npm:^24.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.8.0"
     axios: "npm:^1.18.0"
-    config: "npm:4.2.0"
+    config: "npm:4.4.2"
     dayjs: "npm:1.11.21"
     dotenv: "npm:^17.0.0"
     email-validator: "npm:2.0.4"
