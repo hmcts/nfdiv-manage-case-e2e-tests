@@ -40,6 +40,7 @@ export enum Selectors {
   ColumnLabel = ".search-result-column-label",
   Span = "span",
   Panel = ".panel",
+  SubmitButton = "button[type='submit']",
 
   // Buttons
   GovukButton = ".govuk-button",
@@ -70,6 +71,7 @@ export enum Selectors {
   GovukSummaryText = ".govuk-details__summary-text",
   GovukDetailsText = ".govuk-details__text",
   GovukErrorSummaryTitle = ".govuk-error-summary__title",
+  GovukSummaryListRow = ".govuk-summary-list__row",
   GovukSummaryListValue = ".govuk-summary-list__value",
   GovukSummaryListKey = ".govuk-summary-list__key",
   GovukErrorySummaryHeading = ".error-summary-heading",
@@ -99,6 +101,7 @@ export enum Selectors {
   td = "td",
   strong = "strong",
   div = "div",
+  span = "span",
   markdown = "markdown",
   a = "a",
   b = "b",
@@ -152,4 +155,7 @@ export enum Selectors {
   edgeCaseContinue = "#main-form-submit",
 
   font = "font",
+
+  // Ids
+  nextStep = "#next-step",
 }

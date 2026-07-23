@@ -7,6 +7,7 @@ import {
 } from "@playwright/test";
 import { Events, UserRole } from "./types";
 import { config } from "../config.ts";
+import { Selectors } from "./selectors.ts";
 
 export class Helpers {
   public static async chooseEventFromDropdown(
@@ -14,8 +15,8 @@ export class Helpers {
     chosenEvent: Events,
   ): Promise<void> {
     await page.waitForLoadState("load");
-    await expect(page.locator("#next-step")).toBeVisible();
-    await page.selectOption("#next-step", chosenEvent);
+    await expect(page.locator(Selectors.nextStep)).toBeVisible();
+    await page.selectOption(Selectors.nextStep, chosenEvent);
     const goButton: Locator = page.getByRole("button", { name: "Go" });
     await expect(goButton).toBeEnabled();
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -31,6 +32,19 @@ export class Helpers {
         timeout: 60000,
       }
     ).toBe(false);
+  }
+
+
+  public static async clickButton(page: Page, buttonText: string): Promise<void> {
+    const button = page.getByRole("button", { name: buttonText });
+    try {
+      await expect(button).toBeVisible();
+      await expect(button).toBeEnabled();
+      await button.click();
+    } catch (error) {
+      console.log(`[clickButton with text '${buttonText}' failed`);
+      throw error;
+    }
   }
 
   public static async goToCase(
