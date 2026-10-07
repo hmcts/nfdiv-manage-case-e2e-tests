@@ -39,7 +39,8 @@
     "uuid": "^14.0.0"
   },
   "resolutions": {
-    "lodash-es": "^4.18.0"
+    "lodash-es": "^4.18.0",
+    "moment": "^2.31.0"
   },
   "scripts": {
     "pwinstall": "yarn playwright install --with-deps",
