@@ -28,7 +28,7 @@
     "jwt-decode": "4.0.0",
     "lighthouse": "^13.0.0",
     "node-cache": "5.1.2",
-    "otplib": "12.0.1",
+    "otplib": "13.5.0",
     "playwright": "^1.55.1",
     "playwright-core": "^1.55.1",
     "playwright-lighthouse": "^4.0.0",
