@@ -1,36 +1,38 @@
 import { Page, expect, type Locator } from "@playwright/test";
 import { AccessibilityOptions } from "../../../../types";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-import { ApplicationSolStatementOfTruthContent } from "../constants/signAndSubmitContent";
+
+const pageCaption = "Sign and submit";
+const solicitorName = "Solicitor_app_test";
+const firmName = "NFD Solicitor Firm";
+const sectionHeadings = [
+  "Service method",
+  "Statement of reconciliation",
+  "The prayer",
+  "Statement of truth",
+] as const;
+const radioSelectors = [
+  "#solUrgentCase_Yes",
+  "#serviceMethod-courtService",
+  "#solStatementOfReconciliationCertify_Yes",
+  "#solStatementOfReconciliationDiscussed_Yes",
+  "#applicant1PrayerDissolveDivorce-dissolveDivorce",
+  "#applicant1StatementOfTruth_Yes",
+  "#solSignStatementOfTruth_Yes",
+] as const;
 
 export class ApplicationSolStatementOfTruthPage extends BaseJourneyPage {
-  private readonly serviceMethod: Locator;
-  private readonly statementRecon: Locator;
-  private readonly thePrayer: Locator;
-  private readonly statementTruth: Locator;
   private readonly nameInput: Locator;
   private readonly firmInput: Locator;
+  private readonly sectionHeadingLocators: Locator[];
 
   constructor(readonly page: Page) {
     super(page);
-    this.serviceMethod = page.locator(
-      `h2:text-is("${ApplicationSolStatementOfTruthContent.content.h2_1}")`,
+    this.sectionHeadingLocators = sectionHeadings.map((name) =>
+      page.getByRole("heading", { level: 2, name, exact: true }),
     );
-    this.statementRecon = page.locator(
-      `h2:text-is("${ApplicationSolStatementOfTruthContent.content.h2_2}")`,
-    );
-    this.thePrayer = page.locator(
-      `h2:text-is("${ApplicationSolStatementOfTruthContent.content.h2_3}")`,
-    );
-    this.statementTruth = page.locator(
-      `h2:text-is("${ApplicationSolStatementOfTruthContent.content.h2_4}")`,
-    );
-    this.nameInput = page.locator(
-      ApplicationSolStatementOfTruthContent.selectors.textBoxes.name,
-    );
-    this.firmInput = page.locator(
-      ApplicationSolStatementOfTruthContent.selectors.textBoxes.firmName,
-    );
+    this.nameInput = page.locator("#solStatementOfReconciliationName");
+    this.firmInput = page.locator("#solStatementOfReconciliationFirm");
   }
 
   public async applicationSolStatementOfTruthPage({
@@ -45,29 +47,18 @@ export class ApplicationSolStatementOfTruthPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageCaption(
-      ApplicationSolStatementOfTruthContent.content.pageTitle,
-    );
+    await this.assertPageCaption(pageCaption);
     await Promise.all([
-      expect(this.serviceMethod).toBeVisible(),
-      expect(this.statementRecon).toBeVisible(),
-      expect(this.thePrayer).toBeVisible(),
-      expect(this.statementTruth).toBeVisible(),
+      ...this.sectionHeadingLocators.map((heading) => expect(heading).toBeVisible()),
     ]);
   }
 
   private async fillInFields(): Promise<void> {
-    for (const selector of Object.values(
-      ApplicationSolStatementOfTruthContent.selectors.radioButtons,
-    )) {
-      await this.page.click(selector);
+    for (const selector of radioSelectors) {
+      await this.page.locator(selector).click();
     }
-    await this.nameInput.fill(
-      ApplicationSolStatementOfTruthContent.content.name,
-    );
-    await this.firmInput.fill(
-      ApplicationSolStatementOfTruthContent.content.firmName,
-    );
+    await this.nameInput.fill(solicitorName);
+    await this.firmInput.fill(firmName);
     await this.clickContinue();
   }
 }

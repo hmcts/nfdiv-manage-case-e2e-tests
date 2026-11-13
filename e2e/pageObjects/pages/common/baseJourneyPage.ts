@@ -1,5 +1,4 @@
 import { Page, type Locator } from "@playwright/test";
-import { Selectors } from "../../../common/selectors";
 import { CommonContent } from "../../../common/commonContent";
 import { config } from "../../../config";
 
@@ -15,23 +14,15 @@ export abstract class BaseJourneyPage {
   }
 
   async assertPageCaption(text: string): Promise<void> {
-    await this.page
-      .locator(`${Selectors.GovukCaptionL}:text-is("${text}")`)
-      .waitFor();
+    await this.page.getByText(text, { exact: true }).waitFor();
   }
 
   async assertPageHeading(text: string): Promise<void> {
-    await this.page
-      .locator(`${Selectors.GovukHeadingL}:text-is("${text}")`)
-      .waitFor();
-  }
-
-  protected byText(selector: string, text: string): Locator {
-    return this.page.locator(`${selector}:text-is("${text}")`);
+    await this.page.getByRole("heading", { name: text, exact: true }).waitFor();
   }
 
   buttonByText(text: string): Locator {
-    return this.byText(Selectors.button, text);
+    return this.page.getByRole("button", { name: text, exact: true });
   }
 
   async clickButton(text: string): Promise<void> {

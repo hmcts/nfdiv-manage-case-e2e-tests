@@ -1,7 +1,6 @@
 import { Page, type Locator } from "@playwright/test";
 import { CommonContent } from "../../../../../common/commonContent";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-import { HowDoYouWantToApplyForDivorceContent } from "../constants/solicitorDraftDivorceApplicationContent";
 
 export class HowDoYouWantToApplyForDivorcePage extends BaseJourneyPage {
   private readonly divorceRadio: Locator;
@@ -9,14 +8,8 @@ export class HowDoYouWantToApplyForDivorcePage extends BaseJourneyPage {
 
   constructor(readonly page: Page) {
     super(page);
-    this.divorceRadio = page.locator(
-      HowDoYouWantToApplyForDivorceContent.selectors.radioButtons
-        .radioButtonDivorce,
-    );
-    this.soleApplicationRadio = page.locator(
-      HowDoYouWantToApplyForDivorceContent.selectors.radioButtons
-        .radioButtonSoleApplication,
-    );
+    this.divorceRadio = page.getByLabel("Divorce");
+    this.soleApplicationRadio = page.getByLabel("Sole Application");
   }
 
   public async createApplicationTypePage(): Promise<void> {

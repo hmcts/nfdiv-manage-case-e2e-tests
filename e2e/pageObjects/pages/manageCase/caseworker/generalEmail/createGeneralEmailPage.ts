@@ -1,5 +1,4 @@
 import { Page, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors";
 import { CommonContent } from "../../../../../common/commonContent";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 
@@ -19,10 +18,8 @@ export class CreateGeneralEmailPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    const HEADING_TEXT = "Create general email";
-    
     await this.page
-      .locator(`${Selectors.GovukHeadingL}:text-is("${HEADING_TEXT}")`,)
+      .getByRole("heading", { name: "Create general email", exact: true })
       .waitFor();
   }
 

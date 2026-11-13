@@ -1,7 +1,8 @@
 import { Page, type Locator } from "@playwright/test";
 import { CommonContent } from "../../../../../common/commonContent";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-import { MarriageCertificateDetailsContent } from "../constants/solicitorDraftDivorceApplicationContent";
+
+const marriageDate = "01/10/2016";
 
 export class MarriageCertificateDetailsPage extends BaseJourneyPage {
   private readonly marriageDateDay: Locator;
@@ -11,19 +12,10 @@ export class MarriageCertificateDetailsPage extends BaseJourneyPage {
 
   constructor(page: Page) {
     super(page);
-    this.marriageDateDay = page.locator(
-      MarriageCertificateDetailsContent.selectors.textBoxes.marriageDateDay,
-    );
-    this.marriageDateMonth = page.locator(
-      MarriageCertificateDetailsContent.selectors.textBoxes.marriageDateMonth,
-    );
-    this.marriageDateYear = page.locator(
-      MarriageCertificateDetailsContent.selectors.textBoxes.marriageDateYear,
-    );
-    this.marriedInUkYes = page.locator(
-      MarriageCertificateDetailsContent.selectors.radioButtons
-        .marriageMarriedInUkYes,
-    );
+    this.marriageDateDay = page.getByRole("textbox", { name: "Day" });
+    this.marriageDateMonth = page.getByRole("textbox", { name: "Month" });
+    this.marriageDateYear = page.getByRole("textbox", { name: "Year" });
+    this.marriedInUkYes = page.getByRole("radio", { name: "Yes" });
   }
 
   public async marriageCertificateDetails(): Promise<void> {
@@ -37,8 +29,7 @@ export class MarriageCertificateDetailsPage extends BaseJourneyPage {
 
   private async fillInFields(): Promise<void> {
     await this.marriedInUkYes.check();
-    const [day, month, year] =
-      MarriageCertificateDetailsContent.content.marriageDate.split("/");
+    const [day, month, year] = marriageDate.split("/");
     await this.marriageDateDay.fill(day);
     await this.marriageDateMonth.fill(month);
     await this.marriageDateYear.fill(year);

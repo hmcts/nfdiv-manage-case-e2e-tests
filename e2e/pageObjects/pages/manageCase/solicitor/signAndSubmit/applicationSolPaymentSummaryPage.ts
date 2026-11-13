@@ -1,8 +1,10 @@
 import { Page, expect, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors";
 import { AccessibilityOptions } from "../../../../types";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-import { ApplicationSolPaymentSummaryContent } from "../constants/signAndSubmitContent";
+
+const pageCaption = "Sign and submit";
+const paymentMethod = "Payment Method: Fee Account";
+const paymentReference = "Test";
 
 export class ApplicationSolPaymentSummaryPage extends BaseJourneyPage {
   private readonly paymentMethodP: Locator;
@@ -10,12 +12,8 @@ export class ApplicationSolPaymentSummaryPage extends BaseJourneyPage {
 
   constructor(readonly page: Page) {
     super(page);
-    this.paymentMethodP = page.locator(
-      `${Selectors.p}:text-is("${ApplicationSolPaymentSummaryContent.content.paymentMethod}")`,
-    );
-    this.referenceStrong = page.locator(
-      `${Selectors.strong}:text-is("${ApplicationSolPaymentSummaryContent.content.reference}")`,
-    );
+    this.paymentMethodP = page.getByText(paymentMethod, { exact: true });
+    this.referenceStrong = page.getByText(paymentReference, { exact: true });
   }
 
   public async applicationSolPaymentSummaryPage({
@@ -30,7 +28,7 @@ export class ApplicationSolPaymentSummaryPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageCaption(ApplicationSolPaymentSummaryContent.content.pageTitle);
+    await this.assertPageCaption(pageCaption);
     await Promise.all([
       expect(this.paymentMethodP).toBeVisible(),
       expect(this.referenceStrong).toBeVisible(),

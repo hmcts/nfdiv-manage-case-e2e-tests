@@ -1,6 +1,7 @@
 import { Page, type Locator } from "@playwright/test";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-import { SolAboutTheSolicitorContent } from "../constants/solicitorDraftDivorceApplicationContent";
+import { config } from "../../../../../config";
+import { CommonContent } from "../../../../../common/commonContent";
 
 export class SolAboutTheSolicitorPage extends BaseJourneyPage {
   private readonly solicitorName: Locator;
@@ -14,29 +15,17 @@ export class SolAboutTheSolicitorPage extends BaseJourneyPage {
 
   constructor(page: Page) {
     super(page);
-    this.solicitorName = page.locator(
-      SolAboutTheSolicitorContent.selectors.textBoxes.applicant1SolicitorName,
-    );
-    this.solicitorReference = page.locator(
-      SolAboutTheSolicitorContent.selectors.textBoxes
-        .applicant1SolicitorReference,
-    );
-    this.solicitorPhone = page.locator(
-      SolAboutTheSolicitorContent.selectors.textBoxes.applicant1SolicitorPhone,
-    );
-    this.solicitorEmail = page.locator(
-      SolAboutTheSolicitorContent.selectors.textBoxes.applicant1SolicitorEmail,
-    );
-    this.searchOrgText = page.locator(
-      SolAboutTheSolicitorContent.selectors.textBoxes.searchOrgText,
-    );
-    this.agreeEmailsYes = page.locator(
-      SolAboutTheSolicitorContent.selectors.radioButtons
-        .applicant1SolicitorAgreeToReceiveEmailsCheckboxYes,
-    );
+    this.solicitorName = page.getByRole("textbox", { name: "Solicitor's full name" });
+    this.solicitorReference = page.getByRole("textbox", { name: "Solicitor reference (Optional)" });
+    this.solicitorPhone = page.getByRole("textbox", { name: "Solicitor’s direct phone number (Optional)" });
+    this.solicitorEmail = page.getByRole("textbox", { name: "Solicitor's email address" });
+    this.searchOrgText = page.locator("#search-org-text");
+    this.agreeEmailsYes = page.getByRole('checkbox', {
+      name: "I confirm I’m willing to accept service of all correspondence and orders by email at the email address above"
+    });
     this.organisationTable = page.locator("#organisation-table");
-    this.selectOrgLink = page.locator(
-      `a[title="Select the organisation ${SolAboutTheSolicitorContent.content.solicitorOrganisation}"]`,
+    this.selectOrgLink = page.getByTitle(
+      `Select the organisation ${process.env.E2E_SOLICITOR_ORGANISATION as string} to continue`,
     );
   }
 
@@ -46,23 +35,15 @@ export class SolAboutTheSolicitorPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageCaption(SolAboutTheSolicitorContent.content.pageTitle);
+    await this.assertPageCaption("Apply: divorce or dissolution");
   }
 
   private async fillInFields(): Promise<void> {
-    await this.solicitorName.fill(
-      SolAboutTheSolicitorContent.content.solicitorName,
-    );
-    await this.solicitorReference.fill(
-      SolAboutTheSolicitorContent.content.solicitorReference,
-    );
-    await this.solicitorPhone.fill(
-      SolAboutTheSolicitorContent.content.solicitorPhone,
-    );
+    await this.solicitorName.fill(CommonContent.solicitorName);
+    await this.solicitorReference.fill(CommonContent.solicitorReference);
+    await this.solicitorPhone.fill(CommonContent.solicitorPhone);
     await this.solicitorEmail.fill(process.env.E2E_SOLICITOR_USERNAME as string);
-    await this.searchOrgText.fill(
-      SolAboutTheSolicitorContent.content.solicitorOrganisation,
-    );
+    await this.searchOrgText.fill(process.env.E2E_SOLICITOR_ORGANISATION as string);
     await this.agreeEmailsYes.check();
     await this.organisationTable.first().waitFor();
     await this.selectOrgLink.click();

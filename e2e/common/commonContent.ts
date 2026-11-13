@@ -10,10 +10,12 @@ export enum CommonContent {
   saveAndContinue = "Save and continue",
   jurisdictionOption = "Family Divorce",
   caseTypeOption = "New Law Case",
-  button = "Start",
   continue = "Continue",
   Yes = "Yes",
   submitApplication = "Submit Application",
   applicantOrApplicantSolicitorOption = "Applicant / Applicant's Solicitor",
-  correspondenceTab = "Correspondence"
+  correspondenceTab = "Correspondence",
+  solicitorName = "Test Solicitor",
+  solicitorReference = "Ref123",
+  solicitorPhone = "00000000000"
 }

@@ -1,10 +1,15 @@
-import { Page } from "@playwright/test";
+import { Page, type Locator } from "@playwright/test";
 import { CommonContent } from "../../../../../common/commonContent";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 
 export class JurisdictionApplyForDivorceOrDissolutionPage extends BaseJourneyPage {
+  private readonly jurisdictionFirstCheckbox: Locator;
+
   constructor(page: Page) {
     super(page);
+    this.jurisdictionFirstCheckbox = page.getByRole("checkbox", {
+      name: "Both parties to the marriage or civil partnership are habitually resident in England and Wales",
+    });
   }
 
   public async jurisdictionConnection(): Promise<void> {
@@ -17,11 +22,7 @@ export class JurisdictionApplyForDivorceOrDissolutionPage extends BaseJourneyPag
   }
 
   private async fillInFields(): Promise<void> {
-    const page = this.page;
-    for (let i = 0; i <= 3; i++) {
-      const character = String.fromCharCode("A".charCodeAt(0) + i);
-      await page.check(`#jurisdictionConnections-${character}`);
-    }
+    await this.jurisdictionFirstCheckbox.check();
     await this.clickContinue();
   }
 }

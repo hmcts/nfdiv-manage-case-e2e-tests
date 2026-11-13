@@ -1,5 +1,4 @@
 import { Page, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors";
 import { CommonContent } from "../../../../../common/commonContent";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 
@@ -11,12 +10,12 @@ export class SolicitorCreatePage extends BaseJourneyPage {
 
   constructor(page: Page) {
     super(page);
-    this.jurisdictionSelect = page.locator("#cc-jurisdiction");
-    this.caseTypeSelect = page.locator("#cc-case-type");
-    this.eventSelect = page.locator("#cc-event");
-    this.goButton = page.locator(
-      `${Selectors.button}:text-is("${CommonContent.button}")`,
-    );
+    this.jurisdictionSelect = page.getByLabel('Jurisdiction');
+    this.caseTypeSelect = page.getByLabel('Case type');
+    this.eventSelect = page.getByLabel('Event');
+    this.goButton = page.getByRole("button", {
+      name: "Start",
+    });
   }
 
   public async solicitorCreatePage(): Promise<void> {
@@ -26,9 +25,10 @@ export class SolicitorCreatePage extends BaseJourneyPage {
 
   private async checkPageLoads(): Promise<void> {
     await this.page
-      .locator(
-        `${Selectors.GovukHeadingXL}:text-is("${CommonContent.createCase}")`,
-      )
+      .getByRole("heading", {
+        name: CommonContent.createCase,
+        exact: true,
+      })
       .waitFor();
   }
 

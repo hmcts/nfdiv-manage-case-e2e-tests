@@ -1,5 +1,4 @@
 import { Page, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors";
 import { CommonContent } from "../../../../../common/commonContent";
 import { config } from "../../../../../config";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
@@ -11,15 +10,15 @@ export class UploadSupportingDocumentsPage extends BaseJourneyPage {
 
   constructor(page: Page) {
     super(page);
-    this.addNewButton = page.locator(
-      `${Selectors.button}:text-is("${CommonContent.addNewButton}")`,
-    );
-    this.uploadedDocsHeading = page.locator(
-      'h3:text("Applicant 1 uploaded documents")',
-    );
-    this.fileInput = page.locator(
-      "#applicant1DocumentsUploaded_0_documentLink",
-    );
+    this.addNewButton = page.getByRole("button", {
+      name: CommonContent.addNewButton,
+    });
+    this.uploadedDocsHeading = page.getByRole("heading", {
+      name: "Applicant 1 uploaded documents",
+    });
+    this.fileInput = page.getByRole("button", { 
+      name: "Select your document (Optional): No file chosen",
+    });
   }
 
   public async uploadSupportingDocuments(): Promise<void> {

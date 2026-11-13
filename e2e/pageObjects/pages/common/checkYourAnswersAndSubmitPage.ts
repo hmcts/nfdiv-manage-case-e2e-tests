@@ -1,5 +1,4 @@
 import { Page, type Locator } from "@playwright/test";
-import { Selectors } from "../../../common/selectors";
 import { CommonContent } from "../../../common/commonContent";
 import { BaseJourneyPage } from "../common/baseJourneyPage";
 
@@ -9,12 +8,12 @@ export class CheckYourAnswersAndSubmitPage extends BaseJourneyPage {
 
   constructor(readonly page: Page) {
     super(page);
-    this.saveApplicationButton = page.locator(
-      `${Selectors.button}:text-is("${CommonContent.saveApplication}")`,
-    );
-    this.saveAndContinueButton = page.locator(
-      `${Selectors.button}:text-is("${CommonContent.saveAndContinue}")`,
-    );
+    this.saveApplicationButton = page.getByRole("button", {
+      name: CommonContent.saveApplication,
+    });
+    this.saveAndContinueButton = page.getByRole("button", {
+      name: CommonContent.saveAndContinue,
+    });
   }
 
   public async checkYourAnswers(buttonText: string): Promise<void> {

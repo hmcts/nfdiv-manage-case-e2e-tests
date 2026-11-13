@@ -1,8 +1,14 @@
 import { Page, expect, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors";
 import { AccessibilityOptions } from "../../../../types";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-import { ApplicationSolPayAccountContent } from "../constants/signAndSubmitContent";
+import { config } from "../../../../../config";
+
+const pageCaption = "Sign and submit";
+const accountNumberLabel = "Select your account number";
+const referenceLabel = "Enter your payment reference";
+const referenceHint =
+  "This will appear on your statement to help you identify this payment";
+const paymentReference = "Test";
 
 export class ApplicationSolPayAccountPage extends BaseJourneyPage {
   private readonly label1: Locator;
@@ -13,17 +19,11 @@ export class ApplicationSolPayAccountPage extends BaseJourneyPage {
 
   constructor(readonly page: Page) {
     super(page);
-    this.label1 = page.locator(
-      `${Selectors.GovukFormLabel}:text-is("${ApplicationSolPayAccountContent.content.formLabel1}")`,
-    );
-    this.label2 = page.locator(
-      `${Selectors.GovukFormLabel}:text-is("${ApplicationSolPayAccountContent.content.formLabel2}")`,
-    );
-    this.formHint = page.locator(
-      `${Selectors.GovukFormHint}:text-is("${ApplicationSolPayAccountContent.content.formHint}")`,
-    );
-    this.pbaSelect = page.locator(ApplicationSolPayAccountContent.selectors.accountNumberSelectOption);
-    this.referenceInput = page.locator(ApplicationSolPayAccountContent.selectors.paymentReferenceTextBox);
+    this.label1 = page.getByText(accountNumberLabel, { exact: true });
+    this.label2 = page.getByText(referenceLabel, { exact: true });
+    this.formHint = page.getByText(referenceHint, { exact: true });
+    this.pbaSelect = page.getByLabel(accountNumberLabel, { exact: true });
+    this.referenceInput = page.getByLabel(referenceLabel, { exact: true });
   }
 
   public async applicationSolPayAccountPage({
@@ -38,7 +38,7 @@ export class ApplicationSolPayAccountPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageCaption(ApplicationSolPayAccountContent.content.pageTitle);
+    await this.assertPageCaption(pageCaption);
     await Promise.all([
       expect(this.label1).toBeVisible(),
       expect(this.label2).toBeVisible(),
@@ -47,10 +47,8 @@ export class ApplicationSolPayAccountPage extends BaseJourneyPage {
   }
 
   private async fillInFields(): Promise<void> {
-    await this.pbaSelect.selectOption(
-      ApplicationSolPayAccountContent.content.pbaNumber,
-    );
-    await this.referenceInput.fill(ApplicationSolPayAccountContent.content.reference);
+    await this.pbaSelect.selectOption(config.solicitor.pba);
+    await this.referenceInput.fill(paymentReference);
     await this.clickContinue();
   }
 }

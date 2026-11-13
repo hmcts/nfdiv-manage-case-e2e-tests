@@ -7,9 +7,7 @@ export class FinancialOrdersPage extends BaseJourneyPage {
 
   constructor(readonly page: Page) {
     super(page);
-    this.appFinancialOrderNoRadio = page.locator(
-      "#applicant1FinancialOrder_No",
-    );
+    this.appFinancialOrderNoRadio = page.getByRole("radio", { name: "No" });
   }
 
   public async financialOrders() {

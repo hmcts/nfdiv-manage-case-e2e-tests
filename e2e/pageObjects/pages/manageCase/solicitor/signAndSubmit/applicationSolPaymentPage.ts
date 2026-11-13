@@ -1,15 +1,22 @@
 import { Page, expect, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors";
 import { AccessibilityOptions } from "../../../../types";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-import { ApplicationSolPaymentContent } from "../constants/signAndSubmitContent";
-import {getFee} from "../../../../../helper/fees/service/get-fee.ts";
+import { getFee } from "../../../../../helper/fees/service/get-fee.ts";
 
+const pageCaption = "Payment for this application";
+const orderSummary = "Order Summary";
+const feeCode = "FEE0002";
+const paymentMethodNames = {
+  pba: "Solicitor fee account (PBA)",
+  hwf: "Help With Fees",
+} as const;
+
+type SolicitorPayment = keyof typeof paymentMethodNames;
 type ApplicationSolPaymentOptions = AccessibilityOptions & {
-  solicitorPayment: keyof typeof ApplicationSolPaymentContent.selectors.radioButtons;
+  solicitorPayment: SolicitorPayment;
 };
 
-const divorceFee = await getFee('DivorceCivPart')
+const divorceFee = await getFee("DivorceCivPart");
 
 export class ApplicationSolPaymentPage extends BaseJourneyPage {
   private readonly formLabel1: Locator;
@@ -18,28 +25,28 @@ export class ApplicationSolPaymentPage extends BaseJourneyPage {
   private readonly feeStrong: Locator;
   private readonly orderSummaryDiv: Locator;
   private readonly feeCodeCell: Locator;
+  private readonly paymentMethodRadios: Record<SolicitorPayment, Locator>;
 
   constructor(readonly page: Page) {
     super(page);
-    this.formLabel1 = page.locator(
-      `${Selectors.GovukFormLabel}:text-is("${ApplicationSolPaymentContent.content.formLabel1}")`,
-    );
-    this.formLabel2 = page.locator(
-      `${Selectors.GovukFormLabel}:text-is("${ApplicationSolPaymentContent.content.formLabel2}")`,
-    );
-    this.formLabel3 = page.locator(
-      `${Selectors.GovukFormLabel}:text-is("${ApplicationSolPaymentContent.content.formLabel3}")`,
-    );
-    this.feeStrong = page.locator(
-      `${Selectors.strong}:text-is("${divorceFee}")`,
-    );
-
-    this.orderSummaryDiv = page.locator(
-      `${Selectors.div}:text-is("${ApplicationSolPaymentContent.content.div}")`,
-    );
-    this.feeCodeCell = page.locator(
-      `${Selectors.td}:text-is("${ApplicationSolPaymentContent.content.td}")`,
-    );
+    this.formLabel1 = page.getByText("How is payment being made?", {
+      exact: true,
+    });
+    this.formLabel2 = page.getByText(paymentMethodNames.pba, { exact: true });
+    this.formLabel3 = page.getByText(paymentMethodNames.hwf, { exact: true });
+    this.feeStrong = page.getByText(divorceFee, { exact: true });
+    this.orderSummaryDiv = page.getByText(orderSummary, { exact: true });
+    this.feeCodeCell = page.getByRole("cell", { name: feeCode, exact: true });
+    this.paymentMethodRadios = {
+      pba: page.getByRole("radio", {
+        name: paymentMethodNames.pba,
+        exact: true,
+      }),
+      hwf: page.getByRole("radio", {
+        name: paymentMethodNames.hwf,
+        exact: true,
+      }),
+    };
   }
 
   public async applicationSolPaymentPage({
@@ -55,8 +62,7 @@ export class ApplicationSolPaymentPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    // Uses a different heading locator to the base method
-    await this.assertPageHeading(ApplicationSolPaymentContent.content.pageTitle);
+    await this.assertPageHeading(pageCaption);
     await Promise.all([
       expect(this.formLabel1).toBeVisible(),
       expect(this.formLabel2).toBeVisible(),
@@ -70,10 +76,7 @@ export class ApplicationSolPaymentPage extends BaseJourneyPage {
   private async fillInFields({
     solicitorPayment,
   }: Pick<ApplicationSolPaymentOptions, "solicitorPayment">): Promise<void> {
-    await this.page.click(
-      ApplicationSolPaymentContent.selectors.radioButtons[solicitorPayment],
-    );
-
+    await this.paymentMethodRadios[solicitorPayment].check();
     await this.clickContinue();
   }
 }
