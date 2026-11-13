@@ -34,14 +34,14 @@ export class AboutApplicantPage extends BaseJourneyPage {
     this.findAddressButton = page.getByRole("button", {
       name: CommonContent.findAddressButton,
     });
-    this.applicantFirstName = page.getByRole("textbox", {name: "Applicant's first name"});
-    this.applicantMiddleName = page.getByRole("textbox", {name: "Applicant's middle name (Optional)"});
-    this.applicantLastName = page.getByRole("textbox", {name: "Applicant's last name"});
+    this.applicantFirstName = page.getByRole("textbox", {name: "Applicant’s first name"});
+    this.applicantMiddleName = page.getByRole("textbox", {name: "Applicant’s middle name (Optional)"});
+    this.applicantLastName = page.getByRole("textbox", {name: "Applicant’s last name"});
     this.applicantNameMatches = page.locator("#applicant1NameDifferentToMarriageCertificate_No");
-    this.marriageApplicantName = page.getByRole("textbox", {name: "Applicant's full name"});
+    this.marriageApplicantName = page.getByRole("textbox", {name: "Applicant’s full name"});
     this.applicantSameSex = page.getByRole("radio", { name: "Opposite-sex couple" });
-    this.applicantEmail = page.getByRole("textbox", {name: "Applicant's email address"});
-    this.applicantPhoneNumber = page.getByRole("textbox", {name: "Applicant's phone number (Optional)"});
+    this.applicantEmail = page.getByRole("textbox", {name: "Applicant’s email address"});
+    this.applicantPhoneNumber = page.getByRole("textbox", {name: "Applicant’s phone number (Optional)"});
     this.applicantConfidential = page.getByRole("radio", {name: "Do not need to keep contact details private"});
   }
 

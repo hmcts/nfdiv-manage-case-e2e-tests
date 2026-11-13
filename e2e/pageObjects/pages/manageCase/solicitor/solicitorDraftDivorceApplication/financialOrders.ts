@@ -20,7 +20,7 @@ export class FinancialOrdersPage extends BaseJourneyPage {
   }
 
   private async fillInFields() {
-    await this.appFinancialOrderNoRadio.check();
+    await this.appFinancialOrderNoRadio.click();
     await this.clickContinue();
   }
 }

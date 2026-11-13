@@ -25,6 +25,7 @@ export class MarriageCertificateDetailsPage extends BaseJourneyPage {
 
   private async checkPageLoads(): Promise<void> {
     await this.assertPageCaption(CommonContent.pageTitle);
+    await this.marriageDateDay.waitFor();
   }
 
   private async fillInFields(): Promise<void> {

@@ -15,18 +15,16 @@ export class SolAboutTheSolicitorPage extends BaseJourneyPage {
 
   constructor(page: Page) {
     super(page);
-    this.solicitorName = page.getByRole("textbox", { name: "Solicitor's full name" });
+    this.solicitorName = page.getByRole("textbox", { name: "Solicitor’s full name" });
     this.solicitorReference = page.getByRole("textbox", { name: "Solicitor reference (Optional)" });
     this.solicitorPhone = page.getByRole("textbox", { name: "Solicitor’s direct phone number (Optional)" });
-    this.solicitorEmail = page.getByRole("textbox", { name: "Solicitor's email address" });
+    this.solicitorEmail = page.getByRole("textbox", { name: "Solicitor’s email address" });
     this.searchOrgText = page.locator("#search-org-text");
     this.agreeEmailsYes = page.getByRole('checkbox', {
       name: "I confirm I’m willing to accept service of all correspondence and orders by email at the email address above"
     });
     this.organisationTable = page.locator("#organisation-table");
-    this.selectOrgLink = page.getByTitle(
-      `Select the organisation ${process.env.E2E_SOLICITOR_ORGANISATION as string} to continue`,
-    );
+    this.selectOrgLink = page.getByRole("link", { name : "Select" });
   }
 
   public async solAboutTheSolicitor(): Promise<void> {

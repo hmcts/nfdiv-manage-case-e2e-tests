@@ -16,7 +16,7 @@ export class ApplicantTwoServiceDetailsPage extends BaseJourneyPage {
 
   constructor(readonly page: Page) {
     super(page);
-    this.representedNo = page.getByRole("radio", { name: "No" });
+    this.representedNo = page.locator("#applicant2SolicitorRepresented_No");
     this.heading = page.getByRole("heading", {
       name: "Respondent service details"
     });
@@ -39,14 +39,14 @@ export class ApplicantTwoServiceDetailsPage extends BaseJourneyPage {
   }
 
   private async fillInFields(): Promise<void> {
-    await this.representedNo.check();
+    await this.representedNo.click();
     await this.heading.waitFor();
     await this.emailInput.fill(respondentEmail);
     await this.postcodeInput.fill(postcode);
     await this.findAddressButton.click();
     await this.addressList.waitFor();
     await this.addressList.selectOption({ value: "2: Object" });
-    await this.overseasNo.check();
+    await this.overseasNo.click();
     await this.clickContinue();
   }
 }

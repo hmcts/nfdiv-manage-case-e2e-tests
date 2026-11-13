@@ -15,10 +15,11 @@ export class UploadSupportingDocumentsPage extends BaseJourneyPage {
     });
     this.uploadedDocsHeading = page.getByRole("heading", {
       name: "Applicant 1 uploaded documents",
+      exact: true,
     });
-    this.fileInput = page.getByRole("button", { 
-      name: "Select your document (Optional): No file chosen",
-    });
+    this.fileInput = page.locator(
+      "#applicant1DocumentsUploaded_0_documentLink",
+    );
   }
 
   public async uploadSupportingDocuments(): Promise<void> {
