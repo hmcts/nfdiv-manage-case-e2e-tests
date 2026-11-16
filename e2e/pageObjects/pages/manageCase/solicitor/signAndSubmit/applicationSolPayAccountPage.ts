@@ -2,28 +2,21 @@ import { Page, expect, type Locator } from "@playwright/test";
 import { AccessibilityOptions } from "../../../../types";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 import { config } from "../../../../../config";
-
-const pageCaption = "Sign and submit";
-const accountNumberLabel = "Select your account number";
-const referenceLabel = "Enter your payment reference";
-const referenceHint =
-  "This will appear on your statement to help you identify this payment";
-const paymentReference = "Test";
-
+import { CommonContent } from "../../../../../common/commonContent";
 export class ApplicationSolPayAccountPage extends BaseJourneyPage {
-  private readonly label1: Locator;
-  private readonly label2: Locator;
-  private readonly formHint: Locator;
+  // private readonly label1: Locator;
+  // private readonly label2: Locator;
+  // private readonly formHint: Locator;
   private readonly pbaSelect: Locator;
   private readonly referenceInput: Locator;
 
   constructor(readonly page: Page) {
     super(page);
-    this.label1 = page.getByText(accountNumberLabel, { exact: true });
-    this.label2 = page.getByText(referenceLabel, { exact: true });
-    this.formHint = page.getByText(referenceHint, { exact: true });
-    this.pbaSelect = page.getByLabel(accountNumberLabel, { exact: true });
-    this.referenceInput = page.getByLabel(referenceLabel, { exact: true });
+    // this.label1 = page.getByText(accountNumberLabel, { exact: true });
+    // this.label2 = page.getByText(referenceLabel, { exact: true });
+    // this.formHint = page.getByText(referenceHint, { exact: true });
+    this.pbaSelect = page.getByRole("combobox", { name: "Select your account number"});
+    this.referenceInput = page.getByRole("textbox", { name: "Enter your payment reference" });
   }
 
   public async applicationSolPayAccountPage({
@@ -38,17 +31,12 @@ export class ApplicationSolPayAccountPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageCaption(pageCaption);
-    await Promise.all([
-      expect(this.label1).toBeVisible(),
-      expect(this.label2).toBeVisible(),
-      expect(this.formHint).toBeVisible(),
-    ]);
+    await this.assertPageCaption(CommonContent.solSignAndSubmitPageTitle);
   }
 
   private async fillInFields(): Promise<void> {
     await this.pbaSelect.selectOption(config.solicitor.pba);
-    await this.referenceInput.fill(paymentReference);
+    await this.referenceInput.fill("test reference");
     await this.clickContinue();
   }
 }

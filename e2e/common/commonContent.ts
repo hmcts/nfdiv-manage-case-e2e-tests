@@ -1,5 +1,6 @@
 export enum CommonContent {
-  pageTitle = "Apply: divorce or dissolution",
+  solApplyPageTitle = "Apply: divorce or dissolution",
+  solSignAndSubmitPageTitle = "Sign and submit",
   createCase = "Create Case",
   addNewButton = "Add new",
   continueButton = "Continue",
@@ -12,7 +13,7 @@ export enum CommonContent {
   caseTypeOption = "New Law Case",
   continue = "Continue",
   Yes = "Yes",
-  submitApplication = "Submit Application",
+  submitApplication = " Submit Application ",
   applicantOrApplicantSolicitorOption = "Applicant / Applicant's Solicitor",
   correspondenceTab = "Correspondence",
   solicitorName = "Test Solicitor",

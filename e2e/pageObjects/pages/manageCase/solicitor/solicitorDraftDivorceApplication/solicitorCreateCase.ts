@@ -46,7 +46,7 @@ export class SolicitorCreatePage extends BaseJourneyPage {
       await this.fillInFields();
     }
 
-    await this.eventSelect.selectOption(CommonContent.pageTitle);
+    await this.eventSelect.selectOption(CommonContent.solApplyPageTitle);
     await this.goButton.click();
   }
 }

@@ -16,7 +16,8 @@ export class ApplicantTwoServiceDetailsPage extends BaseJourneyPage {
 
   constructor(readonly page: Page) {
     super(page);
-    this.representedNo = page.locator("#applicant2SolicitorRepresented_No");
+    this.representedNo = page.getByRole("group", { name: "Is the respondent represented by a solicitor?" })
+    .getByRole("radio", { name: "No" });
     this.heading = page.getByRole("heading", {
       name: "Respondent service details"
     });
@@ -26,7 +27,8 @@ export class ApplicantTwoServiceDetailsPage extends BaseJourneyPage {
       name: CommonContent.findAddressButton
     });
     this.addressList = page.getByRole("combobox", { name: "Select an address" });
-    this.overseasNo = page.locator("#applicant2AddressOverseas_No"); 
+    this.overseasNo = page.getByRole("group", { name: "Is Respondent postal address international?" })
+    .getByRole("radio", { name: "No" });
   }
 
   public async applicantTwoServiceDetails(): Promise<void> {
@@ -35,7 +37,7 @@ export class ApplicantTwoServiceDetailsPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageCaption(CommonContent.pageTitle);
+    await this.assertPageCaption(CommonContent.solApplyPageTitle);
   }
 
   private async fillInFields(): Promise<void> {

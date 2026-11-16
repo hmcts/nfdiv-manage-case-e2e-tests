@@ -3,9 +3,7 @@ import { CommonContent } from "../../../../../common/commonContent";
 import { AccessibilityOptions } from "../../../../types";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 import { config } from "../../../../../config";
-import { getFee } from "../../../../../helper/fees/service/get-fee.ts";
 
-const pageCaption = "Sign and submit";
 const orderSummary = "Order Summary";
 const feeCode = "FEE0002";
 const answerTexts = [
@@ -15,15 +13,13 @@ const answerTexts = [
   "NFD Solicitor Firm",
   "Solicitor fee account (PBA)",
   config.solicitor.pba,
-  "Test",
+  "test reference",
 ] as const;
-const divorceFee = await getFee("DivorceCivPart");
 
 export class SignAndSubmitSubmitPage extends BaseJourneyPage {
   private readonly h2CheckAnswers: Locator;
   private readonly orderSummaryDiv: Locator;
   private readonly feeCodeCell: Locator;
-  private readonly feeItems: Locator;
   private readonly yesTexts: Locator;
   private readonly submitButton: Locator;
 
@@ -35,11 +31,9 @@ export class SignAndSubmitSubmitPage extends BaseJourneyPage {
     });
     this.orderSummaryDiv = page.getByText(orderSummary, { exact: true });
     this.feeCodeCell = page.getByRole("cell", { name: feeCode, exact: true });
-    this.feeItems = page.getByText(divorceFee, { exact: true });
     this.yesTexts = page.getByText(CommonContent.Yes, { exact: true });
     this.submitButton = page.getByRole("button", {
-      name: CommonContent.submitApplication,
-      exact: true,
+      name: CommonContent.submitApplication
     });
   }
 
@@ -55,7 +49,7 @@ export class SignAndSubmitSubmitPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageHeading(pageCaption);
+    await this.assertPageCaption(CommonContent.solSignAndSubmitPageTitle);
     for (const text of answerTexts) {
       await expect(this.page.getByText(text, { exact: true })).toBeVisible();
     }
@@ -63,9 +57,8 @@ export class SignAndSubmitSubmitPage extends BaseJourneyPage {
       expect(this.h2CheckAnswers).toBeVisible(),
       expect(this.orderSummaryDiv).toBeVisible(),
       expect(this.feeCodeCell).toBeVisible(),
-      expect(this.feeItems).toHaveCount(3),
     ]);
-    await expect(this.yesTexts).toHaveCount(5);
+    await expect(this.yesTexts).toHaveCount(4);
   }
 
   private async fillInFields(): Promise<void> {

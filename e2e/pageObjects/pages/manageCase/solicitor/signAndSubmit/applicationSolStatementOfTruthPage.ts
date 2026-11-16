@@ -1,38 +1,34 @@
 import { Page, expect, type Locator } from "@playwright/test";
 import { AccessibilityOptions } from "../../../../types";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-
-const pageCaption = "Sign and submit";
-const solicitorName = "Solicitor_app_test";
-const firmName = "NFD Solicitor Firm";
-const sectionHeadings = [
-  "Service method",
-  "Statement of reconciliation",
-  "The prayer",
-  "Statement of truth",
-] as const;
-const radioSelectors = [
-  "#solUrgentCase_Yes",
-  "#serviceMethod-courtService",
-  "#solStatementOfReconciliationCertify_Yes",
-  "#solStatementOfReconciliationDiscussed_Yes",
-  "#applicant1PrayerDissolveDivorce-dissolveDivorce",
-  "#applicant1StatementOfTruth_Yes",
-  "#solSignStatementOfTruth_Yes",
-] as const;
-
+import { CommonContent } from "../../../../../common/commonContent";
 export class ApplicationSolStatementOfTruthPage extends BaseJourneyPage {
+  private readonly solUrgentCaseNo: Locator;
+  private readonly serviceMethodCourt: Locator;
+  private readonly statementOfRecYes: Locator;
+  private readonly discussedRecYes: Locator;
+  private readonly dissolveDivorceYes: Locator;
+  private readonly statementOfTruthYes: Locator;
+  private readonly solAuthorisedYes: Locator;
   private readonly nameInput: Locator;
   private readonly firmInput: Locator;
-  private readonly sectionHeadingLocators: Locator[];
 
   constructor(readonly page: Page) {
     super(page);
-    this.sectionHeadingLocators = sectionHeadings.map((name) =>
-      page.getByRole("heading", { level: 2, name, exact: true }),
-    );
-    this.nameInput = page.locator("#solStatementOfReconciliationName");
-    this.firmInput = page.locator("#solStatementOfReconciliationFirm");
+    this.solUrgentCaseNo = page.getByRole("group", { name: "Does this case require urgent issue due to jurisdiction or other financial matters?" })
+    .getByRole("radio", { name: "No" });
+    this.serviceMethodCourt = page.getByRole("radio", { name: "Court Service" });
+    this.statementOfRecYes = page.getByRole("group", { name: "I have discussed the possibility of a reconciliation with the applicant." })
+    .getByRole("radio", { name: "Yes" });
+    this.discussedRecYes = page.getByRole("group", { name: "I have given the applicant the names and addresses of persons qualified to help effect a reconciliation." })
+    .getByRole("radio", { name: "Yes" });
+    this.dissolveDivorceYes = page.getByRole("checkbox", { name: "I confirm the applicant is applying to the court to dissolve their marriage (get a divorce)" });
+    this.statementOfTruthYes = page.getByRole("group", { name: "The applicant believes that the facts stated in this application are true." })
+    .getByRole("radio", { name: "Yes" });
+    this.solAuthorisedYes = page.getByRole("group", { name: "I am duly authorised by the applicant to sign this statement." })
+    .getByRole("radio", { name: "Yes" });
+    this.nameInput = page.getByRole("textbox", { name: "Your name" });
+    this.firmInput = page.getByRole("textbox", { name: "Name of your firm" });
   }
 
   public async applicationSolStatementOfTruthPage({
@@ -47,18 +43,19 @@ export class ApplicationSolStatementOfTruthPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageCaption(pageCaption);
-    await Promise.all([
-      ...this.sectionHeadingLocators.map((heading) => expect(heading).toBeVisible()),
-    ]);
+    await this.assertPageCaption(CommonContent.solSignAndSubmitPageTitle);
   }
 
   private async fillInFields(): Promise<void> {
-    for (const selector of radioSelectors) {
-      await this.page.locator(selector).click();
-    }
-    await this.nameInput.fill(solicitorName);
-    await this.firmInput.fill(firmName);
+    await this.solUrgentCaseNo.click();
+    await this.serviceMethodCourt.click();
+    await this.statementOfRecYes.click();
+    await this.discussedRecYes.click();
+    await this.dissolveDivorceYes.click();
+    await this.statementOfTruthYes.click();
+    await this.solAuthorisedYes.click();
+    await this.nameInput.fill("Solicitor_app_test");
+    await this.firmInput.fill("NFD Solicitor Firm");
     await this.clickContinue();
   }
 }

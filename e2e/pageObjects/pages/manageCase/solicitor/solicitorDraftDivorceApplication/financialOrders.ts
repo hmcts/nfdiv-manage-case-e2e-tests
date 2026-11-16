@@ -16,7 +16,7 @@ export class FinancialOrdersPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads() {
-    await this.assertPageCaption(CommonContent.pageTitle);
+    await this.assertPageCaption(CommonContent.solApplyPageTitle);
   }
 
   private async fillInFields() {

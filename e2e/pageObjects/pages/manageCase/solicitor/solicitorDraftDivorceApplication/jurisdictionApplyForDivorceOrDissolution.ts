@@ -18,7 +18,7 @@ export class JurisdictionApplyForDivorceOrDissolutionPage extends BaseJourneyPag
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageCaption(CommonContent.pageTitle);
+    await this.assertPageCaption(CommonContent.solApplyPageTitle);
   }
 
   private async fillInFields(): Promise<void> {

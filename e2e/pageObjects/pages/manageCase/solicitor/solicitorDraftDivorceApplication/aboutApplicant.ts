@@ -37,7 +37,8 @@ export class AboutApplicantPage extends BaseJourneyPage {
     this.applicantFirstName = page.getByRole("textbox", {name: "Applicant’s first name"});
     this.applicantMiddleName = page.getByRole("textbox", {name: "Applicant’s middle name (Optional)"});
     this.applicantLastName = page.getByRole("textbox", {name: "Applicant’s last name"});
-    this.applicantNameMatches = page.locator("#applicant1NameDifferentToMarriageCertificate_No");
+    this.applicantNameMatches = page.getByRole("group", { name: "Is the applicant's name different from the name on the marriage certificate?" })
+    .getByRole("radio", { name: "No" });
     this.marriageApplicantName = page.getByRole("textbox", {name: "Applicant’s full name"});
     this.applicantSameSex = page.getByRole("radio", { name: "Opposite-sex couple" });
     this.applicantEmail = page.getByRole("textbox", {name: "Applicant’s email address"});
@@ -51,7 +52,7 @@ export class AboutApplicantPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageCaption(CommonContent.pageTitle);
+    await this.assertPageCaption(CommonContent.solApplyPageTitle);
   }
 
   private async fillInFields(): Promise<void> {
