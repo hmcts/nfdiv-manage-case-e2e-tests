@@ -38,7 +38,7 @@ export class AboutApplicantPage extends BaseJourneyPage {
     this.applicantMiddleName = page.getByRole("textbox", {name: "Applicant’s middle name (Optional)"});
     this.applicantLastName = page.getByRole("textbox", {name: "Applicant’s last name"});
     this.applicantNameMatches = page.getByRole("group", { name: "Is the applicant's name different from the name on the marriage certificate?" })
-    .getByRole("radio", { name: "No" });
+      .getByRole("radio", { name: "No" });
     this.marriageApplicantName = page.getByRole("textbox", {name: "Applicant’s full name"});
     this.applicantSameSex = page.getByRole("radio", { name: "Opposite-sex couple" });
     this.applicantEmail = page.getByRole("textbox", {name: "Applicant’s email address"});
@@ -61,7 +61,7 @@ export class AboutApplicantPage extends BaseJourneyPage {
     await this.applicantLastName.fill(applicantDetails.lastName);
     await this.applicantNameMatches.click();
     await this.marriageApplicantName.fill(applicantDetails.marriageName);
-      await this.divorceWho.selectOption({
+    await this.divorceWho.selectOption({
       value: ["1: husband", "2: wife"][Math.floor(Math.random() * 2)],
     });
     await this.applicantSameSex.click();

@@ -1,4 +1,4 @@
-import { Page, expect, type Locator } from "@playwright/test";
+import { Page } from "@playwright/test";
 import { AccessibilityOptions } from "../../../../types";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 import { CommonContent } from "../../../../../common/commonContent";

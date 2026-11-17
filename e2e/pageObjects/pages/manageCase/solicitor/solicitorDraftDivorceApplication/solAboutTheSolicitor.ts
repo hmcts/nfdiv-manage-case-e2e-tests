@@ -1,6 +1,5 @@
 import { Page, type Locator } from "@playwright/test";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-import { config } from "../../../../../config";
 import { CommonContent } from "../../../../../common/commonContent";
 
 export class SolAboutTheSolicitorPage extends BaseJourneyPage {
