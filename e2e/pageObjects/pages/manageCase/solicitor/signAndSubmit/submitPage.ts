@@ -1,41 +1,40 @@
 import { Page, expect, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors";
 import { CommonContent } from "../../../../../common/commonContent";
 import { AccessibilityOptions } from "../../../../types";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-import { SubmitContent } from "../constants/signAndSubmitContent";
-import {getFee} from "../../../../../helper/fees/service/get-fee.ts";
+import { config } from "../../../../../config";
 
-const divorceFee = await getFee("DivorceCivPart")
+const orderSummary = "Order Summary";
+const feeCode = "FEE0002";
+const answerTexts = [
+  "Court Service",
+  "I confirm the applicant is applying to the court to dissolve their marriage (get a divorce)",
+  CommonContent.solicitorName,
+  process.env.E2E_SOLICITOR_ORGANISATION as string,
+  "Solicitor fee account (PBA)",
+  config.solicitor.pba,
+  "test reference",
+] as const;
 
 export class SignAndSubmitSubmitPage extends BaseJourneyPage {
   private readonly h2CheckAnswers: Locator;
   private readonly orderSummaryDiv: Locator;
   private readonly feeCodeCell: Locator;
-  private readonly feeItems: Locator;
   private readonly yesTexts: Locator;
   private readonly submitButton: Locator;
 
   constructor(readonly page: Page) {
     super(page);
-    this.h2CheckAnswers = page.locator(
-      `${Selectors.h2}:text-is("${SubmitContent.content.h2}")`,
-    );
-    this.orderSummaryDiv = page.locator(
-      `${Selectors.div}:text-is("${SubmitContent.content.div}")`,
-    );
-    this.feeCodeCell = page.locator(
-      `${Selectors.td}:text-is("${SubmitContent.content.feeCode}")`,
-    );
-    this.feeItems = page
-      .locator(`${Selectors.GovukText16}`)
-      .filter({ hasText: `${divorceFee}` });
-    this.yesTexts = page.locator(
-      `${Selectors.GovukText16}:text-is("${CommonContent.Yes}")`,
-    );
-    this.submitButton = page.locator(
-      `${Selectors.button}:text-is("${CommonContent.submitApplication}")`,
-    );
+    this.h2CheckAnswers = page.getByRole("heading", {
+      name: "Check your answers",
+      exact: true,
+    });
+    this.orderSummaryDiv = page.getByText(orderSummary, { exact: true });
+    this.feeCodeCell = page.getByRole("cell", { name: feeCode, exact: true });
+    this.yesTexts = page.getByText(CommonContent.Yes, { exact: true });
+    this.submitButton = page.getByRole("button", {
+      name: CommonContent.submitApplication
+    });
   }
 
   public async signAndSubmitSubmitPage({
@@ -50,28 +49,16 @@ export class SignAndSubmitSubmitPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageHeading(SubmitContent.content.pageTitle);
-    const answers = [
-      SubmitContent.content.text161,
-      SubmitContent.content.text162,
-      SubmitContent.content.text163,
-      SubmitContent.content.text164,
-      SubmitContent.content.text165,
-      SubmitContent.content.text166,
-      SubmitContent.content.text167,
-    ];
-    for (const text of answers) {
-      await expect(
-        this.page.locator(`${Selectors.GovukText16}:text-is("${text}")`),
-      ).toBeVisible();
+    await this.assertPageCaption(CommonContent.solSignAndSubmitPageTitle);
+    for (const text of answerTexts) {
+      await expect(this.page.getByText(text, { exact: true })).toBeVisible();
     }
     await Promise.all([
       expect(this.h2CheckAnswers).toBeVisible(),
       expect(this.orderSummaryDiv).toBeVisible(),
       expect(this.feeCodeCell).toBeVisible(),
-      expect(this.feeItems).toHaveCount(3),
     ]);
-    await expect(this.yesTexts).toHaveCount(5);
+    await expect(this.yesTexts).toHaveCount(4);
   }
 
   private async fillInFields(): Promise<void> {

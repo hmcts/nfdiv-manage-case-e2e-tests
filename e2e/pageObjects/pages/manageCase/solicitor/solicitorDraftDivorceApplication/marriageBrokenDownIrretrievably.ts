@@ -1,17 +1,13 @@
 import { Page, type Locator } from "@playwright/test";
 import { CommonContent } from "../../../../../common/commonContent";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-import { MarriageBrokenDownIrretrievablyContent } from "../constants/solicitorDraftDivorceApplicationContent";
 
 export class MarriageBrokenDownIrretrievablyPage extends BaseJourneyPage {
   private readonly brokenYes: Locator;
 
   constructor(page: Page) {
     super(page);
-    this.brokenYes = page.locator(
-      MarriageBrokenDownIrretrievablyContent.selectors.radioButtons
-        .applicant1ScreenHasMarriageBrokenYes,
-    );
+    this.brokenYes = page.getByRole('radio', { name: "Yes" });
   }
 
   public async marriageBrokenDown(): Promise<void> {
@@ -20,7 +16,7 @@ export class MarriageBrokenDownIrretrievablyPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageCaption(CommonContent.pageTitle);
+    await this.assertPageCaption(CommonContent.solApplyPageTitle);
   }
 
   private async fillInFields(): Promise<void> {

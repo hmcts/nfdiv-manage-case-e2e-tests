@@ -1,6 +1,4 @@
 import { Page, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors";
-import { CommonContent } from "../../../../../common/commonContent";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 
 export class RemoveNotePage extends BaseJourneyPage {
@@ -13,12 +11,14 @@ export class RemoveNotePage extends BaseJourneyPage {
     this.removeNoteButton = page.getByRole("button", {
       name: "Remove notes",
     });
-    this.removeNoteConfirmationButton = page.locator(
-      `${Selectors.ConfirmationButton}:text-is("${CommonContent.removeButton}")`
-    );
-    this.submitButton = page.locator(
-      `${Selectors.button}:text-is("${CommonContent.submitButton}")`
-    );
+    this.removeNoteConfirmationButton = page.getByRole("button", {
+      name: "Remove",
+      exact: true,
+    });
+    this.submitButton = page.getByRole("button", {
+      name: "Submit",
+      exact: true,
+    });
   }
 
   public async caseworkerRemoveNote(): Promise<void> {
@@ -27,10 +27,8 @@ export class RemoveNotePage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    const HEADING_TEXT = "Remove case note";
-
     await this.page
-      .locator(`${Selectors.GovukHeadingL}:text-is("${HEADING_TEXT}")`)
+      .getByRole("heading", { name: "Remove case note", exact: true })
       .waitFor();
   }
 

@@ -26,9 +26,9 @@ export class IdamLoginHelper {
       await page.locator(`#skiplinktarget:text("Sign in or create an account")`,).waitFor();
     }
 
-    await page.fill(this.fields.username, username);
-    await page.fill(this.fields.password, password);
-    await page.click(this.submitButton);
+    await page.locator(this.fields.username).fill(username);
+    await page.locator(this.fields.password).fill(password);
+    await page.locator(this.submitButton).click();
 
     await expect
       .poll(() => !page.url().includes("idam-web-public."), {

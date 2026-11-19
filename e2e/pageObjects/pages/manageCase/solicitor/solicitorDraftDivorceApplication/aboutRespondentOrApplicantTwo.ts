@@ -1,24 +1,20 @@
 import { Page, type Locator } from "@playwright/test";
 import { CommonContent } from "../../../../../common/commonContent";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-import { aboutRespondentOrApplicantTwoContent } from "../constants/solicitorDraftDivorceApplicationContent";
-
 export class AboutRespondentOrApplicantTwoPage extends BaseJourneyPage {
   private readonly firstName: Locator;
   private readonly middleName: Locator;
   private readonly lastName: Locator;
-  private readonly marriageApplicant2Name: Locator;
+  private readonly marriageRespondentName: Locator;
   private readonly nameDifferentNo: Locator;
 
   constructor(readonly page: Page) {
     super(page);
-    this.firstName = page.locator(aboutRespondentOrApplicantTwoContent.selectors.textBoxes.applicant2FirstName);
-    this.middleName = page.locator(aboutRespondentOrApplicantTwoContent.selectors.textBoxes.applicant2MiddleName);
-    this.lastName = page.locator(aboutRespondentOrApplicantTwoContent.selectors.textBoxes.applicant2LastName);
-    this.marriageApplicant2Name = page.locator(aboutRespondentOrApplicantTwoContent.selectors.textBoxes.marriageApplicant2Name);
-    this.nameDifferentNo = page.locator(
-      aboutRespondentOrApplicantTwoContent.selectors.radioButtons.radioButtonApplicant2NameDifferentNo,
-    );
+    this.firstName = page.getByRole("textbox", { name: "Respondent's first name" });
+    this.middleName = page.getByRole("textbox", { name: "Respondent's middle name (Optional)" });
+    this.lastName = page.getByRole("textbox", { name: "Respondent's last name" });
+    this.marriageRespondentName = page.getByRole("textbox", { name: "Respondent's full name" });
+    this.nameDifferentNo = page.getByRole("radio", { name: "No" });
   }
 
   public async aboutRespondentOrApplicantTwo(): Promise<void> {
@@ -27,14 +23,14 @@ export class AboutRespondentOrApplicantTwoPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageCaption(CommonContent.pageTitle);
+    await this.assertPageCaption(CommonContent.solApplyPageTitle);
   }
 
   private async fillInFields(): Promise<void> {
-    await this.firstName.fill(aboutRespondentOrApplicantTwoContent.content.applicant2FirstName);
-    await this.middleName.fill(aboutRespondentOrApplicantTwoContent.content.applicant2MiddleName);
-    await this.lastName.fill(aboutRespondentOrApplicantTwoContent.content.applicant2LastName);
-    await this.marriageApplicant2Name.fill(aboutRespondentOrApplicantTwoContent.content.marriageApplicant2Name);
+    await this.firstName.fill(CommonContent.respFirstName);
+    await this.middleName.fill(CommonContent.respMiddleName);
+    await this.lastName.fill(CommonContent.respLastName);
+    await this.marriageRespondentName.fill(CommonContent.respMarriageName);
     await this.nameDifferentNo.check();
     await this.clickContinue();
   }

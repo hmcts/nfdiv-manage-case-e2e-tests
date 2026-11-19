@@ -1,36 +1,34 @@
-import { Page, expect, type Locator } from "@playwright/test";
+import { Page, type Locator } from "@playwright/test";
 import { AccessibilityOptions } from "../../../../types";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-import { ApplicationSolStatementOfTruthContent } from "../constants/signAndSubmitContent";
-
+import { CommonContent } from "../../../../../common/commonContent";
 export class ApplicationSolStatementOfTruthPage extends BaseJourneyPage {
-  private readonly serviceMethod: Locator;
-  private readonly statementRecon: Locator;
-  private readonly thePrayer: Locator;
-  private readonly statementTruth: Locator;
+  private readonly solUrgentCaseNo: Locator;
+  private readonly serviceMethodCourt: Locator;
+  private readonly statementOfRecYes: Locator;
+  private readonly discussedRecYes: Locator;
+  private readonly dissolveDivorceYes: Locator;
+  private readonly statementOfTruthYes: Locator;
+  private readonly solAuthorisedYes: Locator;
   private readonly nameInput: Locator;
   private readonly firmInput: Locator;
 
   constructor(readonly page: Page) {
     super(page);
-    this.serviceMethod = page.locator(
-      `h2:text-is("${ApplicationSolStatementOfTruthContent.content.h2_1}")`,
-    );
-    this.statementRecon = page.locator(
-      `h2:text-is("${ApplicationSolStatementOfTruthContent.content.h2_2}")`,
-    );
-    this.thePrayer = page.locator(
-      `h2:text-is("${ApplicationSolStatementOfTruthContent.content.h2_3}")`,
-    );
-    this.statementTruth = page.locator(
-      `h2:text-is("${ApplicationSolStatementOfTruthContent.content.h2_4}")`,
-    );
-    this.nameInput = page.locator(
-      ApplicationSolStatementOfTruthContent.selectors.textBoxes.name,
-    );
-    this.firmInput = page.locator(
-      ApplicationSolStatementOfTruthContent.selectors.textBoxes.firmName,
-    );
+    this.solUrgentCaseNo = page.getByRole("group", { name: "Does this case require urgent issue due to jurisdiction or other financial matters?" })
+      .getByRole("radio", { name: "No" });
+    this.serviceMethodCourt = page.getByRole("radio", { name: "Court Service" });
+    this.statementOfRecYes = page.getByRole("group", { name: "I have discussed the possibility of a reconciliation with the applicant." })
+      .getByRole("radio", { name: "Yes" });
+    this.discussedRecYes = page.getByRole("group", { name: "I have given the applicant the names and addresses of persons qualified to help effect a reconciliation." })
+      .getByRole("radio", { name: "Yes" });
+    this.dissolveDivorceYes = page.getByRole("checkbox", { name: "I confirm the applicant is applying to the court to dissolve their marriage (get a divorce)" });
+    this.statementOfTruthYes = page.getByRole("group", { name: "The applicant believes that the facts stated in this application are true." })
+      .getByRole("radio", { name: "Yes" });
+    this.solAuthorisedYes = page.getByRole("group", { name: "I am duly authorised by the applicant to sign this statement." })
+      .getByRole("radio", { name: "Yes" });
+    this.nameInput = page.getByRole("textbox", { name: "Your name" });
+    this.firmInput = page.getByRole("textbox", { name: "Name of your firm" });
   }
 
   public async applicationSolStatementOfTruthPage({
@@ -45,29 +43,19 @@ export class ApplicationSolStatementOfTruthPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageCaption(
-      ApplicationSolStatementOfTruthContent.content.pageTitle,
-    );
-    await Promise.all([
-      expect(this.serviceMethod).toBeVisible(),
-      expect(this.statementRecon).toBeVisible(),
-      expect(this.thePrayer).toBeVisible(),
-      expect(this.statementTruth).toBeVisible(),
-    ]);
+    await this.assertPageCaption(CommonContent.solSignAndSubmitPageTitle);
   }
 
   private async fillInFields(): Promise<void> {
-    for (const selector of Object.values(
-      ApplicationSolStatementOfTruthContent.selectors.radioButtons,
-    )) {
-      await this.page.click(selector);
-    }
-    await this.nameInput.fill(
-      ApplicationSolStatementOfTruthContent.content.name,
-    );
-    await this.firmInput.fill(
-      ApplicationSolStatementOfTruthContent.content.firmName,
-    );
+    await this.solUrgentCaseNo.click();
+    await this.serviceMethodCourt.click();
+    await this.statementOfRecYes.click();
+    await this.discussedRecYes.click();
+    await this.dissolveDivorceYes.click();
+    await this.statementOfTruthYes.click();
+    await this.solAuthorisedYes.click();
+    await this.nameInput.fill(CommonContent.solicitorName);
+    await this.firmInput.fill(process.env.E2E_SOLICITOR_ORGANISATION as string);
     await this.clickContinue();
   }
 }

@@ -1,6 +1,4 @@
 import { Page, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors";
-import { CommonContent } from "../../../../../common/commonContent";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 
 export class RemoveGeneralEmailsPage extends BaseJourneyPage {
@@ -13,12 +11,14 @@ export class RemoveGeneralEmailsPage extends BaseJourneyPage {
     this.removeEmailButton = page.getByRole('button', {
       name: 'Remove General emails',
     });
-    this.removeEmailConfirmationButton = page.locator(
-      `${Selectors.ConfirmationButton}:text-is("${CommonContent.removeButton}")`
-    );
-    this.submitButton = page.locator(
-      `${Selectors.button}:text-is("${CommonContent.submitButton}")`
-    );
+    this.removeEmailConfirmationButton = page.getByRole("button", {
+      name: "Remove",
+      exact: true,
+    });
+    this.submitButton = page.getByRole("button", {
+      name: "Submit",
+      exact: true,
+    });
   }
 
   public async caseworkerRemoveGeneralEmails(): Promise<void> {
@@ -27,10 +27,8 @@ export class RemoveGeneralEmailsPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    const HEADING_TEXT = "Remove general emails";
-    
     await this.page
-      .locator(`${Selectors.GovukHeadingL}:text-is("${HEADING_TEXT}")`,)
+      .getByRole("heading", { name: "Remove general emails", exact: true })
       .waitFor();
   }
 

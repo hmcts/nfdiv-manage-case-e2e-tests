@@ -1,17 +1,13 @@
 import { Page, type Locator } from "@playwright/test";
 import { CommonContent } from "../../../../../common/commonContent";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-import { OtherLegalProceedingsContent } from "../constants/solicitorDraftDivorceApplicationContent";
 
 export class OtherLegalProceedingsPage extends BaseJourneyPage {
   private readonly appLegalProceedingsNo: Locator;
 
   constructor(page: Page) {
     super(page);
-    this.appLegalProceedingsNo = page.locator(
-      OtherLegalProceedingsContent.selectors.radioButtons
-        .applicant1LegalProceedingsNo,
-    );
+    this.appLegalProceedingsNo = page.getByRole("radio", { name: "No" });
   }
 
   public async otherLegalProceedings(): Promise<void> {
@@ -20,7 +16,7 @@ export class OtherLegalProceedingsPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageCaption(CommonContent.pageTitle);
+    await this.assertPageCaption(CommonContent.solApplyPageTitle);
   }
 
   private async fillInFields(): Promise<void> {

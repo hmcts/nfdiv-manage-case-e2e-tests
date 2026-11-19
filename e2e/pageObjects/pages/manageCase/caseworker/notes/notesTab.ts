@@ -1,5 +1,4 @@
 import { Page, expect } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 
 export class NotesTab extends BaseJourneyPage {
@@ -19,19 +18,15 @@ export class NotesTab extends BaseJourneyPage {
 
   private async clickIntoTab(): Promise<void> {
     await this.page
-      .locator(`${Selectors.CaseViewerTab}:text-is("Notes")`)
+      .getByRole("tab", { name: "Notes", exact: true })
       .click();
   }
 
   private async checkNotePresent(): Promise<void> {
-    await expect(
-      this.page.locator(`${Selectors.GovukText16}:text-is("Notes 1")`)
-    ).toHaveCount(1);
+    await expect(this.page.getByText("Notes 1", { exact: true })).toHaveCount(1);
   }
 
   private async checkNoteNotPresent(): Promise<void> {
-    await expect(
-      this.page.locator(`${Selectors.GovukText16}:text-is("Notes 1")`)
-    ).toHaveCount(0);
+    await expect(this.page.getByText("Notes 1", { exact: true })).toHaveCount(0);
   }
 }

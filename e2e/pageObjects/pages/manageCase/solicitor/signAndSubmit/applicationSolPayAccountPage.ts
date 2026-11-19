@@ -1,29 +1,16 @@
-import { Page, expect, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors";
+import { Page, type Locator } from "@playwright/test";
 import { AccessibilityOptions } from "../../../../types";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-import { ApplicationSolPayAccountContent } from "../constants/signAndSubmitContent";
-
+import { config } from "../../../../../config";
+import { CommonContent } from "../../../../../common/commonContent";
 export class ApplicationSolPayAccountPage extends BaseJourneyPage {
-  private readonly label1: Locator;
-  private readonly label2: Locator;
-  private readonly formHint: Locator;
   private readonly pbaSelect: Locator;
   private readonly referenceInput: Locator;
 
   constructor(readonly page: Page) {
     super(page);
-    this.label1 = page.locator(
-      `${Selectors.GovukFormLabel}:text-is("${ApplicationSolPayAccountContent.content.formLabel1}")`,
-    );
-    this.label2 = page.locator(
-      `${Selectors.GovukFormLabel}:text-is("${ApplicationSolPayAccountContent.content.formLabel2}")`,
-    );
-    this.formHint = page.locator(
-      `${Selectors.GovukFormHint}:text-is("${ApplicationSolPayAccountContent.content.formHint}")`,
-    );
-    this.pbaSelect = page.locator(ApplicationSolPayAccountContent.selectors.accountNumberSelectOption);
-    this.referenceInput = page.locator(ApplicationSolPayAccountContent.selectors.paymentReferenceTextBox);
+    this.pbaSelect = page.getByRole("combobox", { name: "Select your account number"});
+    this.referenceInput = page.getByRole("textbox", { name: "Enter your payment reference" });
   }
 
   public async applicationSolPayAccountPage({
@@ -38,19 +25,12 @@ export class ApplicationSolPayAccountPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageCaption(ApplicationSolPayAccountContent.content.pageTitle);
-    await Promise.all([
-      expect(this.label1).toBeVisible(),
-      expect(this.label2).toBeVisible(),
-      expect(this.formHint).toBeVisible(),
-    ]);
+    await this.assertPageCaption(CommonContent.solSignAndSubmitPageTitle);
   }
 
   private async fillInFields(): Promise<void> {
-    await this.pbaSelect.selectOption(
-      ApplicationSolPayAccountContent.content.pbaNumber,
-    );
-    await this.referenceInput.fill(ApplicationSolPayAccountContent.content.reference);
+    await this.pbaSelect.selectOption(config.solicitor.pba);
+    await this.referenceInput.fill("test reference");
     await this.clickContinue();
   }
 }

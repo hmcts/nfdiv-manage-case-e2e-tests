@@ -1,5 +1,4 @@
 import { Page, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors";
 import { CommonContent } from "../../../../../common/commonContent";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 import { config } from "../../../../../config";
@@ -11,12 +10,14 @@ export class PrepareEmailAttachmentsPage extends BaseJourneyPage {
 
   constructor(page: Page) {
     super(page);
-    this.addNewButton = page.locator(
-      `${Selectors.button}:text-is("${CommonContent.addNewButton}")`,
-    );
-    this.uploadedDocsHeading = page.locator(
-      'h3:text("Add attachments")',
-    );
+    this.addNewButton = page.getByRole("button", {
+      name: CommonContent.addNewButton,
+      exact: true,
+    });
+    this.uploadedDocsHeading = page.getByRole("heading", {
+      name: "Add attachments",
+      exact: true,
+    });
     this.fileInput = page.locator(
       "#generalEmailAttachments_0_documentLink",
     );
@@ -28,10 +29,11 @@ export class PrepareEmailAttachmentsPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    const HEADING_TEXT = "Prepare general email attachments";
-
     await this.page
-      .locator(`${Selectors.GovukHeadingL}:text-is("${HEADING_TEXT}")`,)
+      .getByRole("heading", {
+        name: "Prepare general email attachments",
+        exact: true,
+      })
       .waitFor();
   }
 

@@ -7,9 +7,7 @@ export class FinancialOrdersPage extends BaseJourneyPage {
 
   constructor(readonly page: Page) {
     super(page);
-    this.appFinancialOrderNoRadio = page.locator(
-      "#applicant1FinancialOrder_No",
-    );
+    this.appFinancialOrderNoRadio = page.getByRole("radio", { name: "No" });
   }
 
   public async financialOrders() {
@@ -18,11 +16,11 @@ export class FinancialOrdersPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads() {
-    await this.assertPageCaption(CommonContent.pageTitle);
+    await this.assertPageCaption(CommonContent.solApplyPageTitle);
   }
 
   private async fillInFields() {
-    await this.appFinancialOrderNoRadio.check();
+    await this.appFinancialOrderNoRadio.click();
     await this.clickContinue();
   }
 }

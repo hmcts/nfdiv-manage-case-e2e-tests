@@ -1,5 +1,4 @@
 import { Page, type Locator } from "@playwright/test";
-import { Selectors } from "../../../../../common/selectors";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
 import { CommonContent } from "../../../../../common/commonContent";
 
@@ -17,10 +16,8 @@ export class AddNotePage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    const HEADING_TEXT = "Add case notes";
-
     await this.page
-      .locator(`${Selectors.GovukHeadingL}:text-is("${HEADING_TEXT}")`)
+      .getByRole("heading", { name: "Add case notes", exact: true })
       .waitFor();
   }
 
