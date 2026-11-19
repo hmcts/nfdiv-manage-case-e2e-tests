@@ -9,8 +9,8 @@ const feeCode = "FEE0002";
 const answerTexts = [
   "Court Service",
   "I confirm the applicant is applying to the court to dissolve their marriage (get a divorce)",
-  "Solicitor_app_test",
-  "NFD Solicitor Firm",
+  CommonContent.solicitorName,
+  process.env.E2E_SOLICITOR_ORGANISATION as string,
   "Solicitor fee account (PBA)",
   config.solicitor.pba,
   "test reference",

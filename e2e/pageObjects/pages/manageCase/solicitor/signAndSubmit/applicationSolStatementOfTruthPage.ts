@@ -54,8 +54,8 @@ export class ApplicationSolStatementOfTruthPage extends BaseJourneyPage {
     await this.dissolveDivorceYes.click();
     await this.statementOfTruthYes.click();
     await this.solAuthorisedYes.click();
-    await this.nameInput.fill("Solicitor_app_test");
-    await this.firmInput.fill("NFD Solicitor Firm");
+    await this.nameInput.fill(CommonContent.solicitorName);
+    await this.firmInput.fill(process.env.E2E_SOLICITOR_ORGANISATION as string);
     await this.clickContinue();
   }
 }

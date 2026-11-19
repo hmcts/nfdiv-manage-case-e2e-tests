@@ -14,7 +14,10 @@ export abstract class BaseJourneyPage {
   }
 
   async assertPageCaption(text: string): Promise<void> {
-    await this.page.getByText(text, { exact: true }).waitFor();
+    await this.page
+      .locator("main")
+      .getByText(text, { exact: true })
+      .waitFor();
   }
 
   async assertPageHeading(text: string): Promise<void> {

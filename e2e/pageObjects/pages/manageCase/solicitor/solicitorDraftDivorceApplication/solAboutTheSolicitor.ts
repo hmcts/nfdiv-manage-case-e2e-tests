@@ -32,7 +32,7 @@ export class SolAboutTheSolicitorPage extends BaseJourneyPage {
   }
 
   private async checkPageLoads(): Promise<void> {
-    await this.assertPageCaption("Apply: divorce or dissolution");
+    await this.assertPageCaption(CommonContent.solApplyPageTitle);
   }
 
   private async fillInFields(): Promise<void> {
