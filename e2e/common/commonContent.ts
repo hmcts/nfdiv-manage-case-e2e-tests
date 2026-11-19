@@ -25,5 +25,9 @@ export enum CommonContent {
   appPostcode = "SW1H 9AJ",
   solicitorName = "Test Solicitor",
   solicitorReference = "Ref123",
-  solicitorPhone = "00000000000"
+  solicitorPhone = "00000000000", 
+  respFirstName = "ApplicantTwo First",
+  respMiddleName = "ApplicantTwo Middle",
+  respLastName = "ApplicantTwo Last",
+  respMarriageName = "ApplicantTwo Middle Last",
 }

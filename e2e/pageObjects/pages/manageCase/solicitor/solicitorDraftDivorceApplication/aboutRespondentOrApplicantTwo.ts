@@ -1,14 +1,6 @@
 import { Page, type Locator } from "@playwright/test";
 import { CommonContent } from "../../../../../common/commonContent";
 import { BaseJourneyPage } from "../../../common/baseJourneyPage";
-
-const respondentDetails = {
-  firstName: "ApplicantTwo First",
-  middleName: "ApplicantTwo Middle",
-  lastName: "ApplicantTwo Last",
-  marriageName: "ApplicantTwo Middle Last",
-} as const;
-
 export class AboutRespondentOrApplicantTwoPage extends BaseJourneyPage {
   private readonly firstName: Locator;
   private readonly middleName: Locator;
@@ -35,10 +27,10 @@ export class AboutRespondentOrApplicantTwoPage extends BaseJourneyPage {
   }
 
   private async fillInFields(): Promise<void> {
-    await this.firstName.fill(respondentDetails.firstName);
-    await this.middleName.fill(respondentDetails.middleName);
-    await this.lastName.fill(respondentDetails.lastName);
-    await this.marriageRespondentName.fill(respondentDetails.marriageName);
+    await this.firstName.fill(CommonContent.respFirstName);
+    await this.middleName.fill(CommonContent.respMiddleName);
+    await this.lastName.fill(CommonContent.respLastName);
+    await this.marriageRespondentName.fill(CommonContent.respMarriageName);
     await this.nameDifferentNo.check();
     await this.clickContinue();
   }
